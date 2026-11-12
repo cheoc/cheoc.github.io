@@ -31,7 +31,7 @@ const { Content, headings } = await render(post);
 const d = post.data;
 const date = postDate(post);
 const sections = headings.filter((h) => h.depth === 2);
-const card = await getImage({ src: d.cover, width: SOCIAL_WIDTH });
+const card = await getImage({ src: d.cover, width: SOCIAL_WIDTH, format: 'jpg' });
 ---
 <Base title={`${d.title} · ${SITE_NAME}`} description={d.summary} current="projects" image={new URL(card.src, Astro.site).href} ogType="article">
   <article class="wrap post">

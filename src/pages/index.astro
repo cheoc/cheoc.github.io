@@ -7,7 +7,7 @@ import { getPosts, postDate, postHref, readingMinutes, withBase } from '../lib/p
 
 const posts = await getPosts();
 const SOCIAL_WIDTH = 1200;
-const card = posts[0] ? await getImage({ src: posts[0].data.cover, width: SOCIAL_WIDTH }) : null;
+const card = posts[0] ? await getImage({ src: posts[0].data.cover, width: SOCIAL_WIDTH, format: 'jpg' }) : null;
 const image = card ? new URL(card.src, Astro.site).href : undefined;
 ---
 <Base title={SITE_NAME} description={SITE_DESCRIPTION} current="projects" image={image}>

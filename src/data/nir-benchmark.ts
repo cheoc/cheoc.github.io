@@ -65,26 +65,26 @@ export const PUBLISHED: PublishedRow[] = [
   { dataset: 'Corn', property: 'Oil, %', published: '0.0388', ours: '0.0246', range: '0.0220–0.0271', winner: 'ours', gap: '37% lower', sameTestSet: false, testNote: 'same', calibration: { head: 'Single model:', body: 'PLS, 20 components', sub: 'detrend + SG 1st derivative' } },
   { dataset: 'Corn', property: 'Protein, %', published: '0.113', ours: '0.0296', range: '0.0233–0.0335', winner: 'ours', gap: '74% lower', sameTestSet: false, testNote: 'same', calibration: { head: 'Ensemble of 4:', body: 'TabPFN 82%, GPR 18%', sub: 'SG 1st and 2nd derivative' } },
   { dataset: 'Corn', property: 'Starch, %', published: '0.209', ours: '0.140', range: '0.127–0.155', winner: 'ours', gap: '33% lower', sameTestSet: false, testNote: 'same', calibration: { head: 'Ensemble of 3:', body: 'PLS 76%, TabPFN 24%', sub: 'SG 1st derivative' } },
-  { dataset: 'Fermentation', property: 'Glucose, g/L', published: '4.50', ours: '3.20', range: '2.85–3.59', winner: 'ours', gap: '29% lower', sameTestSet: false, testNote: 'paper: bias-corrected SEP, repeated double cross-validation', calibration: null },
-  { dataset: 'Fermentation', property: 'Ethanol, g/L', published: '1.20', ours: '0.641', range: '0.618–0.653', winner: 'ours', gap: '47% lower', sameTestSet: false, testNote: 'same', calibration: null },
-  { dataset: 'Manure, fresh', property: 'Dry matter, %', published: '1.64', ours: '2.27', range: '1.84–2.88', winner: 'pub', gap: '28% lower', sameTestSet: false, testNote: "paper's validation set not described", calibration: null },
-  { dataset: 'Manure, fresh', property: 'Ammonium N, %', published: '0.0420', ours: '0.0346', range: '0.0238–0.0408', winner: 'ours', gap: '18% lower', sameTestSet: false, testNote: 'same', calibration: null },
-  { dataset: 'Manure, fresh', property: 'Total N, %', published: '0.160', ours: '0.159', range: '0.101–0.191', winner: 'equal', gap: '', sameTestSet: false, testNote: 'same', calibration: null },
+  { dataset: 'Fermentation', property: 'Glucose, g/L', published: '4.50', ours: '3.20', range: '2.85–3.59', winner: 'ours', gap: '29% lower', sameTestSet: false, testNote: 'paper: bias-corrected SEP, repeated double cross-validation', calibration: { head: 'Ensemble of 5:', body: 'TabPFN 84%, kernel ridge 16%', sub: 'SNV + SG 1st and 2nd derivative; SG smoothing' } },
+  { dataset: 'Fermentation', property: 'Ethanol, g/L', published: '1.20', ours: '0.641', range: '0.618–0.653', winner: 'ours', gap: '47% lower', sameTestSet: false, testNote: 'same', calibration: { head: 'Ensemble of 5:', body: 'TabPFN 86%, kernel ridge 6%, local PLS 4%, PLS 4%', sub: 'raw spectra and SNV + SG 1st derivative' } },
+  { dataset: 'Manure, fresh', property: 'Dry matter, %', published: '1.64', ours: '2.27', range: '1.84–2.88', winner: 'pub', gap: '28% lower', sameTestSet: false, testNote: "paper's validation set not described", calibration: { head: 'Single model:', body: 'SVR', sub: 'SNV + SG 1st derivative' } },
+  { dataset: 'Manure, fresh', property: 'Ammonium N, %', published: '0.0420', ours: '0.0346', range: '0.0238–0.0408', winner: 'ours', gap: '18% lower', sameTestSet: false, testNote: 'same', calibration: { head: 'Ensemble of 7:', body: 'GPR 54%, TabPFN 34%, local PLS 6%, 3 more', sub: 'SNV + detrend; SG 2nd derivative for TabPFN' } },
+  { dataset: 'Manure, fresh', property: 'Total N, %', published: '0.160', ours: '0.159', range: '0.101–0.191', winner: 'equal', gap: '', sameTestSet: false, testNote: 'same', calibration: { head: 'Ensemble of 5:', body: 'TabPFN 42%, SVR 34%, local PLS 16%, kernel ridge 8%', sub: 'SNV + SG 1st and 2nd derivative; MSC' } },
 ];
 
 export type OwnRow = { dataset: string; property: string; mean: string; range: string; calibration: Calibration };
 
 export const OWN: OwnRow[] = [
   { dataset: 'Tecator meat', property: 'Moisture, %', mean: '0.622', range: '0.476–0.696', calibration: { head: 'Ensemble of 6:', body: 'TabPFN 56%, kernel ridge 32%, local PLS 8%, 2 more', sub: 'SNV + SG 2nd derivative' } },
-  { dataset: 'Manure, dried', property: 'Dry matter, %', mean: '4.47', range: '4.02–4.72', calibration: null },
-  { dataset: 'Manure, dried', property: 'Ammonium N, %', mean: '0.0694', range: '0.0617–0.0751', calibration: null },
-  { dataset: 'Manure, dried', property: 'Total N, %', mean: '0.191', range: '0.180–0.200', calibration: null },
-  { dataset: 'Barley', property: 'Moisture, %', mean: '0.566', range: '0.415–0.678', calibration: null },
-  { dataset: 'Barley', property: 'Protein, %', mean: '0.467', range: '0.425–0.500', calibration: null },
-  { dataset: 'Corn, handheld', property: 'Moisture, %', mean: '0.583', range: '0.486–0.637', calibration: null },
-  { dataset: 'Corn, handheld', property: 'Protein, %', mean: '0.342', range: '0.260–0.421', calibration: null },
-  { dataset: 'Wheat', property: 'Moisture, %', mean: '0.568', range: '0.266–0.742', calibration: null },
-  { dataset: 'Wheat', property: 'Protein, %', mean: '0.344', range: '0.317–0.366', calibration: null },
+  { dataset: 'Manure, dried', property: 'Dry matter, %', mean: '4.47', range: '4.02–4.72', calibration: { head: 'Ensemble of 8:', body: 'TabPFN 48%, kernel ridge 22%, SVR 14%, local PLS 12%, 1 more', sub: 'SG 1st derivative; SNV + SG 2nd derivative for TabPFN' } },
+  { dataset: 'Manure, dried', property: 'Ammonium N, %', mean: '0.0694', range: '0.0617–0.0751', calibration: { head: 'Ensemble of 5:', body: 'LightGBM 44%, TabPFN 22%, GPR 18%, local PLS 16%', sub: 'SNV + SG 2nd derivative; SG 1st derivative' } },
+  { dataset: 'Manure, dried', property: 'Total N, %', mean: '0.191', range: '0.180–0.200', calibration: { head: 'Ensemble of 8:', body: 'kernel ridge 38%, local PLS 26%, TabPFN 18%, LightGBM 12%, 2 more', sub: 'SG 1st derivative, detrend; outliers removed' } },
+  { dataset: 'Barley', property: 'Moisture, %', mean: '0.566', range: '0.415–0.678', calibration: { head: 'Single model:', body: 'kernel ridge', sub: 'SG 2nd derivative' } },
+  { dataset: 'Barley', property: 'Protein, %', mean: '0.467', range: '0.425–0.500', calibration: { head: 'Ensemble of 4:', body: 'TabPFN 56%, GPR 24%, PLS 20%', sub: 'SNV or MSC + SG 2nd derivative' } },
+  { dataset: 'Corn, handheld', property: 'Moisture, %', mean: '0.583', range: '0.486–0.637', calibration: { head: 'Ensemble of 6:', body: 'GPR 54%, local PLS 38%, random forest 4%, 2 more', sub: 'MSC + SG 2nd derivative' } },
+  { dataset: 'Corn, handheld', property: 'Protein, %', mean: '0.342', range: '0.260–0.421', calibration: { head: 'Ensemble of 7:', body: 'TabPFN 48%, PLS 22%, kernel ridge 20%, LightGBM 6%, 2 more', sub: 'MSC + SG 1st and 2nd derivative; flagged unreliable by the pipeline (slope 0.61)' } },
+  { dataset: 'Wheat', property: 'Moisture, %', mean: '0.568', range: '0.266–0.742', calibration: { head: 'Single model:', body: 'SVR', sub: 'SG 2nd derivative' } },
+  { dataset: 'Wheat', property: 'Protein, %', mean: '0.344', range: '0.317–0.366', calibration: { head: 'Ensemble of 7:', body: 'TabPFN 50%, kernel ridge 24%, PLS 16%, local PLS 8%, 1 more', sub: 'detrend + SG 1st derivative; SG 2nd derivative for TabPFN' } },
 ];
 
 // Test settings. Each strip is 16 samples; numbers are the tested positions.
@@ -115,7 +115,7 @@ export const SETTINGS: Setting[] = [
 ];
 
 // The full run: one square per property.
-export const FULL_RUN = { total: 25, done: 8, running: 8 };
+export const FULL_RUN = { total: 25, done: 25, running: -1 };
 
 export const STEPS: { title: string; text: string; key?: boolean }[] = [
   { title: 'Upload', text: 'Spectra and lab reference values. Rows without a value are set aside.' },

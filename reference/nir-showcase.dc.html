@@ -153,13 +153,13 @@ a{color:#1d5a7a}a:hover{color:#123e55}
 
 <article class="card" style="border-top: 3px solid var(--test);">
 <h3>Full pipeline on everything</h3>
-<p class="txt">Every property through the pipeline end to end, as a user would run it. Running now; each square is one property.</p>
-<div class="strips" role="img" aria-label="8 of 25 models finished, one running.">
+<p class="txt">Every property through the pipeline end to end, as a user would run it. Finished on 12 November; each square is one property.</p>
+<div class="strips" role="img" aria-label="All 25 models finished.">
 <sc-for list="{{s5}}" as="row" hint-placeholder-count="2">
 <div style="display: flex; align-items: center; gap: 8px;"><div style="display: flex; gap: 2px;"><sc-for list="{{row.cells}}" as="c" hint-placeholder-count="13"><span style="width: 7px; height: 12px; border-radius: 1px; background: {{c.bg}}; border: {{c.border}}; box-sizing: border-box;"></span></sc-for></div></div>
 </sc-for>
 </div>
-<p class="scope">8 of 25 done</p>
+<p class="scope">25 of 25 done</p>
 </article>
 
 </div>
@@ -193,11 +193,11 @@ a{color:#1d5a7a}a:hover{color:#123e55}
 <tr><td>Corn</td><td>Oil, %</td><td class="n">0.0388</td><td class="n lo">0.0246<span class="sub">(0.0220–0.0271)</span></td><td><span class="chip oh">Ours, 37% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Single model:</b> PLS, 20 components<span class="sub">detrend + SG 1st derivative</span></td></tr>
 <tr><td>Corn</td><td>Protein, %</td><td class="n">0.113</td><td class="n lo">0.0296<span class="sub">(0.0233–0.0335)</span></td><td><span class="chip oh">Ours, 74% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Ensemble of 4:</b> TabPFN 82%, GPR 18%<span class="sub">SG 1st and 2nd derivative</span></td></tr>
 <tr><td>Corn</td><td>Starch, %</td><td class="n">0.209</td><td class="n lo">0.140<span class="sub">(0.127–0.155)</span></td><td><span class="chip oh">Ours, 33% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Ensemble of 3:</b> PLS 76%, TabPFN 24%<span class="sub">SG 1st derivative</span></td></tr>
-<tr><td>Fermentation</td><td>Glucose, g/L</td><td class="n">4.50</td><td class="n lo">3.20<span class="sub">(2.85–3.59)</span></td><td><span class="chip oh">Ours, 29% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">paper: bias-corrected SEP, repeated double cross-validation</span></td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Fermentation</td><td>Ethanol, g/L</td><td class="n">1.20</td><td class="n lo">0.641<span class="sub">(0.618–0.653)</span></td><td><span class="chip oh">Ours, 47% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Manure, fresh</td><td>Dry matter, %</td><td class="n lo">1.64</td><td class="n">2.27<span class="sub">(1.84–2.88)</span></td><td><span class="chip ph">Published, 28% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">paper's validation set not described</span></td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Manure, fresh</td><td>Ammonium N, %</td><td class="n">0.0420</td><td class="n lo">0.0346<span class="sub">(0.0238–0.0408)</span></td><td><span class="chip oh">Ours, 18% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Manure, fresh</td><td>Total N, %</td><td class="n">0.160</td><td class="n">0.159<span class="sub">(0.101–0.191)</span></td><td><span class="chip eq">About equal</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Fermentation</td><td>Glucose, g/L</td><td class="n">4.50</td><td class="n lo">3.20<span class="sub">(2.85–3.59)</span></td><td><span class="chip oh">Ours, 29% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">paper: bias-corrected SEP, repeated double cross-validation</span></td><td><b>Ensemble of 5:</b> TabPFN 84%, kernel ridge 16%<span class="sub">SNV + SG 1st and 2nd derivative; SG smoothing</span></td></tr>
+<tr><td>Fermentation</td><td>Ethanol, g/L</td><td class="n">1.20</td><td class="n lo">0.641<span class="sub">(0.618–0.653)</span></td><td><span class="chip oh">Ours, 47% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Ensemble of 5:</b> TabPFN 86%, kernel ridge 6%, local PLS 4%, PLS 4%<span class="sub">raw spectra and SNV + SG 1st derivative</span></td></tr>
+<tr><td>Manure, fresh</td><td>Dry matter, %</td><td class="n lo">1.64</td><td class="n">2.27<span class="sub">(1.84–2.88)</span></td><td><span class="chip ph">Published, 28% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">paper's validation set not described</span></td><td><b>Single model:</b> SVR<span class="sub">SNV + SG 1st derivative</span></td></tr>
+<tr><td>Manure, fresh</td><td>Ammonium N, %</td><td class="n">0.0420</td><td class="n lo">0.0346<span class="sub">(0.0238–0.0408)</span></td><td><span class="chip oh">Ours, 18% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Ensemble of 7:</b> GPR 54%, TabPFN 34%, local PLS 6%, 3 more<span class="sub">SNV + detrend; SG 2nd derivative for TabPFN</span></td></tr>
+<tr><td>Manure, fresh</td><td>Total N, %</td><td class="n">0.160</td><td class="n">0.159<span class="sub">(0.101–0.191)</span></td><td><span class="chip eq">About equal</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Ensemble of 5:</b> TabPFN 42%, SVR 34%, local PLS 16%, kernel ridge 8%<span class="sub">SNV + SG 1st and 2nd derivative; MSC</span></td></tr>
 </tbody>
 </table>
 </div>
@@ -207,7 +207,7 @@ a{color:#1d5a7a}a:hover{color:#123e55}
 <section style="display: flex; flex-direction: column; gap: 20px;">
 <div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
 <h2 style="margin: 0; font-size: 30px; font-weight: 700;">Datasets without a published result</h2>
-<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">10 properties. Nobody has published an error for these, so we report ours on its own. 3 significant digits.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">10 properties. Nobody has published an error for these, so we report ours on its own. Error: mean of 3 random splits. Calibration: model from the full pipeline, trained on all rows (run of 12 November). 3 significant digits.</p>
 </div>
 <div style="overflow-x: auto;">
 <table class="tbl" style="min-width: 860px;">
@@ -216,15 +216,15 @@ a{color:#1d5a7a}a:hover{color:#123e55}
 </thead>
 <tbody>
 <tr><td>Tecator meat</td><td>Moisture, %</td><td class="n">0.622</td><td class="n">0.476–0.696</td><td><b>Ensemble of 6:</b> TabPFN 56%, kernel ridge 32%, local PLS 8%, 2 more<span class="sub">SNV + SG 2nd derivative</span></td></tr>
-<tr><td>Manure, dried</td><td>Dry matter, %</td><td class="n">4.47</td><td class="n">4.02–4.72</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Manure, dried</td><td>Ammonium N, %</td><td class="n">0.0694</td><td class="n">0.0617–0.0751</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Manure, dried</td><td>Total N, %</td><td class="n">0.191</td><td class="n">0.180–0.200</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Barley</td><td>Moisture, %</td><td class="n">0.566</td><td class="n">0.415–0.678</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Barley</td><td>Protein, %</td><td class="n">0.467</td><td class="n">0.425–0.500</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Corn, handheld</td><td>Moisture, %</td><td class="n">0.583</td><td class="n">0.486–0.637</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Corn, handheld</td><td>Protein, %</td><td class="n">0.342</td><td class="n">0.260–0.421</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Wheat</td><td>Moisture, %</td><td class="n">0.568</td><td class="n">0.266–0.742</td><td style="color: var(--muted);">Run in progress</td></tr>
-<tr><td>Wheat</td><td>Protein, %</td><td class="n">0.344</td><td class="n">0.317–0.366</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Manure, dried</td><td>Dry matter, %</td><td class="n">4.47</td><td class="n">4.02–4.72</td><td><b>Ensemble of 8:</b> TabPFN 48%, kernel ridge 22%, SVR 14%, local PLS 12%, 1 more<span class="sub">SG 1st derivative; SNV + SG 2nd derivative for TabPFN</span></td></tr>
+<tr><td>Manure, dried</td><td>Ammonium N, %</td><td class="n">0.0694</td><td class="n">0.0617–0.0751</td><td><b>Ensemble of 5:</b> LightGBM 44%, TabPFN 22%, GPR 18%, local PLS 16%<span class="sub">SNV + SG 2nd derivative; SG 1st derivative</span></td></tr>
+<tr><td>Manure, dried</td><td>Total N, %</td><td class="n">0.191</td><td class="n">0.180–0.200</td><td><b>Ensemble of 8:</b> kernel ridge 38%, local PLS 26%, TabPFN 18%, LightGBM 12%, 2 more<span class="sub">SG 1st derivative, detrend; outliers removed</span></td></tr>
+<tr><td>Barley</td><td>Moisture, %</td><td class="n">0.566</td><td class="n">0.415–0.678</td><td><b>Single model:</b> kernel ridge<span class="sub">SG 2nd derivative</span></td></tr>
+<tr><td>Barley</td><td>Protein, %</td><td class="n">0.467</td><td class="n">0.425–0.500</td><td><b>Ensemble of 4:</b> TabPFN 56%, GPR 24%, PLS 20%<span class="sub">SNV or MSC + SG 2nd derivative</span></td></tr>
+<tr><td>Corn, handheld</td><td>Moisture, %</td><td class="n">0.583</td><td class="n">0.486–0.637</td><td><b>Ensemble of 6:</b> GPR 54%, local PLS 38%, random forest 4%, 2 more<span class="sub">MSC + SG 2nd derivative</span></td></tr>
+<tr><td>Corn, handheld</td><td>Protein, %</td><td class="n">0.342</td><td class="n">0.260–0.421</td><td><b>Ensemble of 7:</b> TabPFN 48%, PLS 22%, kernel ridge 20%, LightGBM 6%, 2 more<span class="sub">MSC + SG 1st and 2nd derivative; flagged unreliable by the pipeline (slope 0.61)</span></td></tr>
+<tr><td>Wheat</td><td>Moisture, %</td><td class="n">0.568</td><td class="n">0.266–0.742</td><td><b>Single model:</b> SVR<span class="sub">SG 2nd derivative</span></td></tr>
+<tr><td>Wheat</td><td>Protein, %</td><td class="n">0.344</td><td class="n">0.317–0.366</td><td><b>Ensemble of 7:</b> TabPFN 50%, kernel ridge 24%, PLS 16%, local PLS 8%, 1 more<span class="sub">detrend + SG 1st derivative; SG 2nd derivative for TabPFN</span></td></tr>
 </tbody>
 </table>
 </div>
@@ -335,7 +335,7 @@ class Component extends DCLogic {
       s2: [strip([1, 6, 9, 14]), strip([0, 4, 11, 13]), strip([3, 7, 8, 15]), strip([2, 5, 10, 12]), strip([1, 8, 11, 14])],
       s3: [strip([2, 6, 9, 13], '0.372'), strip([0, 5, 10, 14], '0.475'), strip([3, 4, 11, 15], '0.709')],
       s4: [strip([1, 5, 10, 14]), strip([2, 7, 9, 12]), strip([0, 6, 11, 15])],
-      s5: [status(0, 13, 8, 8), status(13, 25, 8, 8)],
+      s5: [status(0, 13, 25, -1), status(13, 25, 25, -1)],
       steps: steps
     };
   }

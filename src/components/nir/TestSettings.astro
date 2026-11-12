@@ -34,9 +34,9 @@ const runRows = [runCells.slice(0, ROW_SPLIT), runCells.slice(ROW_SPLIT)];
   <li>
     <div>
       <h3>Full pipeline on everything</h3>
-      <p>Every property through the pipeline end to end, as a user would run it. Running now; each square is one property.</p>
+      <p>Every property through the pipeline end to end, as a user would run it. Finished on 12 November; each square is one property.</p>
     </div>
-    <div class="strips" role="img" aria-label={`${FULL_RUN.done} of ${FULL_RUN.total} models finished, one running.`}>
+    <div class="strips" role="img" aria-label={`${FULL_RUN.done} of ${FULL_RUN.total} models finished.`}>
       {runRows.map((row) => (
         <div class="strip"><span class="cells">{row.map((c) => <span class={`cell ${c}`}></span>)}</span></div>
       ))}

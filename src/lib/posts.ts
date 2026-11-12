@@ -25,7 +25,7 @@ export function allTags(posts: Post[]): string[] {
 }
 
 // Newest first. Posts with an unconfirmed date sort after dated ones;
-// ties fall back to the title so the order is stable. Drafts show only in dev.
+// same-date posts sort by `order` (higher first), then title. Drafts show only in dev.
 export async function getPosts(): Promise<Post[]> {
   const all = await getCollection('posts', (p) => import.meta.env.DEV || !p.data.draft);
   return all.sort((a, b) => {
@@ -35,6 +35,10 @@ export async function getPosts(): Promise<Post[]> {
     const byDate = b.data.date.getTime() - a.data.date.getTime();
     if (byDate !== 0) {
       return byDate;
+    }
+    const byOrder = b.data.order - a.data.order;
+    if (byOrder !== 0) {
+      return byOrder;
     }
     return a.data.title.localeCompare(b.data.title);
   });

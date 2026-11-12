@@ -12,6 +12,8 @@ const posts = defineCollection({
       date: z.coerce.date(),
       // True until the date is confirmed; the date is then not shown.
       datePending: z.boolean().default(false),
+      // Tie-break for posts with the same date: higher comes first.
+      order: z.number().int().default(0),
       tags: z.array(z.string()).default([]),
       // Reading time override for posts whose text lives in components.
       minutes: z.number().int().positive().optional(),

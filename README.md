@@ -20,6 +20,7 @@ src/content/posts/*.mdx ──> getPosts() ──> index: one row per post, newe
    - `cover` (preview image path, relative to the MDX file) and `coverAlt`
    - optional `cta: { text, label, href }`: the box at the end of the post
    - optional `minutes`: reading time, when most text sits in components
+   - `order` (number): ranks posts that share a date, higher first
    - `datePending: true` hides the date until you confirm it
    - `draft: true` keeps the post out of the build (it still shows in `npm run dev`)
 4. Write the body in Markdown. `##` headings feed the contents box, which

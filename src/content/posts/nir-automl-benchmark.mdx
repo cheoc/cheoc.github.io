@@ -9,6 +9,7 @@ coverAlt: "Calibration page for corn protein: 354 search trials coloured by mode
 summary: "We ran the NIR AutoML pipeline on 10 public NIR datasets and set every result next to the best published error we could find."
 lede: "We ran the NIR AutoML pipeline on 10 public NIR datasets (25 measured properties) and set every result next to the best published error we could find. All numbers are prediction errors (RMSE): lower is better."
 result: "On the 6 like-for-like properties, published errors are lower on 5; ours is lower on Tecator protein, by 24%."
+resultHref: "#datasets-with-a-published-result"
 cta:
   text: "If you work with NIR calibration and want to compare notes, run your own data through the pipeline, or discuss the method, get in touch."
   label: Get in touch
@@ -22,8 +23,6 @@ import OwnTable from '../../components/nir/OwnTable.astro';
 import PipelineSteps from '../../components/nir/PipelineSteps.astro';
 import calibration from '../../assets/posts/nir-automl-benchmark/calibration-corn-protein.png';
 import dataset from '../../assets/posts/nir-automl-benchmark/dataset-tecator-fat.png';
-
-<p class="note">Results as of 12 November 2026. Credits and licences are at the <a href="#credits">end of the post</a>.</p>
 
 ## The data
 

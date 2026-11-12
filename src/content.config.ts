@@ -23,6 +23,8 @@ const posts = defineCollection({
       lede: z.string(),
       // One sentence stating the main finding, shown before the contents box.
       result: z.string().optional(),
+      // Anchor of the table or section that backs the result.
+      resultHref: z.string().optional(),
       // Box at the end of the post: a sentence and one link.
       cta: z.object({ text: z.string(), label: z.string(), href: z.string() }).optional(),
       draft: z.boolean().default(false),

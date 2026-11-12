@@ -59,6 +59,7 @@ a:hover { text-decoration-thickness: 2px; }
 .nav { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0; padding: 0; list-style: none; font-size: 15px; }
 .nav a { color: var(--muted); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 6px; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--fg); }
+.nav a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
 .nav svg { width: 15px; height: 15px; }
 
 main { padding-block: 64px 96px; }
@@ -97,7 +98,9 @@ main { padding-block: 64px 96px; }
 /* Post */
 .back { font-size: 14px; color: var(--muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
 .back:hover { color: var(--fg); }
-.post .tags { margin: 28px 0 0; }
+.post .tags { margin: 14px 0 0; }
+.notfound h2 { margin: 48px 0 0; font-size: 18px; font-weight: 600; }
+.notfound .taglist { margin-top: 12px; }
 .post h1 { margin: 14px 0 0; font-size: clamp(30px, 5vw, 38px); line-height: 1.15; letter-spacing: -0.03em; font-weight: 700; text-wrap: balance; }
 .lede { margin: 14px 0 0; font-size: 19px; line-height: 1.55; color: var(--muted); }
 .post .meta { margin-top: 16px; font-size: 14px; }
@@ -129,6 +132,12 @@ main { padding-block: 64px 96px; }
 @media (max-width: 760px) {
   .table-box th:first-child, .table-box td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: 1px 0 0 var(--rule); }
   .table-box tr.grp td:first-child { position: static; box-shadow: none; }
+  /* The group note stays in view and wraps to the box width while the table scrolls. */
+  .grp-note { position: sticky; left: 12px; display: inline-block; max-width: calc(100vw - 72px); white-space: normal; }
+  /* Wider calibration and test-set columns: fewer wrapped lines, shorter rows
+     (tallest row 132px -> 98px; three-line calibration cells set the ~80px floor). */
+  .table-box td:last-child, .table-box th:last-child { min-width: 340px; }
+  .table-box td.same, .table-box td.diff { min-width: 150px; }
 }
 table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.45; font-variant-numeric: tabular-nums; }
 th { text-align: left; font-weight: 600; font-size: 12.5px; color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
@@ -165,7 +174,7 @@ figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
 .about ul { padding-left: 18px; }
 
 footer { border-top: 1px solid var(--rule); }
-footer .wrap { padding-block: 24px 40px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 16px; }
+footer .wrap { padding-block: 24px 40px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0 16px; }
 footer a { color: var(--muted); }
 
 
@@ -190,7 +199,7 @@ td.diff { color: var(--muted); font-weight: 600; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 16px 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--muted); }
 .legend li { display: inline-flex; align-items: center; gap: 6px; }
-.swatch { width: 11px; height: 11px; border-radius: 2px; display: inline-block; }
+.swatch { width: 11px; height: 11px; display: inline-block; }
 .swatch.train, .cell { background: var(--cell); }
 .swatch.test, .cell.test { background: var(--accent); }
 
@@ -203,7 +212,7 @@ td.diff { color: var(--muted); font-weight: 600; }
 .strips { display: flex; flex-direction: column; gap: 4px; padding-top: 4px; }
 .strip { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .cells { display: flex; gap: 2px; }
-.cell { width: 7px; height: 13px; border-radius: 1px; }
+.cell { width: 7px; height: 13px; }
 .cell.done { background: var(--fg); }
 .cell.waiting { background: var(--rule); }
 .cell.running { background: transparent; outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
@@ -248,10 +257,11 @@ td.diff { color: var(--muted); font-weight: 600; }
 
 /* Reading measure and tidy line ends */
 p, li { text-wrap: pretty; }
-.body > p, .body > ul, .lede, .finding, .intro p { max-width: 68ch; }
+.body > p, .body > ul, .lede, .finding, .intro p, .credits p, .try p, .notfound p { max-width: 68ch; }
 
 /* The main finding, stated before the contents */
-.finding { margin: 16px 0 0; font-size: 17px; line-height: 1.6; font-weight: 600; color: var(--fg); }
+.finding { margin: 16px 0 0; font-size: 19px; line-height: 1.5; font-weight: 600; color: var(--fg); }
+.finding a { font-weight: 500; font-size: 16px; white-space: nowrap; }
 
 .to-top { margin: 32px 0 0; font-size: 14px; }
 .to-top a { color: var(--muted); display: inline-flex; align-items: center; min-height: 44px; }

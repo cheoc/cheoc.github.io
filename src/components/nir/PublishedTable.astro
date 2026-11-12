@@ -31,7 +31,7 @@ function chipText(r: PublishedRow): string {
     <tbody>
       {groups.map((g) => (
         <>
-          <tr class="grp"><td colspan={COLS}>{g.note}</td></tr>
+          <tr class="grp"><td colspan={COLS}><span class="grp-note">{g.note}</span></td></tr>
           {g.rows.map((r) => (
             <tr>
               <td>{r.dataset}</td>

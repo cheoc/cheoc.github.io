@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import { getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
+import Tags from '../../components/Tags.astro';
 import { SITE_NAME } from '../../data/site';
 import { getPosts, postDate, postHref, readingMinutes, withBase, type Post } from '../../lib/posts';
 
@@ -38,25 +39,30 @@ const card = await getImage({ src: d.cover, width: SOCIAL_WIDTH });
       <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
       All projects
     </a>
-    {d.tags.length > 0 && (
-      <ul class="tags" aria-label="Tags">{d.tags.map((t) => <li><span>{t}</span></li>)}</ul>
-    )}
+    <Tags tags={d.tags} />
     <h1>{d.title}</h1>
     <p class="lede">{d.lede}</p>
+    {d.result && <p class="finding">{d.result}</p>}
     <p class="meta">
       {date && <><time datetime={date.iso}>{date.text}</time> · </>}{readingMinutes(post)} min read
     </p>
 
     {sections.length >= MIN_TOC_SECTIONS && (
-      <nav class="toc" aria-label="Contents">
-        <p>Contents</p>
-        <ol>{sections.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
-      </nav>
+      <details class="toc" id="contents">
+        <summary>Contents <span>{sections.length} sections</span></summary>
+        <nav aria-label="Contents">
+          <ol>{sections.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+        </nav>
+      </details>
     )}
 
     <div class="body">
       <Content />
     </div>
+
+    {sections.length >= MIN_TOC_SECTIONS && (
+      <p class="to-top"><a href="#main">Back to top</a></p>
+    )}
 
     {d.cta && (
       <div class="try">

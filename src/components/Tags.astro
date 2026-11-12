@@ -1,0 +1,15 @@
+---
+// Tag list; each tag links to its page listing every post with that tag.
+import { tagHref } from '../lib/posts';
+
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+{tags.length > 0 && (
+  <ul class="tags" aria-label="Tags">
+    {tags.map((t) => <li><a href={tagHref(t)}>{t}</a></li>)}
+  </ul>
+)}

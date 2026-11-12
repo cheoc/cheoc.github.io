@@ -15,6 +15,15 @@ export function postHref(p: Post): string {
   return withBase(`/posts/${p.id}/`);
 }
 
+export function tagHref(tag: string): string {
+  return withBase(`/tags/${encodeURIComponent(tag)}/`);
+}
+
+// Every tag in use, alphabetical.
+export function allTags(posts: Post[]): string[] {
+  return [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+}
+
 // Newest first. Posts with an unconfirmed date sort after dated ones;
 // ties fall back to the title so the order is stable. Drafts show only in dev.
 export async function getPosts(): Promise<Post[]> {

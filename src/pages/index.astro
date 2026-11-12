@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import Tags from '../components/Tags.astro';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from '../data/site';
 import { getPosts, postDate, postHref, readingMinutes, withBase } from '../lib/posts';
 
@@ -13,7 +14,7 @@ const image = card ? new URL(card.src, Astro.site).href : undefined;
   <section class="wrap">
     <div class="intro">
       <h1>{SITE_TITLE}</h1>
-      <p>Some of my projects are listed below. If interested <a href={withBase('/about/')}>get in touch</a>.</p>
+      <p>Some of my projects are listed below. If interested <a href={withBase('/about/#contact')}>get in touch</a>.</p>
     </div>
 
     {posts.length === 0 && <p class="empty">No projects yet.</p>}
@@ -31,9 +32,7 @@ const image = card ? new URL(card.src, Astro.site).href : undefined;
               </p>
               <h2><a href={postHref(p)}>{p.data.title}</a></h2>
               <p class="summary">{p.data.summary}</p>
-              {p.data.tags.length > 0 && (
-                <ul class="tags" aria-label="Tags">{p.data.tags.map((t) => <li><span>{t}</span></li>)}</ul>
-              )}
+              <Tags tags={p.data.tags} />
             </div>
           </li>
         );

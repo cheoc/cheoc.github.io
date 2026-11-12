@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE_NAME } from '../../data/site';
+import { allTags, getPosts, postDate, postHref, withBase, type Post } from '../../lib/posts';
+
+// One page per tag, listing the posts that carry it, newest first.
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return allTags(posts).map((tag) => ({
+    params: { tag },
+    props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: Post[];
+}
+
+const { tag, posts } = Astro.props;
+const count = posts.length === 1 ? '1 project' : `${posts.length} projects`;
+---
+<Base title={`${tag} · ${SITE_NAME}`} description={`Projects tagged ${tag}.`} current="projects">
+  <section class="wrap tagpage">
+    <a class="back" href={withBase('/')}>
+      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      All projects
+    </a>
+    <h1>{tag}</h1>
+    <p class="meta">{count}</p>
+    <ul class="taglist">
+      {posts.map((p) => {
+        const d = postDate(p);
+        return (
+          <li>
+            <a href={postHref(p)}>{p.data.title}</a>
+            {d && <time datetime={d.iso}>{d.text}</time>}
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+</Base>

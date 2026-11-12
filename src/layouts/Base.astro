@@ -1,6 +1,6 @@
 ---
 import '../styles/site.css';
-import { LINKS, SITE_NAME } from '../data/site';
+import { EMAIL, LINKS, SITE_NAME } from '../data/site';
 import { withBase } from '../lib/posts';
 
 interface Props {
@@ -56,7 +56,7 @@ const nav = [
             <li><a href={l.href} aria-current={l.key === current ? 'page' : undefined}>{l.label}</a></li>
           ))}
           <li>
-            <a href={rss} aria-label="RSS feed">
+            <a href={rss}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3a10 10 0 0 1 10 10M3 7.5A5.5 5.5 0 0 1 8.5 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /><circle cx="3.6" cy="12.4" r="1.4" fill="currentColor" /></svg>RSS
             </a>
           </li>
@@ -70,9 +70,8 @@ const nav = [
 
     <footer>
       <div class="wrap">
-        <a href={rss}>RSS</a>
-        {LINKS.linkedin && <a href={LINKS.linkedin}>LinkedIn</a>}
-        {LINKS.github && <a href={LINKS.github}>GitHub</a>}
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <a href={rss}>RSS feed</a>
       </div>
     </footer>
   </body>

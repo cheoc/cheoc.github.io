@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.playwright-mcp/
+# Local design-process files: decision mock-ups, review screenshots, notes
+.impeccable/
+PRODUCT.md
+DESIGN.md

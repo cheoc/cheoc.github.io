@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NIR benchmark results</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@80..100,500..700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1d5a7a}a:hover{color:#123e55}
+.pg{
+  color-scheme:light;
+  --paper:#f5f7f8;--card:#ffffff;--ink:#18232e;--muted:#56636f;--rule:#d3dae0;--soft:#e9eef2;
+  --train:#b7c6d2;--test:#8e1b3a;--yes:#1d5a7a;--no:#8e1b3a;--wait:#e3e8ec;
+  --ours:#1d5a7a;--pub:#8a5410;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])) .pg{
+    color-scheme:dark;
+    --paper:#11171d;--card:#18212a;--ink:#e8edf1;--muted:#a7b3bd;--rule:#2c3946;--soft:#1f2a34;
+    --train:#4b6274;--test:#e0607f;--yes:#7fc0e0;--no:#ee8fa6;--wait:#26323d;
+    --ours:#7fc0e0;--pub:#e2a65a;
+  }
+}
+:root[data-theme="dark"] .pg{
+  color-scheme:dark;
+  --paper:#11171d;--card:#18212a;--ink:#e8edf1;--muted:#a7b3bd;--rule:#2c3946;--soft:#1f2a34;
+  --train:#4b6274;--test:#e0607f;--yes:#7fc0e0;--no:#ee8fa6;--wait:#26323d;
+  --ours:#7fc0e0;--pub:#e2a65a;
+}
+.pg h1,.pg h2,.pg h3{font-family:'Archivo',sans-serif;font-stretch:88%;letter-spacing:-0.01em}
+.tbl{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+.tbl th{text-align:left;font-weight:600;font-size:14px;color:var(--muted);padding:12px 14px;border-bottom:2px solid var(--ink);vertical-align:bottom}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.45}
+.tbl td.n{white-space:nowrap}
+.tbl td.lo{font-weight:700}
+.tbl tr.grp td{padding:20px 0 8px;border-bottom:1px solid var(--rule);font-size:14px;color:var(--muted)}
+.tbl .sub{display:block;font-size:13px;color:var(--muted);font-weight:400}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap;border:2px solid currentColor}
+.chip.o{background:var(--ours);border-color:var(--ours);color:#ffffff}
+.chip.p{background:var(--pub);border-color:var(--pub);color:#ffffff}
+.chip.oh{color:var(--ours);background:transparent}
+.chip.ph{color:var(--pub);background:transparent}
+.chip.eq{color:var(--muted);background:transparent}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th:last-child,.tbl td:last-child{padding-right:0}
+.lead{max-width:760px}
+.sq{width:12px;height:12px;border-radius:2px;flex:none;display:inline-block}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.card h3{margin:0;font-size:19px;line-height:1.2;font-weight:700}
+.card .txt{margin:0;font-size:14px;line-height:1.5;color:var(--muted);flex-grow:1}
+.card .strips{height:118px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px}
+.card .scope{margin:0;padding-top:12px;border-top:1px solid var(--rule);font-size:13px;font-weight:600}
+</style>
+</helmet>
+<div class="pg" style="background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; min-height: 100%;">
+<main style="max-width: 1160px; margin: 0 auto; padding: 64px 24px 96px; display: flex; flex-direction: column; gap: 72px; box-sizing: border-box;">
+
+<header style="display: flex; flex-direction: column; gap: 16px; max-width: 760px;">
+<h1 style="margin: 0; font-size: 46px; line-height: 1.1; font-weight: 700;">How close does automatic NIR calibration get to published results?</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.55; color: var(--muted);">We ran the NIR AutoML pipeline on 10 public NIR datasets (25 measured properties) and set every result next to the best published error we could find. All numbers are prediction errors (RMSE): lower is better.</p>
+<p style="margin: 0; font-size: 14px; color: var(--muted);">Results as of 12 November 2026. Credits and licences are at the <a href="#credits">bottom of the page</a>.</p>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">The data</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">10 public datasets, 2,714 spectra, 25 measured properties. Only 3 datasets come with a published train/test split.</p>
+</div>
+<div style="overflow-x: auto;">
+<table class="tbl" style="min-width: 1080px;">
+<thead>
+<tr><th>Dataset</th><th>Source</th><th>Samples</th><th>Measured properties</th><th>Instrument</th><th>Wavelengths</th><th>Published split</th><th>Licence</th></tr>
+</thead>
+<tbody>
+<tr><td><b>Tecator meat</b></td><td>StatLib; Borggaard &amp; Thodberg 1992</td><td class="n">240</td><td>fat, moisture, protein</td><td>Tecator Infratec food and feed analyser (transmission)</td><td class="n">850–1050 nm<span class="sub">100 points</span></td><td>Yes, 172 / 43</td><td>Public domain, with permission note</td></tr>
+<tr><td><b>Corn</b></td><td>Eigenvector Research; Cargill</td><td class="n">80</td><td>moisture, oil, protein, starch</td><td>Spectrometer "m5" (one of three in the set)</td><td class="n">1100–2498 nm<span class="sub">700 points</span></td><td>No</td><td>None stated</td></tr>
+<tr><td><b>Gasoline</b></td><td>R package pls; Kalivas 1997</td><td class="n">60</td><td>octane number</td><td>Not stated in our sources</td><td class="n">900–1700 nm<span class="sub">401 points</span></td><td>Yes, 50 / 10</td><td>GPL-2</td></tr>
+<tr><td><b>NIRsoil</b></td><td>R package prospectr; CRA-W, Chimiométrie 2006</td><td class="n">825</td><td>total nitrogen, carbon, CEC</td><td>Not stated in our sources</td><td class="n">1100–2498 nm<span class="sub">700 points</span></td><td>Yes, 618 / 207</td><td>MIT</td></tr>
+<tr><td><b>Fermentation</b></td><td>R package chemometrics; Liebmann et al. 2009</td><td class="n">166</td><td>glucose, ethanol</td><td>Brimrose Luminar 5030</td><td class="n">1115–2285 nm<span class="sub">235 points, 1st derivative</span></td><td>No</td><td>GPL 3 or later</td></tr>
+<tr><td><b>Manure, fresh</b></td><td>Data INRAE; Gogé et al. 2020</td><td class="n">332</td><td>dry matter, ammonium N, total N</td><td>NIRFlex and two XDS instruments, standardised to one</td><td class="n">1100–2498 nm<span class="sub">700 points</span></td><td>No</td><td>CC0</td></tr>
+<tr><td><b>Manure, dried</b></td><td>Data INRAE; Gogé et al. 2020</td><td class="n">332</td><td>dry matter, ammonium N, total N</td><td>Same samples, dried and ground</td><td class="n">1100–2498 nm<span class="sub">700 points</span></td><td>No</td><td>CC0</td></tr>
+<tr><td><b>Barley</b></td><td>Zenodo, sensAIfood Grainit set 2025</td><td class="n">86</td><td>moisture, protein</td><td>AuroraNIR handheld (Grainit)</td><td class="n">950–1650 nm<span class="sub">351 points</span></td><td>No</td><td>CC BY 4.0</td></tr>
+<tr><td><b>Corn, handheld</b></td><td>Zenodo, sensAIfood Grainit set 2025</td><td class="n">187</td><td>moisture, protein</td><td>AuroraNIR handheld (Grainit)</td><td class="n">950–1650 nm<span class="sub">351 points</span></td><td>No</td><td>CC BY 4.0</td></tr>
+<tr><td><b>Wheat</b></td><td>Zenodo, sensAIfood Grainit set 2025</td><td class="n">406<span class="sub">410 in the source</span></td><td>moisture, protein</td><td>AuroraNIR handheld (Grainit)</td><td class="n">950–1650 nm<span class="sub">351 points</span></td><td>No</td><td>CC BY 4.0</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">How we tested</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">A model is scored on samples it never saw during training. Which samples those are changes the score a lot, so we tested the same pipeline with five different settings. Every square is a sample.</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px; font-size: 14px; color: var(--muted);">
+<span style="display: inline-flex; align-items: center; gap: 8px;"><span class="sq" style="background: var(--train);"></span>used to train the model</span>
+<span style="display: inline-flex; align-items: center; gap: 8px;"><span class="sq" style="background: var(--test);"></span>used to test it</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+
+<article class="card" style="border-top: 3px solid var(--yes);">
+<h3>The paper's own split</h3>
+<p class="txt">Train and test on exactly the rows the paper used. The only like-for-like comparison.</p>
+<div class="strips" role="img" aria-label="One fixed split: the last samples are the test set.">
+<sc-for list="{{s1}}" as="row" hint-placeholder-count="1">
+<div style="display: flex; align-items: center; gap: 8px;"><div style="display: flex; gap: 2px;"><sc-for list="{{row.cells}}" as="c" hint-placeholder-count="16"><span style="width: 7px; height: 12px; border-radius: 1px; background: {{c.bg}}; border: {{c.border}}; box-sizing: border-box;"></span></sc-for></div><span style="font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap;">{{row.label}}</span></div>
+</sc-for>
+</div>
+<p class="scope">6 properties, full pipeline</p>
+</article>
+
+<article class="card" style="border-top: 3px solid var(--ink);">
+<h3>50 random splits</h3>
+<p class="txt">Shuffle which samples are tested, 50 times, with a simple model menu. Shows the range to expect.</p>
+<div class="strips" role="img" aria-label="Five example random splits with different test samples, and 45 more.">
+<sc-for list="{{s2}}" as="row" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 8px;"><div style="display: flex; gap: 2px;"><sc-for list="{{row.cells}}" as="c" hint-placeholder-count="16"><span style="width: 7px; height: 12px; border-radius: 1px; background: {{c.bg}}; border: {{c.border}}; box-sizing: border-box;"></span></sc-for></div></div>
+</sc-for>
+<span style="font-size: 13px; color: var(--muted); line-height: 16px;">and 45 more</span>
+</div>
+<p class="scope">6 properties, simple menu</p>
+</article>
+
+<article class="card" style="border-top: 3px solid var(--ink);">
+<h3>Lucky, median, unlucky</h3>
+<p class="txt">Run the full pipeline on three of those splits for soil nitrogen.</p>
+<div class="strips" role="img" aria-label="Three splits with errors 0.372, 0.475 and 0.709.">
+<sc-for list="{{s3}}" as="row" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 8px;"><div style="display: flex; gap: 2px;"><sc-for list="{{row.cells}}" as="c" hint-placeholder-count="16"><span style="width: 7px; height: 12px; border-radius: 1px; background: {{c.bg}}; border: {{c.border}}; box-sizing: border-box;"></span></sc-for></div><span style="font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap;">{{row.label}}</span></div>
+</sc-for>
+</div>
+<p class="scope">Soil nitrogen, full pipeline</p>
+</article>
+
+<article class="card" style="border-top: 3px solid var(--ink);">
+<h3>Ensemble check</h3>
+<p class="txt">Mix the best models with the pretrained TabPFN model; keep the mix only if it beats the single best in cross-validation.</p>
+<div class="strips" role="img" aria-label="Three random splits per property.">
+<sc-for list="{{s4}}" as="row" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 8px;"><div style="display: flex; gap: 2px;"><sc-for list="{{row.cells}}" as="c" hint-placeholder-count="16"><span style="width: 7px; height: 12px; border-radius: 1px; background: {{c.bg}}; border: {{c.border}}; box-sizing: border-box;"></span></sc-for></div></div>
+</sc-for>
+</div>
+<p class="scope">All 25 properties, up to 3 splits</p>
+</article>
+
+<article class="card" style="border-top: 3px solid var(--test);">
+<h3>Full pipeline on everything</h3>
+<p class="txt">Every property through the pipeline end to end, as a user would run it. Running now; each square is one property.</p>
+<div class="strips" role="img" aria-label="8 of 25 models finished, one running.">
+<sc-for list="{{s5}}" as="row" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 8px;"><div style="display: flex; gap: 2px;"><sc-for list="{{row.cells}}" as="c" hint-placeholder-count="13"><span style="width: 7px; height: 12px; border-radius: 1px; background: {{c.bg}}; border: {{c.border}}; box-sizing: border-box;"></span></sc-for></div></div>
+</sc-for>
+</div>
+<p class="scope">8 of 25 done</p>
+</article>
+
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">Datasets with a published result</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">15 properties. Only 6 come with the paper's own train/test split, so only those 6 compare like for like. The lower error in each row is bold. All numbers have 3 significant digits.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px 20px; font-size: 13px; color: var(--muted); align-items: center;">
+<span style="display: inline-flex; align-items: center; gap: 8px;"><span class="chip o">Ours</span>our error lower, same test set</span>
+<span style="display: inline-flex; align-items: center; gap: 8px;"><span class="chip p">Published</span>published error lower, same test set</span>
+<span style="display: inline-flex; align-items: center; gap: 8px;"><span class="chip oh">Ours</span><span class="chip ph">Published</span>outlined: different test procedure, indicative only</span>
+</div>
+<div style="overflow-x: auto;">
+<table class="tbl" style="min-width: 1100px;">
+<thead>
+<tr><th>Dataset</th><th>Measured property</th><th>Published error</th><th>Our error</th><th>Lower error</th><th>Same test set?</th><th style="width: 30%;">Calibration the pipeline found</th></tr>
+</thead>
+<tbody>
+<tr class="grp"><td colspan="7">Same test set as the paper. Our error and calibration: one model from the full pipeline, trained on the paper's training rows.</td></tr>
+<tr><td>Tecator meat</td><td>Fat, %</td><td class="n lo">0.360</td><td class="n">0.435</td><td><span class="chip p">Published, 17% lower</span></td><td style="color: var(--yes); font-weight: 600;">Yes</td><td><b>Ensemble of 6:</b> TabPFN 72%, kernel ridge 22%, GPR 4%, local PLS 2%<span class="sub">SG 2nd derivative; SNV + SG for TabPFN</span></td></tr>
+<tr><td>Tecator meat</td><td>Protein, %</td><td class="n">0.520</td><td class="n lo">0.395</td><td><span class="chip o">Ours, 24% lower</span></td><td style="color: var(--yes); font-weight: 600;">Yes</td><td><b>Ensemble of 6:</b> GPR 40%, TabPFN 32%, kernel ridge 18%, local PLS 10%<span class="sub">MSC + SG 2nd derivative; SNV + detrend</span></td></tr>
+<tr><td>Gasoline</td><td>Octane number</td><td class="n lo">0.234</td><td class="n">0.279</td><td><span class="chip p">Published, 16% lower</span></td><td style="color: var(--yes); font-weight: 600;">Yes</td><td><b>Ensemble of 5:</b> TabPFN 54%, SVR 16%, PLS 16%, ridge 14%<span class="sub">SG 2nd derivative; SNV + SG 1st derivative; SG smoothing</span></td></tr>
+<tr><td>NIRsoil</td><td>Total nitrogen, g/kg</td><td class="n lo">0.558</td><td class="n">0.576</td><td><span class="chip p">Published, 3% lower</span></td><td style="color: var(--yes); font-weight: 600;">Yes</td><td><b>Ensemble of 10:</b> TabPFN 46%, local PLS 22%, GPR 18%, kernel ridge 10%, 2 more<span class="sub">SG 1st and 2nd derivative, MSC</span></td></tr>
+<tr><td>NIRsoil</td><td>CEC, meq/100 g</td><td class="n lo">3.33</td><td class="n">3.38</td><td><span class="chip p">Published, 2% lower</span></td><td style="color: var(--yes); font-weight: 600;">Yes</td><td><b>Ensemble of 7:</b> TabPFN 48%, local PLS 24%, SVR 22%, 2 more<span class="sub">SG 1st derivative; SNV for TabPFN</span></td></tr>
+<tr><td>NIRsoil</td><td>Carbon, %</td><td class="n lo">0.433</td><td class="n">0.439</td><td><span class="chip p">Published, 1% lower</span></td><td style="color: var(--yes); font-weight: 600;">Yes</td><td><b>Ensemble of 9:</b> TabPFN 22%, SVR 20%, local PLS 20%, GPR 18%, kernel ridge 14%, 2 more<span class="sub">SG 1st and 2nd derivative</span></td></tr>
+<tr class="grp"><td colspan="7">Different test procedure. Our error: mean of 3 random splits, range in brackets. Calibration: model from the full pipeline, trained on all rows (run of 12 November).</td></tr>
+<tr><td>Corn</td><td>Moisture, %</td><td class="n">0.0245</td><td class="n lo">0.00735<span class="sub">(0.00538–0.00849)</span></td><td><span class="chip oh">Ours, 70% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">paper's random split not published</span></td><td><b>Single model:</b> PLS, 20 components<span class="sub">SG smoothing</span></td></tr>
+<tr><td>Corn</td><td>Oil, %</td><td class="n">0.0388</td><td class="n lo">0.0246<span class="sub">(0.0220–0.0271)</span></td><td><span class="chip oh">Ours, 37% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Single model:</b> PLS, 20 components<span class="sub">detrend + SG 1st derivative</span></td></tr>
+<tr><td>Corn</td><td>Protein, %</td><td class="n">0.113</td><td class="n lo">0.0296<span class="sub">(0.0233–0.0335)</span></td><td><span class="chip oh">Ours, 74% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Ensemble of 4:</b> TabPFN 82%, GPR 18%<span class="sub">SG 1st and 2nd derivative</span></td></tr>
+<tr><td>Corn</td><td>Starch, %</td><td class="n">0.209</td><td class="n lo">0.140<span class="sub">(0.127–0.155)</span></td><td><span class="chip oh">Ours, 33% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td><b>Ensemble of 3:</b> PLS 76%, TabPFN 24%<span class="sub">SG 1st derivative</span></td></tr>
+<tr><td>Fermentation</td><td>Glucose, g/L</td><td class="n">4.50</td><td class="n lo">3.20<span class="sub">(2.85–3.59)</span></td><td><span class="chip oh">Ours, 29% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">paper: bias-corrected SEP, repeated double cross-validation</span></td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Fermentation</td><td>Ethanol, g/L</td><td class="n">1.20</td><td class="n lo">0.641<span class="sub">(0.618–0.653)</span></td><td><span class="chip oh">Ours, 47% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Manure, fresh</td><td>Dry matter, %</td><td class="n lo">1.64</td><td class="n">2.27<span class="sub">(1.84–2.88)</span></td><td><span class="chip ph">Published, 28% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">paper's validation set not described</span></td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Manure, fresh</td><td>Ammonium N, %</td><td class="n">0.0420</td><td class="n lo">0.0346<span class="sub">(0.0238–0.0408)</span></td><td><span class="chip oh">Ours, 18% lower</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Manure, fresh</td><td>Total N, %</td><td class="n">0.160</td><td class="n">0.159<span class="sub">(0.101–0.191)</span></td><td><span class="chip eq">About equal</span></td><td style="color: var(--no); font-weight: 600;">No<span class="sub">same</span></td><td style="color: var(--muted);">Run in progress</td></tr>
+</tbody>
+</table>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 760px;">Percentages in the calibration column are ensemble weights: each model's share of the final prediction. The pipeline picks them by greedily adding the model that most lowers the cross-validated error, 50 times, so the weights are multiples of 2% and add up to 100%. "Lower error" says how much lower the smaller error is than the larger one; "about equal" means within 1%.</p>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">Datasets without a published result</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">10 properties. Nobody has published an error for these, so we report ours on its own. 3 significant digits.</p>
+</div>
+<div style="overflow-x: auto;">
+<table class="tbl" style="min-width: 860px;">
+<thead>
+<tr><th>Dataset</th><th>Measured property</th><th>Our error (mean of 3 splits)</th><th>Range over the 3 splits</th><th style="width: 38%;">Calibration the pipeline found</th></tr>
+</thead>
+<tbody>
+<tr><td>Tecator meat</td><td>Moisture, %</td><td class="n">0.622</td><td class="n">0.476–0.696</td><td><b>Ensemble of 6:</b> TabPFN 56%, kernel ridge 32%, local PLS 8%, 2 more<span class="sub">SNV + SG 2nd derivative</span></td></tr>
+<tr><td>Manure, dried</td><td>Dry matter, %</td><td class="n">4.47</td><td class="n">4.02–4.72</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Manure, dried</td><td>Ammonium N, %</td><td class="n">0.0694</td><td class="n">0.0617–0.0751</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Manure, dried</td><td>Total N, %</td><td class="n">0.191</td><td class="n">0.180–0.200</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Barley</td><td>Moisture, %</td><td class="n">0.566</td><td class="n">0.415–0.678</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Barley</td><td>Protein, %</td><td class="n">0.467</td><td class="n">0.425–0.500</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Corn, handheld</td><td>Moisture, %</td><td class="n">0.583</td><td class="n">0.486–0.637</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Corn, handheld</td><td>Protein, %</td><td class="n">0.342</td><td class="n">0.260–0.421</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Wheat</td><td>Moisture, %</td><td class="n">0.568</td><td class="n">0.266–0.742</td><td style="color: var(--muted);">Run in progress</td></tr>
+<tr><td>Wheat</td><td>Protein, %</td><td class="n">0.344</td><td class="n">0.317–0.366</td><td style="color: var(--muted);">Run in progress</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">How the NIR AutoML pipeline builds a calibration</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">A rough outline. One time limit of one hour covers all steps.</p>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; border-top: 2px solid var(--ink);">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="7">
+<li style="padding: 16px 16px 0 0; display: flex; flex-direction: column; gap: 8px; min-width: 0;">
+<span style="font-family: 'Archivo', sans-serif; font-size: 30px; font-weight: 700; color: {{s.color}}; line-height: 1;">{{s.num}}</span>
+<span style="font-size: 16px; font-weight: 600;">{{s.title}}</span>
+<span style="font-size: 14px; line-height: 1.5; color: var(--muted);">{{s.text}}</span>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">Screens from the web interface</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<img src="/_blob/358990a196d7a26dda3b152281d93796" alt="Calibration page for corn protein: a chart of 354 search trials coloured by model type, the chosen model ringed, and ISO 12099 statistics below." style="display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px;">
+<figcaption style="font-size: 14px; line-height: 1.5; color: var(--muted);">Calibration page, corn protein: every model the search tried (354), the chosen one ringed, and the ISO 12099 statistics.</figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<img src="/_blob/2eb6dbf1fc6e106cf288b2009f8ea470" alt="Dataset page for Tecator fat: spectra upload, a summary of 240 spectra and 100 wavenumbers, and the preprocessing steps." style="display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px;">
+<figcaption style="font-size: 14px; line-height: 1.5; color: var(--muted);">Dataset page, Tecator fat: upload, data summary, and the preprocessing steps for manual training.</figcaption>
+</figure>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">Under the hood</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">The pipeline is an API with a web interface on top. Everything runs in containers, on a CPU or with a GPU.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 32px; border-top: 2px solid var(--ink);">
+<div style="padding-top: 16px; display: flex; flex-direction: column; gap: 6px;">
+<span style="font-size: 16px; font-weight: 600;">Modelling</span>
+<span style="font-size: 14px; line-height: 1.55; color: var(--muted);">Python 3.12, scikit-learn, NumPy, SciPy, Optuna for the search, LightGBM, PyTorch, TabPFN v2, SHAP for explanations</span>
+</div>
+<div style="padding-top: 16px; display: flex; flex-direction: column; gap: 6px;">
+<span style="font-size: 16px; font-weight: 600;">API and data</span>
+<span style="font-size: 14px; line-height: 1.55; color: var(--muted);">FastAPI, Pydantic, SQLAlchemy, PostgreSQL 16, PDF reports with ReportLab and Matplotlib</span>
+</div>
+<div style="padding-top: 16px; display: flex; flex-direction: column; gap: 6px;">
+<span style="font-size: 16px; font-weight: 600;">Web interface and runtime</span>
+<span style="font-size: 14px; line-height: 1.55; color: var(--muted);">Next.js, React, TypeScript, Tailwind CSS; Docker Compose</span>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 12px; max-width: 760px;">
+<h2 style="margin: 0; font-size: 30px; font-weight: 700;">Interested?</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted);">If you work with NIR calibration and want to compare notes, run your own data through the pipeline, or discuss the method, get in touch.</p>
+<p style="margin: 0; font-size: 16px;"><a href="#">[YOUR CONTACT LINK]</a></p>
+</section>
+
+<footer id="credits"style="display: flex; flex-direction: column; gap: 8px; padding-top: 24px; border-top: 1px solid var(--rule); font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 760px;">
+<p style="margin: 0; font-weight: 600; color: var(--ink);">Built with PriorLabs-TabPFN</p>
+<p style="margin: 0;">The ensembles use TabPFN v2 (Hollmann et al., Nature 2025, doi:10.1038/s41586-024-08328-6). TabPFN, copyright 2026 Prior Labs GmbH. Model weights under the <a href="https://huggingface.co/Prior-Labs/TabPFN-v2-reg/blob/main/LICENSE.txt">Prior Labs License 1.1</a>; the tabpfn code under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+</footer>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":4200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var TRAIN = 'var(--train)', TEST = 'var(--test)';
+
+    // One strip of 16 samples; testIdx marks the tested ones.
+    var strip = function (testIdx, label) {
+      var cells = [];
+      for (var i = 0; i < 16; i++) {
+        cells.push({ bg: testIdx.indexOf(i) >= 0 ? TEST : TRAIN, border: 'none' });
+      }
+      return { cells: cells, label: label || '' };
+    };
+
+    // Status strip for the full run: done, running, waiting.
+    var status = function (from, to, done, running) {
+      var cells = [];
+      for (var i = from; i < to; i++) {
+        cells.push({ bg: i < done ? 'var(--yes)' : 'var(--wait)', border: i === running ? '2px solid var(--test)' : 'none' });
+      }
+      return { cells: cells, label: '' };
+    };
+
+    var steps = [
+      ['Upload', 'Spectra and lab reference values. Rows without a value are set aside.'],
+      ['Preprocess', '12 recipes: SNV, MSC, Savitzky-Golay derivatives and combinations.'],
+      ['Search models', 'PLS, SVR, GPR, ridge, kernel ridge, local PLS, forests, boosting, scored by cross-validation.'],
+      ['Check outliers', 'Remove outliers only if nested cross-validation says it helps.'],
+      ['Mix models', 'Best models plus TabPFN v2, kept only if cross-validation improves.'],
+      ['Estimate error', 'Repeated hold-out on unseen rows, plus reliability flags.'],
+      ['Predict', 'Model stored with its software versions; predict new spectra, with a PDF report.']
+    ].map(function (s, i) {
+      return { num: i + 1, title: s[0], text: s[1], color: i === 4 ? 'var(--test)' : 'var(--ink)' };
+    });
+
+    return {
+      s1: [strip([12, 13, 14, 15], 'fixed')],
+      s2: [strip([1, 6, 9, 14]), strip([0, 4, 11, 13]), strip([3, 7, 8, 15]), strip([2, 5, 10, 12]), strip([1, 8, 11, 14])],
+      s3: [strip([2, 6, 9, 13], '0.372'), strip([0, 5, 10, 14], '0.475'), strip([3, 4, 11, 15], '0.709')],
+      s4: [strip([1, 5, 10, 14]), strip([2, 7, 9, 12]), strip([0, 6, 11, 15])],
+      s5: [status(0, 13, 8, 8), status(13, 25, 8, 8)],
+      steps: steps
+    };
+  }
+}
+</script>
+</body>
+</html>

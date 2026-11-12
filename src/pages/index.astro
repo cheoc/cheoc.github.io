@@ -1,0 +1,43 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from '../data/site';
+import { getPosts, postDate, postHref, readingMinutes, withBase } from '../lib/posts';
+
+const posts = await getPosts();
+const SOCIAL_WIDTH = 1200;
+const card = posts[0] ? await getImage({ src: posts[0].data.cover, width: SOCIAL_WIDTH }) : null;
+const image = card ? new URL(card.src, Astro.site).href : undefined;
+---
+<Base title={SITE_NAME} description={SITE_DESCRIPTION} current="projects" image={image}>
+  <section class="wrap">
+    <div class="intro">
+      <h1>{SITE_TITLE}</h1>
+      <p>Some of my projects are listed below. If interested <a href={withBase('/about/')}>get in touch</a>.</p>
+    </div>
+
+    {posts.length === 0 && <p class="empty">No projects yet.</p>}
+    <ol class="posts">
+      {posts.map((p) => {
+        const d = postDate(p);
+        return (
+          <li class="row">
+            <a class="thumb-link" href={postHref(p)} tabindex="-1" aria-hidden="true">
+              <Image src={p.data.cover} alt="" widths={[200, 400]} sizes="(max-width: 560px) 96px, 176px" class="thumb" />
+            </a>
+            <div>
+              <p class="meta">
+                {d && <><time datetime={d.iso}>{d.text}</time> · </>}{readingMinutes(p)} min read
+              </p>
+              <h2><a href={postHref(p)}>{p.data.title}</a></h2>
+              <p class="summary">{p.data.summary}</p>
+              {p.data.tags.length > 0 && (
+                <ul class="tags" aria-label="Tags">{p.data.tags.map((t) => <li><span>{t}</span></li>)}</ul>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+</Base>

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { LINKS, SITE_NAME } from '../data/site';
+---
+<Base title={`About · ${SITE_NAME}`} description="Who writes this and what the projects are." current="about">
+  <section class="wrap about">
+    <h1>About</h1>
+    <div class="body">
+      <p>I build tools for problems I keep running into, and write up how they work and how well they do.</p>
+      <ul>
+        <li><strong>NIR AutoML</strong>: an automatic calibration pipeline for near-infrared spectra, from upload to a validated model with a PDF report.</li>
+        <li><strong><a href="https://ivive.app">ivive.app</a></strong>: predicts human hepatic clearance from in-vitro data, with the error range real drugs showed. Also usable from an LLM through MCP.</li>
+        <li><strong><a href="https://goblingains.com">Goblin Gains</a></strong>: one training log for strength and conditioning, from Hyrox to bodybuilding.</li>
+      </ul>
+      <h2 id="contact">Get in touch</h2>
+      <p>
+        {LINKS.linkedin && <><a href={LINKS.linkedin}>LinkedIn</a> · </>}
+        <a href={LINKS.github}>GitHub</a>
+      </p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,58 @@
+---
+import { DIFFERENT_SET_NOTE, IN_PROGRESS, PUBLISHED, SAME_SET_NOTE, type PublishedRow } from '../../data/nir-benchmark';
+
+const COLS = 7;
+const WINNER_LABEL = { ours: 'Ours', pub: 'Published', equal: 'About equal' } as const;
+
+const groups = [
+  { note: SAME_SET_NOTE, rows: PUBLISHED.filter((r) => r.sameTestSet) },
+  { note: DIFFERENT_SET_NOTE, rows: PUBLISHED.filter((r) => !r.sameTestSet) },
+];
+
+// Chip: filled for the same test set, outlined when only indicative.
+function chipClass(r: PublishedRow): string {
+  return ['chip', r.winner, r.sameTestSet ? '' : 'ind'].join(' ').trim();
+}
+
+function chipText(r: PublishedRow): string {
+  return r.gap ? `${WINNER_LABEL[r.winner]}, ${r.gap}` : WINNER_LABEL[r.winner];
+}
+---
+<div class="table-box wide" role="region" aria-label="Datasets with a published result" tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Dataset</th><th scope="col">Measured property</th>
+        <th scope="col" class="num">Published error</th><th scope="col" class="num">Our error</th>
+        <th scope="col">Lower error</th><th scope="col">Same test set?</th>
+        <th scope="col">Calibration the pipeline found</th>
+      </tr>
+    </thead>
+    <tbody>
+      {groups.map((g) => (
+        <>
+          <tr class="grp"><td colspan={COLS}>{g.note}</td></tr>
+          {g.rows.map((r) => (
+            <tr>
+              <td>{r.dataset}</td>
+              <td>{r.property}</td>
+              <td class:list={['num', { win: r.winner === 'pub' }]}>{r.published}</td>
+              <td class:list={['num', { win: r.winner === 'ours' }]}>
+                {r.ours}{r.range && <span class="sub">({r.range})</span>}
+              </td>
+              <td><span class={chipClass(r)}>{chipText(r)}</span></td>
+              <td class={r.sameTestSet ? 'same' : 'diff'}>
+                {r.sameTestSet ? 'Yes' : 'No'}{r.testNote && <span class="sub">{r.testNote}</span>}
+              </td>
+              {r.calibration ? (
+                <td><b>{r.calibration.head}</b> {r.calibration.body}<span class="sub">{r.calibration.sub}</span></td>
+              ) : (
+                <td class="wait">{IN_PROGRESS}</td>
+              )}
+            </tr>
+          ))}
+        </>
+      ))}
+    </tbody>
+  </table>
+</div>

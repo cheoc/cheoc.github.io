@@ -1,0 +1,29 @@
+---
+import { IN_PROGRESS, OWN } from '../../data/nir-benchmark';
+---
+<div class="table-box wide" role="region" aria-label="Datasets without a published result" tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Dataset</th><th scope="col">Measured property</th>
+        <th scope="col" class="num">Our error (mean of 3 splits)</th><th scope="col" class="num">Range over the 3 splits</th>
+        <th scope="col">Calibration the pipeline found</th>
+      </tr>
+    </thead>
+    <tbody>
+      {OWN.map((r) => (
+        <tr>
+          <td>{r.dataset}</td>
+          <td>{r.property}</td>
+          <td class="num">{r.mean}</td>
+          <td class="num">{r.range}</td>
+          {r.calibration ? (
+            <td><b>{r.calibration.head}</b> {r.calibration.body}<span class="sub">{r.calibration.sub}</span></td>
+          ) : (
+            <td class="wait">{IN_PROGRESS}</td>
+          )}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

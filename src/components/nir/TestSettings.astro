@@ -1,0 +1,46 @@
+---
+import { FULL_RUN, SETTINGS } from '../../data/nir-benchmark';
+
+// The full run is drawn as one square per property, split over two strips.
+const ROW_SPLIT = 13;
+const runCells = Array.from({ length: FULL_RUN.total }, (_, i) =>
+  i < FULL_RUN.done ? 'done' : i === FULL_RUN.running ? 'running' : 'waiting',
+);
+const runRows = [runCells.slice(0, ROW_SPLIT), runCells.slice(ROW_SPLIT)];
+---
+<ul class="legend" aria-label="Legend">
+  <li><span class="swatch train"></span>used to train the model</li>
+  <li><span class="swatch test"></span>used to test it</li>
+</ul>
+<ol class="settings">
+  {SETTINGS.map((s) => (
+    <li>
+      <div>
+        <h3>{s.title}</h3>
+        <p>{s.text}</p>
+      </div>
+      <div class="strips" role="img" aria-label={s.alt}>
+        {s.strips.map((st) => (
+          <div class="strip">
+            <span class="cells">{st.cells.map((c) => <span class:list={['cell', { test: c === 'test' }]}></span>)}</span>
+            {st.label && <span>{st.label}</span>}
+          </div>
+        ))}
+        {s.more && <span class="more">{s.more}</span>}
+      </div>
+      <p class="scope">{s.scope}</p>
+    </li>
+  ))}
+  <li>
+    <div>
+      <h3>Full pipeline on everything</h3>
+      <p>Every property through the pipeline end to end, as a user would run it. Running now; each square is one property.</p>
+    </div>
+    <div class="strips" role="img" aria-label={`${FULL_RUN.done} of ${FULL_RUN.total} models finished, one running.`}>
+      {runRows.map((row) => (
+        <div class="strip"><span class="cells">{row.map((c) => <span class={`cell ${c}`}></span>)}</span></div>
+      ))}
+    </div>
+    <p class="scope">{FULL_RUN.done} of {FULL_RUN.total} done</p>
+  </li>
+</ol>

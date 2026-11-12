@@ -1,0 +1,79 @@
+---
+import '../styles/site.css';
+import { LINKS, SITE_NAME } from '../data/site';
+import { withBase } from '../lib/posts';
+
+interface Props {
+  title: string;
+  description: string;
+  // Which header link is the current section.
+  current?: 'projects' | 'about';
+  // Absolute URL of the social-card image; falls back to text-only cards.
+  image?: string;
+  ogType?: 'website' | 'article';
+}
+
+const { title, description, current, image, ogType = 'website' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const rss = withBase('/rss.xml');
+const FONTS = 'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap';
+
+// Header links in order; empty hrefs are dropped.
+const nav = [
+  { key: 'projects', label: 'Projects', href: withBase('/') },
+  { key: 'about', label: 'About', href: withBase('/about/') },
+  { key: 'linkedin', label: 'LinkedIn', href: LINKS.linkedin },
+  { key: 'github', label: 'GitHub', href: LINKS.github },
+].filter((l) => l.href);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href={rss} />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {image && <meta property="og:image" content={image} />}
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={FONTS} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="bar">
+      <div class="wrap">
+        <ul class="nav">
+          {nav.map((l) => (
+            <li><a href={l.href} aria-current={l.key === current ? 'page' : undefined}>{l.label}</a></li>
+          ))}
+          <li>
+            <a href={rss} aria-label="RSS feed">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3a10 10 0 0 1 10 10M3 7.5A5.5 5.5 0 0 1 8.5 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /><circle cx="3.6" cy="12.4" r="1.4" fill="currentColor" /></svg>RSS
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <a href={rss}>RSS</a>
+        {LINKS.linkedin && <a href={LINKS.linkedin}>LinkedIn</a>}
+        {LINKS.github && <a href={LINKS.github}>GitHub</a>}
+      </div>
+    </footer>
+  </body>
+</html>

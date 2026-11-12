@@ -1,0 +1,73 @@
+---
+import { render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { SITE_NAME } from '../../data/site';
+import { getPosts, postDate, postHref, readingMinutes, withBase, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+
+  // Index order is newest first, so "newer" is the previous list entry.
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+// Long posts get a contents box listing their sections.
+const MIN_TOC_SECTIONS = 4;
+const SOCIAL_WIDTH = 1200;
+
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
+const d = post.data;
+const date = postDate(post);
+const sections = headings.filter((h) => h.depth === 2);
+const card = await getImage({ src: d.cover, width: SOCIAL_WIDTH });
+---
+<Base title={`${d.title} · ${SITE_NAME}`} description={d.summary} current="projects" image={new URL(card.src, Astro.site).href} ogType="article">
+  <article class="wrap post">
+    <a class="back" href={withBase('/')}>
+      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      All projects
+    </a>
+    {d.tags.length > 0 && (
+      <ul class="tags" aria-label="Tags">{d.tags.map((t) => <li><span>{t}</span></li>)}</ul>
+    )}
+    <h1>{d.title}</h1>
+    <p class="lede">{d.lede}</p>
+    <p class="meta">
+      {date && <><time datetime={date.iso}>{date.text}</time> · </>}{readingMinutes(post)} min read
+    </p>
+
+    {sections.length >= MIN_TOC_SECTIONS && (
+      <nav class="toc" aria-label="Contents">
+        <p>Contents</p>
+        <ol>{sections.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+      </nav>
+    )}
+
+    <div class="body">
+      <Content />
+    </div>
+
+    {d.cta && (
+      <div class="try">
+        <p>{d.cta.text}</p>
+        <a href={withBase(d.cta.href)}>{d.cta.label}</a>
+      </div>
+    )}
+
+    <nav class="pager" aria-label="More projects">
+      {newer ? <a class="newer" href={postHref(newer)}><small>Newer</small>{newer.data.title}</a> : <span></span>}
+      {older && <a class="older" href={postHref(older)}><small>Older</small>{older.data.title}</a>}
+    </nav>
+  </article>
+</Base>

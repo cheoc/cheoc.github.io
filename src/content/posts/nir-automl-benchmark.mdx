@@ -1,0 +1,91 @@
+---
+title: How close does automatic NIR calibration get to published results?
+date: 2026-11-12
+tags: [nir, chemometrics, automl, benchmark]
+# Tables are in components, so the word count misses them: 1,524 rendered words.
+minutes: 7
+cover: ../../assets/posts/nir-automl-benchmark/calibration-corn-protein.png
+coverAlt: "Calibration page for corn protein: 354 search trials coloured by model type, the chosen model ringed."
+summary: "We ran the NIR AutoML pipeline on 10 public NIR datasets and set every result next to the best published error we could find."
+lede: "We ran the NIR AutoML pipeline on 10 public NIR datasets (25 measured properties) and set every result next to the best published error we could find. All numbers are prediction errors (RMSE): lower is better."
+cta:
+  text: "If you work with NIR calibration and want to compare notes, run your own data through the pipeline, or discuss the method, get in touch."
+  label: Get in touch
+  href: /about/
+---
+import { Image } from 'astro:assets';
+import DatasetTable from '../../components/nir/DatasetTable.astro';
+import TestSettings from '../../components/nir/TestSettings.astro';
+import PublishedTable from '../../components/nir/PublishedTable.astro';
+import OwnTable from '../../components/nir/OwnTable.astro';
+import PipelineSteps from '../../components/nir/PipelineSteps.astro';
+import calibration from '../../assets/posts/nir-automl-benchmark/calibration-corn-protein.png';
+import dataset from '../../assets/posts/nir-automl-benchmark/dataset-tecator-fat.png';
+
+<p class="note">Results as of 12 November 2026. Credits and licences are at the <a href="#credits">end of the post</a>.</p>
+
+## The data
+
+10 public datasets, 2,714 spectra, 25 measured properties. Only 3 datasets come with a published train/test split.
+
+<DatasetTable />
+
+## How we tested
+
+A model is scored on samples it never saw during training. Which samples those are changes the score a lot, so we tested the same pipeline with five different settings. Every square is a sample.
+
+<TestSettings />
+
+## Datasets with a published result
+
+15 properties. Only 6 come with the paper's own train/test split, so only those 6 compare like for like. The lower error in each row is bold. All numbers have 3 significant digits.
+
+<ul class="legend" aria-label="How to read the lower-error column">
+  <li><span class="chip ours">Ours</span>our error lower, same test set</li>
+  <li><span class="chip pub">Published</span>published error lower, same test set</li>
+  <li><span class="chip ours ind">Ours</span><span class="chip pub ind">Published</span>outlined: different test procedure, indicative only</li>
+</ul>
+
+<PublishedTable />
+
+<p class="note">Percentages in the calibration column are ensemble weights: each model's share of the final prediction. The pipeline picks them by greedily adding the model that most lowers the cross-validated error, 50 times, so the weights are multiples of 2% and add up to 100%. "Lower error" says how much lower the smaller error is than the larger one; "about equal" means within 1%.</p>
+
+## Datasets without a published result
+
+10 properties. Nobody has published an error for these, so we report ours on its own. 3 significant digits.
+
+<OwnTable />
+
+## How the NIR AutoML pipeline builds a calibration
+
+A rough outline. One time limit of one hour covers all steps.
+
+<PipelineSteps />
+
+## Screens from the web interface
+
+<div class="figures wide">
+  <figure>
+    <Image src={calibration} widths={[720, 1440]} sizes="(max-width: 700px) 100vw, 510px" alt="Calibration page for corn protein: a chart of 354 search trials coloured by model type, the chosen model ringed, and ISO 12099 statistics below." />
+    <figcaption>Calibration page, corn protein: every model the search tried (354), the chosen one ringed, and the ISO 12099 statistics.</figcaption>
+  </figure>
+  <figure>
+    <Image src={dataset} widths={[720, 1440]} sizes="(max-width: 700px) 100vw, 510px" alt="Dataset page for Tecator fat: spectra upload, a summary of 240 spectra and 100 wavenumbers, and the preprocessing steps." />
+    <figcaption>Dataset page, Tecator fat: upload, data summary, and the preprocessing steps for manual training.</figcaption>
+  </figure>
+</div>
+
+## Under the hood
+
+The pipeline is an API with a web interface on top. Everything runs in containers, on a CPU or with a GPU.
+
+<dl class="stack">
+  <div><dt>Modelling</dt><dd>Python 3.12, scikit-learn, NumPy, SciPy, Optuna for the search, LightGBM, PyTorch, TabPFN v2, SHAP for explanations</dd></div>
+  <div><dt>API and data</dt><dd>FastAPI, Pydantic, SQLAlchemy, PostgreSQL 16, PDF reports with ReportLab and Matplotlib</dd></div>
+  <div><dt>Web interface and runtime</dt><dd>Next.js, React, TypeScript, Tailwind CSS; Docker Compose</dd></div>
+</dl>
+
+<div id="credits" class="credits">
+  <p><strong>Built with PriorLabs-TabPFN</strong></p>
+  <p>The ensembles use TabPFN v2 (Hollmann et al., Nature 2025, doi:10.1038/s41586-024-08328-6). TabPFN, copyright 2026 Prior Labs GmbH. Model weights under the <a href="https://huggingface.co/Prior-Labs/TabPFN-v2-reg/blob/main/LICENSE.txt">Prior Labs License 1.1</a>; the tabpfn code under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+</div>

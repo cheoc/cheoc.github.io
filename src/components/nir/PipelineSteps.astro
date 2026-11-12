@@ -1,0 +1,11 @@
+---
+import { STEPS } from '../../data/nir-benchmark';
+---
+<ol class="steps">
+  {STEPS.map((s) => (
+    <li class:list={{ key: s.key }}>
+      <strong>{s.title}</strong>
+      <span>{s.text}</span>
+    </li>
+  ))}
+</ol>

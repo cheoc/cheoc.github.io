@@ -1,0 +1,68 @@
+---
+title: "ivive.app: hepatic clearance from in-vitro data"
+date: 2026-11-12
+datePending: true
+tags: [pharmacokinetics, ivive, mcp]
+cover: ../../assets/posts/ivive-app/ivive-home.png
+coverAlt: "The ivive.app home page with the midazolam worked example."
+summary: "A calculator that turns microsome or hepatocyte data, or just a SMILES, into predicted human clearance, with the error band real drugs showed."
+lede: "Enter CLint, fu,mic and fu,p, or just a SMILES, and get hepatic and plasma clearance by well-stirred or parallel-tube IVIVE, together with how far off a prediction like this has been for real drugs."
+cta:
+  text: "Open the calculator. No account needed."
+  label: ivive.app
+  href: https://ivive.app
+---
+import { Image } from 'astro:assets';
+import home from '../../assets/posts/ivive-app/ivive-home.png';
+
+<figure>
+  <Image src={home} widths={[720, 1440]} sizes="(max-width: 960px) 100vw, 1000px" alt="The ivive.app home page: headline 'Hepatic clearance from in-vitro data' above a worked example for midazolam with its predicted plasma clearance and observed-clearance band." />
+  <figcaption>ivive.app, home page with the midazolam worked example.</figcaption>
+</figure>
+
+## Why it exists
+
+Clearance sets how long a drug stays in the body, and so how large and how frequent a dose must be. Long before any human data exist, project teams estimate human clearance from a test-tube assay with liver microsomes or hepatocytes. Turning that in-vitro number into whole-body clearance is IVIVE: in-vitro to in-vivo extrapolation. ivive.app does that arithmetic with every intermediate shown.
+
+## Four worked examples
+
+Computed by the calculator: human liver microsomes, well-stirred model. Clearance in mL/min/kg.
+
+<div class="table-box" role="region" aria-label="Worked examples" tabindex="0">
+  <table style="min-width: 640px">
+    <thead>
+      <tr><th scope="col">Drug</th><th scope="col">CLint, µL/min/mg</th><th scope="col">Predicted plasma CL</th><th scope="col">Observed-CL band</th><th scope="col">Observed CL</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><b>Midazolam</b></td><td class="num">177.8</td><td class="num win">4.73</td><td class="num">4.32–27.7</td><td class="num">5.3</td></tr>
+      <tr><td><b>Verapamil</b></td><td class="num">135.6</td><td class="num win">9.87</td><td class="num">9.02–57.9</td><td class="num">18.0</td></tr>
+      <tr><td><b>Diltiazem</b></td><td class="num">16.7</td><td class="num win">3.34</td><td class="num">3.05–19.5</td><td class="wait">not in the reference set</td></tr>
+      <tr><td><b>Warfarin</b></td><td class="num">0.58</td><td class="num win">0.0101</td><td class="wait">no band: outside the calibrated range</td><td class="num">0.06</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="note">Inputs from Obach 1999 (Drug Metab Dispos 27:1350); observed plasma CL from the Lombardo et al. 2018 compilation, via PKSmart. For warfarin the calculator explains the missing band: renal filtration rivals the predicted hepatic clearance.</p>
+
+## Validation, plainly
+
+IVIVE from human liver microsomes and hepatocytes under-predicts in-vivo clearance by about 3-fold on average. The calculator does not hide that: every result carries the range in which observed plasma clearance fell for the middle half of 301 reference drugs, between 0.91× and 5.9× the well-stirred prediction.
+
+On an independent Pfizer dataset (Tess et al. 2023), the 50% band held the observed clearance 58–68% of the time, never below its nominal coverage.
+
+- The band assumes hepatic metabolism drives clearance. Where active uptake (OATP substrates such as statins or bosentan) or biliary excretion does, it under-predicts further, and the band does not cover that.
+- Compounds with fu,p below 0.01 are flagged instead of given a range, because no range held for them.
+- Multi-species allometry scored worst of the scaling methods measured, and the page says so.
+
+## Use it from an LLM
+
+ivive.app is also an MCP server, so Claude, ChatGPT or any MCP client can call the calculations instead of doing the arithmetic itself. A structure sent through an LLM also reaches that LLM's vendor; for proprietary compounds, check the vendor is cleared for them.
+
+```sh
+claude mcp add --transport http \
+  ivive https://api.ivive.app/mcp/
+```
+
+Every calculation is also a plain HTTP endpoint; the reference is at <a href="https://api.ivive.app/docs">api.ivive.app/docs</a>.
+
+<p class="note">Source for every number in this post: the <a href="https://ivive.app">ivive.app</a> home page (worked examples and "Validation, plainly"), retrieved 12 November 2026.</p>

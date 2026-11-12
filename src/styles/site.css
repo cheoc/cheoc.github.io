@@ -11,18 +11,20 @@
   --accent-ink: #0c6e60;
   --shade: rgb(23 29 28 / 0.12);
   --cell: #b9c4c1;
+  --lower-bg: #e1f3e3;
+  --higher-bg: #fbe6e3;
   --font: 'Geist', 'Helvetica Neue', Arial, sans-serif;
   --column: 720px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111615; --surface: #171e1d; --fg: #e6ecea; --muted: #9aa8a4;
-    --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; color-scheme: dark;
+    --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111615; --surface: #171e1d; --fg: #e6ecea; --muted: #9aa8a4;
-  --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; color-scheme: dark;
+  --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -146,6 +148,9 @@ tr:last-child td { border-bottom: 0; }
 td.num { text-align: right; white-space: nowrap; }
 th.num { text-align: right; }
 td.win { font-weight: 700; }
+/* Per row: the lower error is tinted green, the higher red; bold stays as the non-colour cue. */
+.table-box td.win { background: var(--lower-bg); }
+.table-box td.lose { background: var(--higher-bg); }
 
 figure { margin: 28px 0; }
 figure img { display: block; width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--rule); }

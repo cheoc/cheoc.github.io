@@ -36,8 +36,8 @@ function chipText(r: PublishedRow): string {
             <tr>
               <td>{r.dataset}</td>
               <td>{r.property}</td>
-              <td class:list={['num', { win: r.winner === 'pub' }]}>{fmtError(r.published)}</td>
-              <td class:list={['num', { win: r.winner === 'ours' }]}>
+              <td class:list={['num', { win: r.winner === 'pub', lose: r.winner === 'ours' }]}>{fmtError(r.published)}</td>
+              <td class:list={['num', { win: r.winner === 'ours', lose: r.winner === 'pub' }]}>
                 {fmtError(r.ours)}{r.range && <span class="sub">({fmtRange(r.range)})</span>}
               </td>
               <td><span class={chipClass(r)}>{chipText(r)}</span></td>

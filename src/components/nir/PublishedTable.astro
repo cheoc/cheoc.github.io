@@ -1,5 +1,5 @@
 ---
-import { DIFFERENT_SET_NOTE, IN_PROGRESS, PUBLISHED, SAME_SET_NOTE, type PublishedRow } from '../../data/nir-benchmark';
+import { DIFFERENT_SET_NOTE, IN_PROGRESS, PUBLISHED, SAME_SET_NOTE, fmtError, fmtRange, type PublishedRow } from '../../data/nir-benchmark';
 
 const COLS = 7;
 const WINNER_LABEL = { ours: 'Ours', pub: 'Published', equal: 'About equal' } as const;
@@ -36,9 +36,9 @@ function chipText(r: PublishedRow): string {
             <tr>
               <td>{r.dataset}</td>
               <td>{r.property}</td>
-              <td class:list={['num', { win: r.winner === 'pub' }]}>{r.published}</td>
+              <td class:list={['num', { win: r.winner === 'pub' }]}>{fmtError(r.published)}</td>
               <td class:list={['num', { win: r.winner === 'ours' }]}>
-                {r.ours}{r.range && <span class="sub">({r.range})</span>}
+                {fmtError(r.ours)}{r.range && <span class="sub">({fmtRange(r.range)})</span>}
               </td>
               <td><span class={chipClass(r)}>{chipText(r)}</span></td>
               <td class={r.sameTestSet ? 'same' : 'diff'}>

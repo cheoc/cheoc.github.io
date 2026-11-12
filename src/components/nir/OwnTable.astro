@@ -1,5 +1,5 @@
 ---
-import { IN_PROGRESS, OWN } from '../../data/nir-benchmark';
+import { IN_PROGRESS, OWN, fmtError, fmtRange } from '../../data/nir-benchmark';
 ---
 <div class="table-box wide" role="region" aria-label="Datasets without a published result" tabindex="0">
   <table>
@@ -15,8 +15,8 @@ import { IN_PROGRESS, OWN } from '../../data/nir-benchmark';
         <tr>
           <td>{r.dataset}</td>
           <td>{r.property}</td>
-          <td class="num">{r.mean}</td>
-          <td class="num">{r.range}</td>
+          <td class="num">{fmtError(r.mean)}</td>
+          <td class="num">{fmtRange(r.range)}</td>
           {r.calibration ? (
             <td><b>{r.calibration.head}</b> {r.calibration.body}<span class="sub">{r.calibration.sub}</span></td>
           ) : (

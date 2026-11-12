@@ -4,6 +4,23 @@
 
 export const IN_PROGRESS = 'Run in progress';
 
+// Error values are shown with this many decimals (owner's choice), so columns
+// line up. Rounding is half-up on the decimal value; the epsilon keeps binary
+// floating point from turning 0.0245 into 0.024.
+const ERROR_DECIMALS = 3;
+const SCALE = 10 ** ERROR_DECIMALS;
+const ROUNDING_EPSILON = 1e-9;
+const RANGE_DASH = '–';
+
+export function fmtError(value: string): string {
+  return (Math.round(Number(value) * SCALE + ROUNDING_EPSILON) / SCALE).toFixed(ERROR_DECIMALS);
+}
+
+// "0.00538–0.00849" -> "0.005–0.008"
+export function fmtRange(range: string): string {
+  return range.split(RANGE_DASH).map(fmtError).join(RANGE_DASH);
+}
+
 export type Dataset = {
   name: string;
   source: string;

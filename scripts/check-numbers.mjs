@@ -1,5 +1,7 @@
 // Checks that every number in the source NIR page's tables reached the built
-// board, and that the board's tables add none. Run after `npm run build`.
+// post, and that the post's tables add none. Run after `npm run build`.
+// Decimals are compared at the precision the site shows (3 places, half-up),
+// so a value that changed is caught but the display rounding is not.
 // Usage: node scripts/check-numbers.mjs [built-page]
 import { readFileSync } from 'node:fs';
 
@@ -10,11 +12,23 @@ const BUILT = process.argv[2] ?? 'dist/posts/nir-automl-benchmark/index.html';
 const NUMBER = /\d[\d,]*(?:\.\d+)?/g;
 const TABLE = /<table[\s\S]*?<\/table>/g;
 
+const SHOWN_DECIMALS = 3;
+const SCALE = 10 ** SHOWN_DECIMALS;
+const ROUNDING_EPSILON = 1e-9;
+
+// Same rounding as fmtError in src/data/nir-benchmark.ts; integers pass through.
+function atShownPrecision(n) {
+  if (!n.includes('.')) {
+    return n;
+  }
+  return (Math.round(Number(n) * SCALE + ROUNDING_EPSILON) / SCALE).toFixed(SHOWN_DECIMALS);
+}
+
 function tableNumbers(file) {
   const html = readFileSync(file, 'utf8');
   const tables = html.match(TABLE) ?? [];
   const text = tables.join(' ').replace(/<[^>]+>/g, ' ').replace(/&#?\w+;/g, ' ');
-  return text.match(NUMBER) ?? [];
+  return (text.match(NUMBER) ?? []).map(atShownPrecision);
 }
 
 function counts(list) {

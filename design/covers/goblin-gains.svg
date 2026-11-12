@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="1600" height="1000">
+  <!-- Goblin Gains cover: a grinning goblin pressing a barbell overhead. -->
+  <defs>
+    <style>
+      .ol { stroke: #1b2321; stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect width="800" height="500" fill="#f5edd3"/>
+  <circle cx="400" cy="250" r="215" fill="#efe2b8"/>
+
+  <!-- floor shadow -->
+  <ellipse cx="400" cy="452" rx="150" ry="16" fill="#1b2321" opacity="0.12"/>
+
+  <!-- legs (outline, then fill) -->
+  <path d="M368 395 L352 440 M432 395 L448 440" stroke="#1b2321" stroke-width="44" stroke-linecap="round" fill="none"/>
+  <path d="M368 395 L352 440 M432 395 L448 440" stroke="#6cbf4c" stroke-width="30" stroke-linecap="round" fill="none"/>
+  <ellipse cx="342" cy="446" rx="34" ry="15" fill="#3b2a20" class="ol"/>
+  <ellipse cx="458" cy="446" rx="34" ry="15" fill="#3b2a20" class="ol"/>
+
+  <!-- arms up to the bar -->
+  <path d="M348 300 Q 300 220 292 150 M452 300 Q 500 220 508 150" stroke="#1b2321" stroke-width="44" stroke-linecap="round" fill="none"/>
+  <path d="M348 300 Q 300 220 292 150 M452 300 Q 500 220 508 150" stroke="#6cbf4c" stroke-width="30" stroke-linecap="round" fill="none"/>
+
+  <!-- torso and shorts -->
+  <ellipse cx="400" cy="330" rx="74" ry="82" fill="#6cbf4c" class="ol"/>
+  <ellipse cx="400" cy="318" rx="40" ry="44" fill="#8fd16f"/>
+  <path d="M330 362 Q 400 392 470 362 L 466 404 Q 400 424 334 404 Z" fill="#0f7b6c" class="ol"/>
+
+  <!-- barbell -->
+  <line x1="150" y1="138" x2="650" y2="138" stroke="#1b2321" stroke-width="12" stroke-linecap="round"/>
+  <rect x="168" y="84" width="34" height="108" rx="8" fill="#2f3a38" class="ol"/>
+  <rect x="204" y="98" width="24" height="80" rx="6" fill="#d9563a" class="ol"/>
+  <rect x="598" y="84" width="34" height="108" rx="8" fill="#2f3a38" class="ol"/>
+  <rect x="572" y="98" width="24" height="80" rx="6" fill="#d9563a" class="ol"/>
+
+  <!-- fists on the bar -->
+  <circle cx="292" cy="140" r="22" fill="#6cbf4c" class="ol"/>
+  <circle cx="508" cy="140" r="22" fill="#6cbf4c" class="ol"/>
+
+  <!-- ears -->
+  <path d="M344 214 L 262 168 L 352 248 Z" fill="#6cbf4c" class="ol"/>
+  <path d="M456 214 L 538 168 L 448 248 Z" fill="#6cbf4c" class="ol"/>
+  <path d="M338 222 L 292 196 L 344 238 Z" fill="#e58f8a"/>
+  <path d="M462 222 L 508 196 L 456 238 Z" fill="#e58f8a"/>
+
+  <!-- head -->
+  <circle cx="400" cy="224" r="64" fill="#6cbf4c" class="ol"/>
+  <!-- brows, eyes -->
+  <path d="M358 196 L 386 206 M442 196 L 414 206" stroke="#1b2321" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="376" cy="220" r="13" fill="#fffbea" class="ol" style="stroke-width:5"/>
+  <circle cx="424" cy="220" r="13" fill="#fffbea" class="ol" style="stroke-width:5"/>
+  <circle cx="379" cy="222" r="5.5" fill="#1b2321"/>
+  <circle cx="421" cy="222" r="5.5" fill="#1b2321"/>
+  <!-- nose -->
+  <path d="M400 228 Q 412 240 400 246" stroke="#1b2321" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- grin with teeth -->
+  <path d="M366 252 Q 400 282 434 252 Z" fill="#fffbea" class="ol" style="stroke-width:5"/>
+  <path d="M383 256 L 383 266 M400 258 L 400 270 M417 256 L 417 266" stroke="#1b2321" stroke-width="3"/>
+
+  <!-- effort sweat -->
+  <path d="M478 186 q 10 14 0 22 q -10 -8 0 -22 Z" fill="#7fc9e8" class="ol" style="stroke-width:4"/>
+  <path d="M320 180 q 8 11 0 18 q -8 -7 0 -18 Z" fill="#7fc9e8" class="ol" style="stroke-width:4"/>
+
+  <!-- motion marks -->
+  <path d="M232 70 l -14 -18 M400 52 l 0 -22 M568 70 l 14 -18" stroke="#1b2321" stroke-width="6" stroke-linecap="round"/>
+</svg>

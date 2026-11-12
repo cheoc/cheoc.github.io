@@ -90,8 +90,8 @@ main { padding-block: 64px 96px; }
 .thumb-link { display: block; }
 
 @media (max-width: 560px) {
-  .row { grid-template-columns: 96px minmax(0, 1fr); gap: 16px; }
-  .thumb { aspect-ratio: 1; }
+  .row { grid-template-columns: 112px minmax(0, 1fr); gap: 16px; }
+  /* Same 16:10 shape as desktop, so the cover illustrations stay whole. */
   .row h2 { font-size: 17px; }
 }
 

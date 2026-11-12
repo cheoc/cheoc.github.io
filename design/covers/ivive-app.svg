@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="1600" height="1000">
+  <!-- ivive.app cover: from a test tube with liver cells (in vitro) to a person's
+       liver (in vivo). -->
+  <defs>
+    <style>
+      .ol { stroke: #1b2321; stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; }
+    </style>
+    <clipPath id="tube">
+      <path d="M232 118 L 232 380 Q 232 420 262 420 Q 292 420 292 380 L 292 118 Z"/>
+    </clipPath>
+  </defs>
+  <rect width="800" height="500" fill="#f1eaf6"/>
+  <circle cx="400" cy="250" r="215" fill="#e5d9ef"/>
+
+  <!-- rack -->
+  <ellipse cx="262" cy="452" rx="110" ry="14" fill="#1b2321" opacity="0.12"/>
+  <rect x="176" y="330" width="172" height="34" rx="8" fill="#c99a6b" class="ol"/>
+  <path d="M192 364 L 192 440 M332 364 L 332 440" stroke="#1b2321" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- test tube -->
+  <g clip-path="url(#tube)">
+    <rect x="226" y="260" width="72" height="170" fill="#f08a9b"/>
+    <circle cx="250" cy="300" r="7" fill="#ffd3da"/>
+    <circle cx="272" cy="330" r="5" fill="#ffd3da"/>
+    <circle cx="256" cy="360" r="9" fill="#ffd3da"/>
+    <!-- tiny liver cells -->
+    <path d="M246 392 q 10 -12 24 -4 q 8 10 -6 14 q -14 4 -18 -10 Z" fill="#9e3b3b"/>
+  </g>
+  <path d="M232 118 L 232 380 Q 232 420 262 420 Q 292 420 292 380 L 292 118" fill="none" class="ol"/>
+  <path d="M222 118 L 302 118" stroke="#1b2321" stroke-width="10" stroke-linecap="round"/>
+  <path d="M244 140 L 244 240" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+  <!-- bubbles rising -->
+  <circle cx="262" cy="92" r="9" fill="#ffffff" class="ol" style="stroke-width:4"/>
+  <circle cx="282" cy="66" r="6" fill="#ffffff" class="ol" style="stroke-width:4"/>
+
+  <!-- arrow: in vitro to in vivo -->
+  <path d="M322 214 Q 400 150 470 206" stroke="#1b2321" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="2 16"/>
+  <path d="M452 202 L 472 210 L 474 188" stroke="#1b2321" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- person -->
+  <ellipse cx="560" cy="452" rx="100" ry="14" fill="#1b2321" opacity="0.12"/>
+  <path d="M478 446 L 478 330 Q 478 270 560 270 Q 642 270 642 330 L 642 446 Z" fill="#0f7b6c" class="ol"/>
+  <!-- liver -->
+  <path d="M512 322 Q 536 298 584 306 Q 618 312 606 336 Q 590 366 548 360 Q 512 356 512 322 Z" fill="#b2473f" class="ol" style="stroke-width:6"/>
+  <path d="M572 318 Q 588 330 584 348" stroke="#7d2b26" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- head -->
+  <circle cx="560" cy="210" r="56" fill="#f2c7a5" class="ol"/>
+  <path d="M506 196 Q 520 150 566 150 Q 610 152 616 196 Q 590 176 560 182 Q 530 176 506 196 Z" fill="#3b2a20" class="ol" style="stroke-width:6"/>
+  <circle cx="542" cy="214" r="6" fill="#1b2321"/>
+  <circle cx="578" cy="214" r="6" fill="#1b2321"/>
+  <path d="M542 236 Q 560 252 578 236" stroke="#1b2321" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <circle cx="530" cy="232" r="8" fill="#ec9b8c" opacity="0.7"/>
+  <circle cx="590" cy="232" r="8" fill="#ec9b8c" opacity="0.7"/>
+  <!-- waving arm -->
+  <path d="M640 320 Q 680 290 676 248" stroke="#1b2321" stroke-width="32" fill="none" stroke-linecap="round"/>
+  <path d="M640 320 Q 680 290 676 248" stroke="#0f7b6c" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <circle cx="676" cy="240" r="16" fill="#f2c7a5" class="ol" style="stroke-width:6"/>
+</svg>

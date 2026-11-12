@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="1600" height="1000">
+  <!-- NIR AutoML cover: a scanner shines near-infrared light on grain, the spectrum
+       goes into a little robot that picks the model. -->
+  <defs>
+    <style>
+      .ol { stroke: #1b2321; stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; }
+    </style>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2554a" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#e2554a" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="#e1f0ec"/>
+  <circle cx="400" cy="250" r="215" fill="#cbe6df"/>
+
+  <!-- grain pile -->
+  <ellipse cx="232" cy="430" rx="96" ry="14" fill="#1b2321" opacity="0.12"/>
+  <path d="M150 428 Q 232 330 314 428 Z" fill="#e7b85a" class="ol"/>
+  <g fill="#f3d38a" stroke="#1b2321" stroke-width="4">
+    <ellipse cx="210" cy="400" rx="12" ry="8" transform="rotate(-25 210 400)"/>
+    <ellipse cx="244" cy="388" rx="12" ry="8" transform="rotate(20 244 388)"/>
+    <ellipse cx="270" cy="410" rx="12" ry="8" transform="rotate(-10 270 410)"/>
+    <ellipse cx="228" cy="418" rx="12" ry="8" transform="rotate(35 228 418)"/>
+  </g>
+
+  <!-- light beam -->
+  <path d="M206 214 L 172 372 L 296 372 L 248 214 Z" fill="url(#beam)"/>
+  <path d="M214 250 q 8 -8 16 0 t 16 0 M206 290 q 9 -9 18 0 t 18 0 t 18 0 M196 330 q 10 -10 20 0 t 20 0 t 20 0 t 20 0" stroke="#c23a32" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- handheld scanner -->
+  <rect x="166" y="124" width="122" height="88" rx="18" fill="#3a4846" class="ol"/>
+  <rect x="186" y="142" width="56" height="34" rx="6" fill="#7fe0cc" class="ol" style="stroke-width:5"/>
+  <circle cx="264" cy="160" r="9" fill="#e2554a" class="ol" style="stroke-width:4"/>
+  <path d="M196 212 L 196 226 L 258 226 L 258 212" fill="#2a3533" class="ol" style="stroke-width:5"/>
+
+  <!-- spectrum card -->
+  <rect x="326" y="110" width="170" height="130" rx="14" fill="#ffffff" class="ol"/>
+  <path d="M346 214 L 476 214 M346 214 L 346 130" stroke="#1b2321" stroke-width="4" stroke-linecap="round"/>
+  <path d="M350 196 C 368 196, 372 150, 390 158 S 410 206, 428 186 S 448 140, 468 170" stroke="#0f7b6c" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- arrow to robot -->
+  <path d="M502 172 Q 540 164 556 206" stroke="#1b2321" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M542 194 L 557 210 L 568 190" stroke="#1b2321" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- robot -->
+  <ellipse cx="582" cy="436" rx="80" ry="13" fill="#1b2321" opacity="0.12"/>
+  <rect x="528" y="330" width="108" height="96" rx="22" fill="#f0f4f2" class="ol"/>
+  <rect x="554" y="352" width="56" height="46" rx="8" fill="#0f7b6c" class="ol" style="stroke-width:5"/>
+  <path d="M564 386 L 564 378 M576 386 L 576 368 M588 386 L 588 372 M600 386 L 600 362" stroke="#bff0e4" stroke-width="6" stroke-linecap="round"/>
+  <line x1="582" y1="236" x2="582" y2="208" stroke="#1b2321" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="582" cy="202" r="11" fill="#e2554a" class="ol" style="stroke-width:5"/>
+  <rect x="520" y="236" width="124" height="92" rx="26" fill="#f0f4f2" class="ol"/>
+  <rect x="540" y="256" width="84" height="50" rx="16" fill="#1b2321"/>
+  <circle cx="564" cy="280" r="9" fill="#7fe0cc"/>
+  <circle cx="600" cy="280" r="9" fill="#7fe0cc"/>
+  <path d="M572 296 Q 582 304 592 296" stroke="#7fe0cc" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect x="510" y="270" width="12" height="28" rx="5" fill="#9fb3ae" class="ol" style="stroke-width:5"/>
+  <rect x="642" y="270" width="12" height="28" rx="5" fill="#9fb3ae" class="ol" style="stroke-width:5"/>
+  <!-- robot arm holding a check -->
+  <path d="M636 360 Q 668 350 676 322" stroke="#1b2321" stroke-width="20" fill="none" stroke-linecap="round"/>
+  <path d="M636 360 Q 668 350 676 322" stroke="#f0f4f2" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <circle cx="680" cy="304" r="24" fill="#ffffff" class="ol"/>
+  <path d="M668 304 L 677 314 L 694 294" stroke="#0f7b6c" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

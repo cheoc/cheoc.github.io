@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // Served from the GitHub user site https://cheoc.github.io/ at the root.
 // SITE_URL and BASE_PATH override these, e.g. for a project-site copy.
@@ -10,7 +11,7 @@ export default defineConfig({
   site: process.env.SITE_URL ?? DEFAULT_SITE,
   base: process.env.BASE_PATH ?? DEFAULT_BASE,
   trailingSlash: 'always',
-  integrations: [mdx()],
+  integrations: [mdx(), sitemap()],
   // Code blocks stay in the page's own colours.
   markdown: { syntaxHighlight: false },
 });

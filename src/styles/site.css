@@ -7,6 +7,8 @@
   --muted: #5a6562;
   --rule: #dfe5e3;
   --accent: #0f7b6c;
+  --chart-lean: #3b6ea8;
+  --chart-fatty: #b45309;
   --accent-soft: #e3f1ee;
   --accent-ink: #0c6e60;
   --shade: rgb(23 29 28 / 0.12);
@@ -19,12 +21,12 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111615; --surface: #171e1d; --fg: #e6ecea; --muted: #9aa8a4;
-    --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
+    --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --chart-lean: #5a8fd6; --chart-fatty: #c97a1a; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111615; --surface: #171e1d; --fg: #e6ecea; --muted: #9aa8a4;
-  --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
+  --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --chart-lean: #5a8fd6; --chart-fatty: #c97a1a; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -235,6 +237,21 @@ td.diff { color: var(--muted); font-weight: 600; }
 /* One height for all four: phone shots crop from the top, the body map fits on its black ground. */
 .figures.shots img { aspect-ratio: 3 / 4; object-fit: cover; object-position: top; }
 .figures.shots img.fit { object-fit: contain; object-position: center; background: #000; }
+/* SHAP example: two panels on one wavelength axis; scrolls inside its box on phones. */
+.shap-box { margin: 24px 0 8px; overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); padding: 12px 8px 4px; }
+.shap-fig { display: block; width: 100%; min-width: 560px; height: auto; font-family: inherit; }
+.shap-fig .band { fill: var(--accent-soft); }
+.shap-fig .panel { fill: var(--fg); font-size: 13px; font-weight: 600; }
+.shap-fig .tick, .shap-fig .tag { fill: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.shap-fig .grid { stroke: var(--rule); stroke-width: 1; }
+.shap-fig .axis, .shap-fig .zero { stroke: var(--muted); stroke-width: 1; }
+.shap-fig .zero { stroke-dasharray: 3 3; opacity: 0.6; }
+.shap-fig .lean, .shap-fig .fatty { fill: none; stroke-width: 2; stroke-linejoin: round; }
+.shap-fig .lean { stroke: var(--chart-lean); }
+.shap-fig .fatty { stroke: var(--chart-fatty); }
+.shap-fig .lean-key { fill: var(--chart-lean); }
+.shap-fig .fatty-key { fill: var(--chart-fatty); }
+.shap-fig .bar { fill: var(--accent); }
 @media (max-width: 760px) { .figures.shots { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } }
 
 .stack { margin: 16px 0 0; display: flex; flex-direction: column; gap: 12px; }

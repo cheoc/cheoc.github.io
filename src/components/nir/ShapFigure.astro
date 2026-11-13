@@ -1,0 +1,85 @@
+---
+// Two panels on one wavelength axis: where fatty and lean meat spectra differ,
+// and which wavelengths the fat model leans on (mean |SHAP|).
+//
+//   850 nm ─────────────── fat band ─────────────── 1050 nm
+//   [ second derivative: lean vs fatty  (lines)    ]
+//   [ mean |SHAP| per wavelength, % fat (bars)     ]
+import {
+  FATTY_D2, FATTY_MIN_FAT, LEAN_D2, LEAN_MAX_FAT, MEAN_ABS_SHAP, WAVELENGTHS,
+} from '../../data/nir-shap';
+
+// Canvas, in SVG units.
+const W = 640;
+const LEFT = 48;
+const RIGHT = 24;
+const PLOT_W = W - LEFT - RIGHT;
+const TOP_Y0 = 30;       // spectra panel
+const TOP_H = 120;
+const BOT_Y0 = 200;      // SHAP panel
+const BOT_H = 150;
+const AXIS_Y = BOT_Y0 + BOT_H;
+const H = AXIS_Y + 44;
+
+// Axis ranges.
+const NM_MIN = 850;
+const NM_MAX = 1050;
+const NM_TICKS = [850, 900, 950, 1000, 1050];
+const SHAP_MAX = 8;
+const SHAP_TICKS = [0, 2, 4, 6, 8];
+const BAND = [922.7, 949.0];  // wavelengths of the outer tall bars
+const BAR_W = 3.6;
+const PEAK_DECIMALS = 1;
+
+const x = (nm: number) => LEFT + ((nm - NM_MIN) / (NM_MAX - NM_MIN)) * PLOT_W;
+const yShap = (v: number) => AXIS_Y - (v / SHAP_MAX) * BOT_H;
+
+// Second-derivative lines share one symmetric scale so their offsets are comparable.
+const d2Max = Math.max(...LEAN_D2.map(Math.abs), ...FATTY_D2.map(Math.abs));
+const yD2 = (v: number) => TOP_Y0 + TOP_H / 2 - (v / d2Max) * (TOP_H / 2);
+const d2Path = (vals: number[]) =>
+  vals.map((v, i) => `${i === 0 ? 'M' : 'L'}${x(WAVELENGTHS[i + 1]).toFixed(1)},${yD2(v).toFixed(1)}`).join(' ');
+
+// The tallest bar gets a label.
+const peakIndex = MEAN_ABS_SHAP.indexOf(Math.max(...MEAN_ABS_SHAP));
+const peakNm = Math.round(WAVELENGTHS[peakIndex]);
+const peakValue = MEAN_ABS_SHAP[peakIndex].toFixed(PEAK_DECIMALS);
+
+const leanLabel = `Lean meat, fat ≤ ${Math.round(LEAN_MAX_FAT)}%`;
+const fattyLabel = `Fatty meat, fat ≥ ${Math.round(FATTY_MIN_FAT)}%`;
+---
+<div class="shap-box" role="region" aria-label="SHAP example, Tecator fat" tabindex="0">
+  <svg class="shap-fig" viewBox={`0 0 ${W} ${H}`} role="img"
+    aria-label={`Top: second-derivative spectra of lean and fatty meat, which differ most between about 925 and 950 nm. Bottom: mean absolute SHAP value per wavelength for the fat model; the largest is ${peakValue}% fat at ${peakNm} nm, and the tallest bars sit between ${Math.round(BAND[0])} and ${Math.round(BAND[1])} nm.`}>
+    <!-- Highlight the band through both panels -->
+    <rect class="band" x={x(BAND[0]) - BAR_W} y={TOP_Y0 - 8} width={x(BAND[1]) - x(BAND[0]) + 2 * BAR_W} height={AXIS_Y - TOP_Y0 + 8} />
+
+    <!-- Panel 1: spectra -->
+    <text class="panel" x={LEFT} y={TOP_Y0 - 14}>Where fatty and lean meat spectra differ (second derivative)</text>
+    <line class="zero" x1={LEFT} x2={W - RIGHT} y1={yD2(0)} y2={yD2(0)} />
+    <path class="lean" d={d2Path(LEAN_D2)} />
+    <path class="fatty" d={d2Path(FATTY_D2)} />
+    <text class="tag" x={x(985)} y={TOP_Y0 + 14}><tspan class="key fatty-key">●</tspan> {fattyLabel}</text>
+    <text class="tag" x={x(985)} y={TOP_Y0 + 30}><tspan class="key lean-key">●</tspan> {leanLabel}</text>
+
+    <!-- Panel 2: mean |SHAP| -->
+    <text class="panel" x={LEFT} y={BOT_Y0 - 14}>What the fat model uses: mean |SHAP| per wavelength, % fat</text>
+    {SHAP_TICKS.map((t) => (
+      <>
+        <line class="grid" x1={LEFT} x2={W - RIGHT} y1={yShap(t)} y2={yShap(t)} />
+        <text class="tick" x={LEFT - 8} y={yShap(t) + 4} text-anchor="end">{t}</text>
+      </>
+    ))}
+    {MEAN_ABS_SHAP.map((v, i) => v > 0 && (
+      <rect class="bar" x={x(WAVELENGTHS[i]) - BAR_W / 2} y={yShap(v)} width={BAR_W} height={AXIS_Y - yShap(v)} rx="1" />
+    ))}
+    <text class="tag" x={x(WAVELENGTHS[peakIndex]) - 6} y={yShap(MEAN_ABS_SHAP[peakIndex]) - 6} text-anchor="end">{peakNm} nm: {peakValue}</text>
+
+    <!-- Shared wavelength axis -->
+    <line class="axis" x1={LEFT} x2={W - RIGHT} y1={AXIS_Y} y2={AXIS_Y} />
+    {NM_TICKS.map((t) => (
+      <text class="tick" x={x(t)} y={AXIS_Y + 18} text-anchor="middle">{t}</text>
+    ))}
+    <text class="tick" x={LEFT + PLOT_W / 2} y={AXIS_Y + 38} text-anchor="middle">Wavelength, nm</text>
+  </svg>
+</div>

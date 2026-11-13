@@ -3,8 +3,8 @@ title: "Benchmarking NIR AutoML pipeline against 10 public datasets"
 date: 2026-11-12
 order: 2
 tags: [nir, chemometrics, automl, benchmark]
-# Tables are in components, so the word count misses them: 2,428 rendered words.
-minutes: 11
+# Tables are in components, so the word count misses them: 2,780 rendered words.
+minutes: 13
 cover: ../../assets/posts/nir-automl-benchmark/cover.png
 coverAlt: "Cartoon of a handheld scanner shining near-infrared light on grain; the spectrum goes to a small robot holding a check mark."
 summary: "I ran my NIR AutoML pipeline on 10 public datasets, set it against published results, then read the papers to see how those results were made."
@@ -22,6 +22,7 @@ import TestSettings from '../../components/nir/TestSettings.astro';
 import PublishedTable from '../../components/nir/PublishedTable.astro';
 import OwnTable from '../../components/nir/OwnTable.astro';
 import PipelineSteps from '../../components/nir/PipelineSteps.astro';
+import ShapFigure from '../../components/nir/ShapFigure.astro';
 import calibration from '../../assets/posts/nir-automl-benchmark/calibration-corn-protein.png';
 import dataset from '../../assets/posts/nir-automl-benchmark/dataset-tecator-fat.png';
 
@@ -91,6 +92,24 @@ That is why I want more data. Spectra with reference values, ideally with the sp
 A rough outline. One time limit of one hour covers all steps.
 
 <PipelineSteps />
+
+## Seeing what the model uses: SHAP
+
+The usual objection to AutoML in chemometrics is the black box. A PLS model comes with loadings and VIP scores you can read. The Tecator fat model above is an ensemble: TabPFN 72%, kernel ridge 22%, GPR 4%, local PLS 2%. Nobody reads the weights of that.
+
+SHAP (Shapley values) closes that gap with one method for any model. It measures how much each wavelength moves the prediction, in the units of the prediction, here % fat. That is what makes the pair work: the search is free to pick whatever predicts best, and every model it picks comes with the same kind of explanation. The pipeline computes it per calibration and, on request, for a single prediction.
+
+An example on that Tecator fat model (test error 0.435):
+
+<ShapFigure />
+
+<p class="note">Top: second derivative of the mean spectrum of the leanest and the fattest quarter of the 215 Tecator samples. Bottom: mean |SHAP| per wavelength for the fat model, from the pipeline's SHAP endpoint. Shaded: 922–949 nm.</p>
+
+The fatty and lean spectra differ most at 929–937 nm, in the region where the C–H bonds of fat absorb (third overtone, 850–950 nm). The model's largest SHAP values sit right there: 922–949 nm, with the top one at 925 nm, worth 6.9% fat on average. Nobody told the model where fat absorbs; it found the band from the data. Smaller bars near 1030–1050 nm sit where the spectra also track fat.
+
+This is the check I want before trusting a calibration. If the tallest bars sat in a region with no chemistry behind it, or at the edge of the detector, I would suspect an artefact or overfitting, however good the error.
+
+<p class="note">How it is computed: SHAP's KernelExplainer on 25 representative training spectra (k-means), 500 model evaluations each. For this ensemble that took about 25 minutes on one CPU core; the result is stored with the model. With 500 evaluations for 100 wavelengths, each spectrum's explanation keeps only its strongest ten or so wavelengths, so single bars are spiky: read the clusters, not one bar.</p>
 
 ## Screens from the web interface
 

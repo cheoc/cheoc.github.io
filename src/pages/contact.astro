@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { EMAIL, LINKS, SITE_NAME } from '../data/site';
+---
+<Base title={`Get in touch · ${SITE_NAME}`} description="How to get in touch about a project." current="contact">
+  <section class="wrap contact-page">
+    <h1>Get in touch</h1>
+    <div class="body">
+      <p>Questions about a project, data to run, or anything else: write to me.</p>
+      <dl class="contact">
+        <div><dt>Email</dt><dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd></div>
+        <div><dt>LinkedIn</dt><dd><a href={LINKS.linkedin}>{LINKS.linkedin.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, '')}</a></dd></div>
+        <div><dt>GitHub</dt><dd><a href={LINKS.github}>{LINKS.github.replace(/^https:\/\//, '')}</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</Base>

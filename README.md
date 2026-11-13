@@ -27,7 +27,7 @@ src/content/posts/*.mdx ──> getPosts() ──> index: one row per post, newe
    appears once a post has four or more of them.
 
 Site title, subtitle, email and the LinkedIn/GitHub links are in
-`src/data/site.ts`; the contact links show on the About page.
+`src/data/site.ts`; the contact links show on the Get in touch page.
 
 ## Run
 

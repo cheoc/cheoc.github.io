@@ -14,7 +14,7 @@ const image = card ? new URL(card.src, Astro.site).href : undefined;
   <section class="wrap">
     <div class="intro">
       <h1>{SITE_TITLE}</h1>
-      <p>Some of my projects are listed below. If interested <a href={withBase('/about/#contact')}>get in touch</a>.</p>
+      <p>Some of my projects are listed below. If interested <a href={withBase('/contact/')}>get in touch</a>.</p>
     </div>
 
     {posts.length === 0 && <p class="empty">No projects yet.</p>}

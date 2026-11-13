@@ -174,9 +174,8 @@ figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
 }
 
 /* About */
-.about h1 { margin: 0; line-height: 1.15; font-size: clamp(30px, 5vw, 38px); letter-spacing: -0.03em; font-weight: 700; }
-.about .body { margin-top: 24px; }
-.about ul { padding-left: 18px; }
+.contact-page h1 { margin: 0; line-height: 1.15; font-size: clamp(30px, 5vw, 38px); letter-spacing: -0.03em; font-weight: 700; }
+.contact-page .body { margin-top: 24px; }
 
 
 
@@ -251,7 +250,6 @@ td.diff { color: var(--muted); font-weight: 600; }
 
 .empty { color: var(--muted); margin-top: 48px; }
 .body h2 { scroll-margin-top: 24px; }
-.about h2 { font-size: 20px; margin-top: 36px; }
 .body ul:not([class]) { padding-left: 20px; }
 .body li { margin-bottom: 6px; }
 .body pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); font-size: 14px; line-height: 1.55; }

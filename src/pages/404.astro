@@ -9,7 +9,7 @@ const posts = await getPosts();
   <section class="wrap notfound">
     <h1>Page not found</h1>
     <p>This address does not lead to a page. The link may be old, or the address mistyped.</p>
-    <p><a href={withBase('/')}>See all projects</a> or <a href={withBase('/about/#contact')}>get in touch</a>.</p>
+    <p><a href={withBase('/')}>See all projects</a> or <a href={withBase('/contact/')}>get in touch</a>.</p>
 
     {posts.length > 0 && (
       <>

@@ -7,7 +7,7 @@ interface Props {
   title: string;
   description: string;
   // Which header link is the current section.
-  current?: 'projects' | 'about';
+  current?: 'projects' | 'contact';
   // Absolute URL of the social-card image; falls back to text-only cards.
   image?: string;
   ogType?: 'website' | 'article';
@@ -21,7 +21,7 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;7
 // Header links in order; RSS follows them.
 const nav = [
   { key: 'projects', label: 'Projects', href: withBase('/') },
-  { key: 'about', label: 'About', href: withBase('/about/') },
+  { key: 'contact', label: 'Get in touch', href: withBase('/contact/') },
 ];
 ---
 <!doctype html>

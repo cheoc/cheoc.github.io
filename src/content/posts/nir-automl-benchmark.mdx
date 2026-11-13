@@ -1,19 +1,19 @@
 ---
-title: How close does automatic NIR calibration get to published results?
+title: "I put my NIR AutoML pipeline up against published results. The papers won 5 of 6."
 date: 2026-11-12
 order: 2
 tags: [nir, chemometrics, automl, benchmark]
-# Tables are in components, so the word count misses them: 1,524 rendered words.
-minutes: 7
+# Tables are in components, so the word count misses them: 2,127 rendered words.
+minutes: 10
 cover: ../../assets/posts/nir-automl-benchmark/cover.png
 coverAlt: "Cartoon of a handheld scanner shining near-infrared light on grain; the spectrum goes to a small robot holding a check mark."
-summary: "We ran the NIR AutoML pipeline on 10 public NIR datasets and set every result next to the best published error we could find."
-lede: "We ran the NIR AutoML pipeline on 10 public NIR datasets (25 measured properties) and set every result next to the best published error we could find. All numbers are prediction errors (RMSE): lower is better."
+summary: "I expected AutoML to beat hand-built NIR calibrations. On 10 public datasets it mostly did not, and that is still useful."
+lede: "I ran my NIR AutoML pipeline on 10 public NIR datasets (25 measured properties) and put every result next to the best published error I could find. All numbers are prediction errors (RMSE): lower is better."
 result: "On the 6 like-for-like properties, published errors are lower on 5; ours is lower on Tecator protein, by 24%."
 resultHref: "#datasets-with-a-published-result"
 cta:
-  text: "If you work with NIR calibration and want to compare notes, run your own data through the pipeline, or discuss the method, get in touch."
-  label: Get in touch
+  text: "Have NIR spectra with reference values, or a published calibration I should try to reproduce? Send it over. I will run it through the pipeline and share what comes out."
+  label: Send me data
   href: /contact/
 ---
 import { Image } from 'astro:assets';
@@ -25,15 +25,21 @@ import PipelineSteps from '../../components/nir/PipelineSteps.astro';
 import calibration from '../../assets/posts/nir-automl-benchmark/calibration-corn-protein.png';
 import dataset from '../../assets/posts/nir-automl-benchmark/dataset-tecator-fat.png';
 
+## Why I tried this
+
+At Evonik I spent more than three years around NIR: feedstuff analysis, prediction algorithms, two patents. Years later, at Eurofins, I built automated ML pipelines that take the hand work out of ADMET models. Putting the two together was the obvious next step. Can the AutoML approach build NIR calibrations?
+
+The classic way is still a person at a desk: pretreat the spectra, look at a PCA, fit a PLS model, tune it, repeat. It works, and it takes an expert and a lot of time per property. I wanted to see how close a pipeline gets with one upload and a one-hour time limit.
+
 ## The data
 
 10 public datasets, 2,714 spectra, 25 measured properties. Only 3 datasets come with a published train/test split.
 
 <DatasetTable />
 
-## How we tested
+## How I tested
 
-A model is scored on samples it never saw during training. Which samples those are changes the score a lot, so we tested the same pipeline with five different settings. Every square is a sample.
+A model is scored on samples it never saw during training. Which samples those are changes the score a lot, so I tested the same pipeline with five different settings. Every square is a sample.
 
 <TestSettings />
 
@@ -42,7 +48,7 @@ A model is scored on samples it never saw during training. Which samples those a
 15 properties. Only 6 come with the paper's own train/test split, so only those 6 compare like for like. The lower error in each row is bold. Errors are shown with 3 decimal places; the percentages are computed from the unrounded values.
 
 <ul class="legend" aria-label="How to read the lower-error column">
-  <li><span class="chip ours">Ours</span>our error lower, same test set</li>
+  <li><span class="chip ours">Ours</span>pipeline error lower, same test set</li>
   <li><span class="chip pub">Published</span>published error lower, same test set</li>
   <li><span class="chip ours ind">Ours</span><span class="chip pub ind">Published</span>outlined: different test procedure, indicative only</li>
 </ul>
@@ -51,9 +57,21 @@ A model is scored on samples it never saw during training. Which samples those a
 
 <p class="note">Percentages in the calibration column are ensemble weights: each model's share of the final prediction. The pipeline picks them by greedily adding the model that most lowers the cross-validated error, 50 times, so the weights are multiples of 2% and add up to 100%. "Lower error" says how much lower the smaller error is than the larger one; "about equal" means within 1%.</p>
 
+## I expected better
+
+Honestly, I thought the pipeline would win more often. On the 6 properties where the comparison is fair, the published calibration has the lower error 5 times. Did I miss something? Maybe: a pretreatment the authors chose by eye, a wavelength range they cut, or simply years of knowing their samples. If you can see what it is, tell me.
+
+What the pipeline does have is the rest of the job. It needs no chemometrics expert to run, it gives every property a validated model with a report in an hour, and it deploys as an API. For a lab with many properties and little time, being close is often enough.
+
+## Can the published numbers be reproduced?
+
+This is the bigger question. Only 6 of the 15 published results come with the paper's own train/test split. For the other 9 I cannot rerun what the authors did, so those rows stay indicative. A published error you cannot reproduce is hard to beat and hard to trust.
+
+That is why I want more data. Spectra with reference values, ideally with the split that was used, make each comparison fairer. If you have some, the box at the end says how to send it.
+
 ## Datasets without a published result
 
-10 properties. Nobody has published an error for these, so we report ours on its own. Error: mean of 3 random splits. Calibration: model from the full pipeline, trained on all rows (run of 12 November). Errors are shown with 3 decimal places.
+10 properties. Nobody has published an error for these, so I report mine on their own. Error: mean of 3 random splits. Calibration: model from the full pipeline, trained on all rows (run of 12 November). Errors are shown with 3 decimal places.
 
 <OwnTable />
 

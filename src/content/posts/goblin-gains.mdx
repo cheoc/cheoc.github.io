@@ -71,4 +71,26 @@ A training cycle is planned for the days you can train, the minutes you have and
 
 ## A grammar for workouts
 
-The workout generator does not pick from a list. It counts the patterns in real workouts (formats, movements, how rounds and caps are built) and writes new ones from them, for running, Hyrox, hybrid and CrossFit. Every workout passes checks before it is shown: doable, the right equipment, within its time cap. Each carries its scores. The generator fills planned sessions, offers swaps in the app, and answers through MCP, so Claude or any MCP client can ask for a workout.
+The workout generator does not pick from a list. It counts the patterns in real workouts (formats, movements, how rounds and caps are built) and writes new ones from them, for running, Hyrox, hybrid and CrossFit. Every workout passes checks before it is shown: doable, the right equipment, within its time cap. Each carries its scores. The generator fills planned sessions, offers swaps in the app, and answers your AI assistant through MCP.
+
+## Ask your AI assistant for a workout
+
+Goblin Gains is an MCP server. Ask Claude, ChatGPT or another assistant for a workout and it asks the generator: the workouts come from the library and its coaching rules, not from the AI. Each comes with a link to save it in the app and log it. It is free and needs no account.
+
+```text
+https://api.goblingains.com/mcp
+```
+
+- **Claude (claude.ai and the apps):** Settings, then Connectors, then Add custom connector. Name it goblingains, paste the address, leave sign-in off.
+- **Claude Code:**
+
+  ```sh
+  claude mcp add --transport http \
+    goblingains https://api.goblingains.com/mcp
+  ```
+
+- **ChatGPT, Cursor, VS Code, Gemini CLI:** the steps for each are on <a href="https://goblingains.com/ai">goblingains.com/ai</a>.
+
+Without a key, everyone on the same assistant shares an hourly limit. With an account, make a key in the app under Profile, then AI assistants, and send it as `Authorization: Bearer gg_mcp_…`. Then ask, for example: "A 20-minute workout with a rower and one kettlebell" or "Fran, but as an EMOM".
+
+<p class="note">Setup steps from <a href="https://goblingains.com/ai">goblingains.com/ai</a>, retrieved 13 November 2026.</p>

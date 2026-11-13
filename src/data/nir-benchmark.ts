@@ -66,7 +66,7 @@ export type PublishedRow = {
 };
 
 export const SAME_SET_NOTE =
-  "Same test set as the paper. Our error and calibration: one model from the full pipeline, trained on the paper's training rows.";
+  "Same test set as the published result. Our error and calibration: one model from the full pipeline, trained on the published training rows.";
 
 export const DIFFERENT_SET_NOTE =
   'Different test procedure. Our error: mean of 3 random splits, range in brackets. Calibration: model from the full pipeline, trained on all rows (run of 12 November).';
@@ -74,10 +74,10 @@ export const DIFFERENT_SET_NOTE =
 export const PUBLISHED: PublishedRow[] = [
   { dataset: 'Tecator meat', property: 'Fat, %', published: '0.360', ours: '0.435', winner: 'pub', gap: '17% lower', sameTestSet: true, calibration: { head: 'Ensemble of 6:', body: 'TabPFN 72%, kernel ridge 22%, GPR 4%, local PLS 2%', sub: 'SG 2nd derivative; SNV + SG for TabPFN' } },
   { dataset: 'Tecator meat', property: 'Protein, %', published: '0.520', ours: '0.395', winner: 'ours', gap: '24% lower', sameTestSet: true, calibration: { head: 'Ensemble of 6:', body: 'GPR 40%, TabPFN 32%, kernel ridge 18%, local PLS 10%', sub: 'MSC + SG 2nd derivative; SNV + detrend' } },
-  { dataset: 'Gasoline', property: 'Octane number', published: '0.234', ours: '0.279', winner: 'pub', gap: '16% lower', sameTestSet: true, calibration: { head: 'Ensemble of 5:', body: 'TabPFN 54%, SVR 16%, PLS 16%, ridge 14%', sub: 'SG 2nd derivative; SNV + SG 1st derivative; SG smoothing' } },
-  { dataset: 'NIRsoil', property: 'Total nitrogen, g/kg', published: '0.558', ours: '0.576', winner: 'pub', gap: '3% lower', sameTestSet: true, calibration: { head: 'Ensemble of 10:', body: 'TabPFN 46%, local PLS 22%, GPR 18%, kernel ridge 10%, 2 more', sub: 'SG 1st and 2nd derivative, MSC' } },
-  { dataset: 'NIRsoil', property: 'CEC, meq/100 g', published: '3.33', ours: '3.38', winner: 'pub', gap: '2% lower', sameTestSet: true, calibration: { head: 'Ensemble of 7:', body: 'TabPFN 48%, local PLS 24%, SVR 22%, 2 more', sub: 'SG 1st derivative; SNV for TabPFN' } },
-  { dataset: 'NIRsoil', property: 'Carbon, %', published: '0.433', ours: '0.439', winner: 'pub', gap: '1% lower', sameTestSet: true, calibration: { head: 'Ensemble of 9:', body: 'TabPFN 22%, SVR 20%, local PLS 20%, GPR 18%, kernel ridge 14%, 2 more', sub: 'SG 1st and 2nd derivative' } },
+  { dataset: 'Gasoline', property: 'Octane number', published: '0.234', ours: '0.279', winner: 'pub', gap: '16% lower', sameTestSet: true, testNote: 'split from the pls tutorial; lowest test error of all PLS sizes', calibration: { head: 'Ensemble of 5:', body: 'TabPFN 54%, SVR 16%, PLS 16%, ridge 14%', sub: 'SG 2nd derivative; SNV + SG 1st derivative; SG smoothing' } },
+  { dataset: 'NIRsoil', property: 'Total nitrogen, g/kg', published: '0.558', ours: '0.576', winner: 'pub', gap: '3% lower', sameTestSet: true, testNote: "contest organisers' model; they held the test values", calibration: { head: 'Ensemble of 10:', body: 'TabPFN 46%, local PLS 22%, GPR 18%, kernel ridge 10%, 2 more', sub: 'SG 1st and 2nd derivative, MSC' } },
+  { dataset: 'NIRsoil', property: 'CEC, meq/100 g', published: '3.33', ours: '3.38', winner: 'pub', gap: '2% lower', sameTestSet: true, testNote: "contest organisers' model; they held the test values", calibration: { head: 'Ensemble of 7:', body: 'TabPFN 48%, local PLS 24%, SVR 22%, 2 more', sub: 'SG 1st derivative; SNV for TabPFN' } },
+  { dataset: 'NIRsoil', property: 'Carbon, %', published: '0.433', ours: '0.439', winner: 'pub', gap: '1% lower', sameTestSet: true, testNote: "contest organisers' model; they held the test values", calibration: { head: 'Ensemble of 9:', body: 'TabPFN 22%, SVR 20%, local PLS 20%, GPR 18%, kernel ridge 14%, 2 more', sub: 'SG 1st and 2nd derivative' } },
   { dataset: 'Corn', property: 'Moisture, %', published: '0.0245', ours: '0.00735', range: '0.00538–0.00849', winner: 'ours', gap: '70% lower', sameTestSet: false, testNote: "paper's random split not published", calibration: { head: 'Single model:', body: 'PLS, 20 components', sub: 'SG smoothing' } },
   { dataset: 'Corn', property: 'Oil, %', published: '0.0388', ours: '0.0246', range: '0.0220–0.0271', winner: 'ours', gap: '37% lower', sameTestSet: false, testNote: 'same', calibration: { head: 'Single model:', body: 'PLS, 20 components', sub: 'detrend + SG 1st derivative' } },
   { dataset: 'Corn', property: 'Protein, %', published: '0.113', ours: '0.0296', range: '0.0233–0.0335', winner: 'ours', gap: '74% lower', sameTestSet: false, testNote: 'same', calibration: { head: 'Ensemble of 4:', body: 'TabPFN 82%, GPR 18%', sub: 'SG 1st and 2nd derivative' } },
@@ -125,7 +125,7 @@ export type Setting = {
 };
 
 export const SETTINGS: Setting[] = [
-  { title: "The paper's own split", text: 'Train and test on exactly the rows the paper used. The only like-for-like comparison.', scope: '6 properties, full pipeline', strips: [strip([12, 13, 14, 15], 'fixed')], alt: 'One fixed split: the last samples are the test set.', key: true },
+  { title: 'The published split', text: 'Train and test on exactly the rows the published result used. The only like-for-like comparison.', scope: '6 properties, full pipeline', strips: [strip([12, 13, 14, 15], 'fixed')], alt: 'One fixed split: the last samples are the test set.', key: true },
   { title: '50 random splits', text: 'Shuffle which samples are tested, 50 times, with a simple model menu. Shows the range to expect.', scope: '6 properties, simple menu', strips: [strip([1, 6, 9, 14]), strip([0, 4, 11, 13]), strip([3, 7, 8, 15]), strip([2, 5, 10, 12]), strip([1, 8, 11, 14])], more: 'and 45 more', alt: 'Five example random splits with different test samples, and 45 more.' },
   { title: 'Lucky, median, unlucky', text: 'Run the full pipeline on three of those splits for soil nitrogen.', scope: 'Soil nitrogen, full pipeline', strips: [strip([2, 6, 9, 13], '0.372'), strip([0, 5, 10, 14], '0.475'), strip([3, 4, 11, 15], '0.709')], alt: 'Three splits with errors 0.372, 0.475 and 0.709.' },
   { title: 'Ensemble check', text: 'Mix the best models with the pretrained TabPFN model; keep the mix only if it beats the single best in cross-validation.', scope: 'All 25 properties, up to 3 splits', strips: [strip([1, 5, 10, 14]), strip([2, 7, 9, 12]), strip([0, 6, 11, 15])], alt: 'Three random splits per property.' },

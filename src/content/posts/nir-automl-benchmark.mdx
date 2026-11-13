@@ -1,13 +1,13 @@
 ---
-title: "I put my NIR AutoML pipeline up against published results. The papers won 5 of 6."
+title: "Benchmarking NIR AutoML pipeline against 10 public datasets"
 date: 2026-11-12
 order: 2
 tags: [nir, chemometrics, automl, benchmark]
-# Tables are in components, so the word count misses them: 2,127 rendered words.
-minutes: 10
+# Tables are in components, so the word count misses them: 2,428 rendered words.
+minutes: 11
 cover: ../../assets/posts/nir-automl-benchmark/cover.png
 coverAlt: "Cartoon of a handheld scanner shining near-infrared light on grain; the spectrum goes to a small robot holding a check mark."
-summary: "I expected AutoML to beat hand-built NIR calibrations. On 10 public datasets it mostly did not, and that is still useful."
+summary: "I ran my NIR AutoML pipeline on 10 public datasets, set it against published results, then read the papers to see how those results were made."
 lede: "I ran my NIR AutoML pipeline on 10 public NIR datasets (25 measured properties) and put every result next to the best published error I could find. All numbers are prediction errors (RMSE): lower is better."
 result: "On the 6 like-for-like properties, published errors are lower on 5; ours is lower on Tecator protein, by 24%."
 resultHref: "#datasets-with-a-published-result"
@@ -45,7 +45,7 @@ A model is scored on samples it never saw during training. Which samples those a
 
 ## Datasets with a published result
 
-15 properties. Only 6 come with the paper's own train/test split, so only those 6 compare like for like. The lower error in each row is bold. Errors are shown with 3 decimal places; the percentages are computed from the unrounded values.
+15 properties. Only 6 come with a published train/test split, so only those 6 compare like for like. The lower error in each row is bold. Errors are shown with 3 decimal places; the percentages are computed from the unrounded values.
 
 <ul class="legend" aria-label="How to read the lower-error column">
   <li><span class="chip ours">Ours</span>pipeline error lower, same test set</li>
@@ -59,13 +59,24 @@ A model is scored on samples it never saw during training. Which samples those a
 
 ## I expected better
 
-Honestly, I thought the pipeline would win more often. On the 6 properties where the comparison is fair, the published calibration has the lower error 5 times. Did I miss something? Maybe: a pretreatment the authors chose by eye, a wavelength range they cut, or simply years of knowing their samples. If you can see what it is, tell me.
+I thought the pipeline would win more often. On the 6 properties with a published split, the published error is lower 5 times, by 1% to 17%. So I downloaded the papers behind those numbers and read how each one was made.
 
-What the pipeline does have is the rest of the job. It needs no chemometrics expert to run, it gives every property a validated model with a report in an hour, and it deploys as an API. For a lab with many properties and little time, being close is often enough.
+## What the papers show
+
+- **NIRsoil, 3 properties (published lower by 1–3%).** The numbers come from a 2006 contest (Fernández Pierna & Dardenne 2008). Three participants predicted the test set blind. The best published errors are the organisers' own models, and the organisers held the test reference values. Against the best blind entry, the pipeline is lower on all three: 0.576 against 0.654 for nitrogen, 0.439 against 0.558 for carbon, 3.38 against 3.58 for CEC.
+- **Gasoline octane (published lower by 16%).** The split and the 0.234 come from the tutorial of the R package pls, not from the dataset paper; Kalivas 1997 used a different split. The tutorial prints the test error for 1 to 10 PLS components, and I took the lowest, 0.234. That flatters the published side: the tutorial itself picks 2 components by cross-validation, which gives 0.244. The test set has 10 samples, so one sample moves the error a lot.
+- **Tecator fat (published lower by 17%).** The 0.36 comes from a Bayesian neural network that Thodberg, who also published the dataset, built for this data. The pipeline's 0.435 beats the models in the original paper (Borggaard & Thodberg 1992: neural network 0.65, PLS 2.86). I have not read the 1996 paper behind 0.36 yet, so I can't say how that model was chosen.
+- **Tecator protein (pipeline lower by 24%).** The 0.52 is a side result in a statistics paper (Bergsma 2017), from a single local optimum. Zhao et al. 2012 note that the protein reference values are known to be imprecise.
+
+So most of the gap is how the published numbers were obtained. The one clear loss to a better method is Tecator fat.
+
+## What the pipeline does have
+
+It needs no chemometrics expert to run, it gives every property a validated model with a report in an hour, and it deploys as an API. For a lab with many properties and little time, that matters as much as the last few percent.
 
 ## Can the published numbers be reproduced?
 
-This is the bigger question. Only 6 of the 15 published results come with the paper's own train/test split. For the other 9 I cannot rerun what the authors did, so those rows stay indicative. A published error you cannot reproduce is hard to beat and hard to trust.
+Only 6 of the 15 published results come with a published train/test split. For the other 9 I cannot rerun what the authors did, so those rows stay indicative. And as the papers show, even the 6 were not all made blind. A published error you cannot reproduce is hard to beat and hard to trust.
 
 That is why I want more data. Spectra with reference values, ideally with the split that was used, make each comparison fairer. If you have some, the box at the end says how to send it.
 

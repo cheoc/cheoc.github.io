@@ -230,6 +230,12 @@ td.diff { color: var(--muted); font-weight: 600; }
 
 .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 24px 0; }
 .figures figure { margin: 0; }
+/* Four small app screenshots side by side; two per row on phones. */
+.figures.shots { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: start; }
+/* One height for all four: phone shots crop from the top, the body map fits on its black ground. */
+.figures.shots img { aspect-ratio: 3 / 4; object-fit: cover; object-position: top; }
+.figures.shots img.fit { object-fit: contain; object-position: center; background: #000; }
+@media (max-width: 760px) { .figures.shots { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } }
 
 .stack { margin: 16px 0 0; display: flex; flex-direction: column; gap: 12px; }
 .stack dt { font-weight: 600; font-size: 15px; }

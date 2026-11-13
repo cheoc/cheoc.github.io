@@ -4,19 +4,24 @@ date: 2026-11-12
 tags: [fitness, hyrox, app]
 cover: ../../assets/posts/goblin-gains/cover.png
 coverAlt: "Cartoon of a grinning green goblin pressing a barbell overhead."
-summary: "Lifts, runs and stations in one log, with a muscle-load map and Garmin data attached to the right block."
-lede: "Made for Hyrox, hybrid, CrossFit and bodybuilding. Pick a cycle planned for your days and the time you have, log every lift round by round with your runs and stations next to it, and see what the week did to every muscle."
+summary: "Round-by-round logging, health data from the watch, 100k+ pre-solved training cycles and a grammar that writes new workouts."
+lede: "Made for Hyrox, hybrid, CrossFit and bodybuilding. Four parts carry it: a log that records every round, health data pulled from a Garmin, training cycles solved ahead of time for your days and minutes, and a workout generator built on a grammar of real workouts."
 cta:
   text: "In testing. Request access; new accounts are approved by hand."
   label: goblingains.com
   href: https://goblingains.com
 ---
 import { Image } from 'astro:assets';
+import logger from '../../assets/posts/goblin-gains/promo-poster.jpg';
+import session from '../../assets/posts/goblin-gains/session.webp';
+import watch from '../../assets/posts/goblin-gains/watch-poster.jpg';
 import musclemap from '../../assets/posts/goblin-gains/musclemap.webp';
 
-## One real week, 21–27 September
+## Logging, round by round
 
-Lifting days and running days share one load model, so a heavy squat day shows up before Thursday's intervals. As logged in the app, names shortened. Source: the week shown on <a href="https://goblingains.com">goblingains.com</a>, retrieved 12 November 2026.
+Every round is its own entry: one tap per set, mid-workout. Lifts, runs and stations land in the same log, so a heavy squat day and Thursday's intervals feed one load model, and every set counts on the muscles that did it.
+
+One real week as logged, names shortened. Source: the week shown on <a href="https://goblingains.com">goblingains.com</a>, retrieved 12 November 2026.
 
 <div class="table-box" role="region" aria-label="One logged week" tabindex="0">
   <table style="min-width: 640px">
@@ -35,15 +40,35 @@ Lifting days and running days share one load model, so a heavy squat day shows u
   </table>
 </div>
 
-## Every set lands on the muscles that did it
+<div class="figures shots wide">
+  <figure>
+    <Image src={logger} width={360} alt="The logger mid-session: back squats, round 1 of 3 at 10 × 40 kg, with a button to log the round." />
+    <figcaption>Logging a round.</figcaption>
+  </figure>
+  <figure>
+    <Image src={session} width={390} alt="A logged session: an outdoor ride of 4.41 km with heart rate, then back squats and Bulgarian split squats with their top sets." />
+    <figcaption>A ride and the lifts in one session.</figcaption>
+  </figure>
+  <figure>
+    <Image src={watch} width={374} alt="A finished Hyrox WOD of 29:01 with average 135 and max 160 bpm from the watch." />
+    <figcaption>Watch data on a logged WOD.</figcaption>
+  </figure>
+  <figure>
+    <Image src={musclemap} width={390} class="fit" alt="Front and back body map in the app: most muscles green for fresh, quadriceps and glutes amber for loaded." />
+    <figcaption>Muscle load: green fresh, amber loaded.</figcaption>
+  </figure>
+</div>
 
-Squats, lunges and the wall balls inside a WOD all count toward your quads. The map shows what training has loaded and what is fresh, muscle by muscle, front and back, so the next session is chosen on evidence instead of feel.
+## Health data from the watch
 
-<figure>
-  <Image src={musclemap} width={774} alt="Front and back body map in the app: most muscles green for fresh, quadriceps and glutes amber for loaded." />
-  <figcaption>Muscle fatigue in the app: green is fresh, amber is loaded.</figcaption>
-</figure>
+A Garmin connection pulls daily HRV, resting heart rate, steps, sleep score and sleep duration. Each shows its trend, with a 90-day chart behind it. Heart-rate zones come from the watch's max and threshold heart rate.
 
-## The watch adds to the log; it doesn't replace it
+The watch adds to the log; it doesn't replace it. You log the workout you did. Afterwards the run or ride attaches to the block it belongs to: distance, pace, heart rate, zones and laps. What you entered stays yours; the watch fills in what it measured.
 
-You log the workout you did. Afterwards the run or ride from a Garmin attaches to the block it belongs to: distance, pace, heart rate and zones. What you entered stays yours; the watch fills in what it measured.
+## 100k+ cycles, solved ahead
+
+A training cycle is planned for the days you can train, the minutes you have and your goal, for Hyrox, hybrid, CrossFit or bodybuilding. Each plan is a constraint solve (CP-SAT). Instead of solving while you wait, the solve runs offline for every rounded combination of inputs, and more than 100,000 cycles are stored. Picking one reads the stored plan; your equipment, injuries and loads are then fitted to it.
+
+## A grammar for workouts
+
+The workout generator does not pick from a list. It counts the patterns in real workouts (formats, movements, how rounds and caps are built) and writes new ones from them, for running, Hyrox, hybrid and CrossFit. Every workout passes checks before it is shown: doable, the right equipment, within its time cap. Each carries its scores. The generator fills planned sessions, offers swaps in the app, and answers through MCP, so Claude or any MCP client can ask for a workout.

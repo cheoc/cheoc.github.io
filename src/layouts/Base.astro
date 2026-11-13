@@ -1,6 +1,6 @@
 ---
 import '../styles/site.css';
-import { LINKS, SITE_NAME } from '../data/site';
+import { SITE_NAME } from '../data/site';
 import { withBase } from '../lib/posts';
 
 interface Props {
@@ -18,12 +18,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const rss = withBase('/rss.xml');
 const FONTS = 'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap';
 
-// Header links in order; empty hrefs are dropped.
+// Header links in order; RSS follows them.
 const nav = [
   { key: 'projects', label: 'Projects', href: withBase('/') },
-  { key: 'github', label: 'GitHub', href: LINKS.github },
   { key: 'about', label: 'About', href: withBase('/about/') },
-].filter((l) => l.href);
+];
 ---
 <!doctype html>
 <html lang="en">

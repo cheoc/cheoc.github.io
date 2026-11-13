@@ -26,8 +26,8 @@ src/content/posts/*.mdx ──> getPosts() ──> index: one row per post, newe
 4. Write the body in Markdown. `##` headings feed the contents box, which
    appears once a post has four or more of them.
 
-Site title, subtitle and the LinkedIn/GitHub links are in `src/data/site.ts`;
-an empty link is hidden.
+Site title, subtitle, email and the LinkedIn/GitHub links are in
+`src/data/site.ts`; the contact links show on the About page.
 
 ## Run
 

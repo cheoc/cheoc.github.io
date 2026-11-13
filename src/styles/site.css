@@ -178,9 +178,6 @@ figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
 .about .body { margin-top: 24px; }
 .about ul { padding-left: 18px; }
 
-footer { border-top: 1px solid var(--rule); }
-footer .wrap { padding-block: 24px 40px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0 16px; }
-footer a { color: var(--muted); }
 
 
 
@@ -285,4 +282,3 @@ p, li { text-wrap: pretty; }
 .taglist a { color: var(--fg); font-weight: 600; text-decoration: none; }
 .taglist a:hover { color: var(--accent); }
 .taglist time { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
-footer a { min-height: 44px; display: inline-flex; align-items: center; }

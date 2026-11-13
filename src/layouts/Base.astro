@@ -1,6 +1,6 @@
 ---
 import '../styles/site.css';
-import { EMAIL, LINKS, SITE_NAME } from '../data/site';
+import { LINKS, SITE_NAME } from '../data/site';
 import { withBase } from '../lib/posts';
 
 interface Props {
@@ -21,9 +21,8 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;7
 // Header links in order; empty hrefs are dropped.
 const nav = [
   { key: 'projects', label: 'Projects', href: withBase('/') },
-  { key: 'about', label: 'About', href: withBase('/about/') },
-  { key: 'linkedin', label: 'LinkedIn', href: LINKS.linkedin },
   { key: 'github', label: 'GitHub', href: LINKS.github },
+  { key: 'about', label: 'About', href: withBase('/about/') },
 ].filter((l) => l.href);
 ---
 <!doctype html>
@@ -67,12 +66,5 @@ const nav = [
     <main id="main">
       <slot />
     </main>
-
-    <footer>
-      <div class="wrap">
-        <span>Contact: <a href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
-        <a href={rss}>RSS feed</a>
-      </div>
-    </footer>
   </body>
 </html>

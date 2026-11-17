@@ -25,6 +25,7 @@ import PipelineSteps from '../../components/nir/PipelineSteps.astro';
 import ShapFigure from '../../components/nir/ShapFigure.astro';
 import calibration from '../../assets/posts/nir-automl-benchmark/calibration-corn-protein.png';
 import dataset from '../../assets/posts/nir-automl-benchmark/dataset-tecator-fat.png';
+import explain from '../../assets/posts/nir-automl-benchmark/explain-tecator-fat.png';
 
 ## Why I tried this
 
@@ -108,6 +109,13 @@ An example on that Tecator fat model (test error 0.435):
 The fatty and lean spectra differ most at 929–937 nm, in the region where the C–H bonds of fat absorb (third overtone, 850–950 nm). The model's largest SHAP values sit right there: 922–949 nm, with the top one at 925 nm, worth 6.9% fat on average. Nobody told the model where fat absorbs; it found the band from the data. Smaller bars near 1030–1050 nm sit where the spectra also track fat.
 
 This is the check I want before trusting a calibration. If the tallest bars sat in a region with no chemistry behind it, or at the edge of the detector, I would suspect an artefact or overfitting, however good the error.
+
+The app does this check on its explain page. It marks the peak regions, shades them by strength, and lists the published NIR bands that sit there, each with its sources:
+
+<figure>
+  <Image src={explain} widths={[720, 1440]} sizes="(max-width: 700px) 100vw, 1040px" alt="Explain page for a Tecator fat model: mean SHAP per wavelength with the 923–937 nm region shaded, and region cards below listing candidate bands such as fat, C–H third overtone, with PubMed Central sources." />
+  <figcaption>Explain page, Tecator fat, single kernel ridge model (test error 0.573): 923–937 nm holds 70% of the attribution and is labelled fat, C–H third overtone. Ensembles get regions but no labels yet.</figcaption>
+</figure>
 
 <p class="note">How it is computed: SHAP's KernelExplainer on 25 representative training spectra (k-means), 500 model evaluations each. For this ensemble that took about 25 minutes on one CPU core; the result is stored with the model. With 500 evaluations for 100 wavelengths, each spectrum's explanation keeps only its strongest ten or so wavelengths, so single bars are spiky: read the clusters, not one bar.</p>
 

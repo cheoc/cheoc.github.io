@@ -2,7 +2,7 @@
 import { DIFFERENT_SET_NOTE, IN_PROGRESS, PUBLISHED, SAME_SET_NOTE, fmtError, fmtRange, type PublishedRow } from '../../data/nir-benchmark';
 
 const COLS = 7;
-const WINNER_LABEL = { ours: 'Ours', pub: 'Published', equal: 'About equal' } as const;
+const WINNER_LABEL = { ours: 'Pipeline', pub: 'Published', equal: 'About equal' } as const;
 
 const groups = [
   { note: SAME_SET_NOTE, rows: PUBLISHED.filter((r) => r.sameTestSet) },
@@ -23,7 +23,7 @@ function chipText(r: PublishedRow): string {
     <thead>
       <tr>
         <th scope="col">Dataset</th><th scope="col">Measured property</th>
-        <th scope="col" class="num">Published error</th><th scope="col" class="num">Our error</th>
+        <th scope="col" class="num">Published error</th><th scope="col" class="num">Pipeline error</th>
         <th scope="col">Lower error</th><th scope="col">Same test set?</th>
         <th scope="col">Calibration the pipeline found</th>
       </tr>

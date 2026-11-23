@@ -10,7 +10,7 @@ cover: ../../assets/posts/nir-automl-71-tasks/cover.png
 coverAlt: "Cartoon of a small robot on a podium next to a bar chart; most bars end below a dashed reference line, two rise above it."
 summary: "I ran the NIR AutoML pipeline on 71 public tasks, 27 of them on the published splits of the NIRBENCH-DL benchmark."
 lede: "I ran the NIR AutoML pipeline on 71 public NIR tasks with a one-hour limit each. 27 come from NIRBENCH-DL, a benchmark that publishes its train/test splits and the errors of 16 models per task, so for those the comparison is like for like. All errors are test RMSE: lower is better."
-result: "On NIRBENCH-DL's own test sets, my error is lower than their tuned PLS on 23 of 27 tasks; beyond two standard errors, 12 lower and 1 higher."
+result: "On NIRBENCH-DL's own test sets, the NIR AutoML pipeline's error is lower than their tuned PLS on 23 of 27 tasks; beyond two standard errors, 12 lower and 1 higher."
 resultHref: "#nirbench-dl-27-tasks-on-the-published-splits"
 cta:
   text: "Have NIR spectra with reference values, or a published calibration I should try to reproduce? Send it over. I will run it through the pipeline and share what comes out."
@@ -26,7 +26,7 @@ import { NIRBENCH_MODELS, RANK_SCORE, RUNTIME } from '../../data/nir-benchmark-7
 
 ## Why a second run
 
-In my [first NIR post](/posts/nir-automl-benchmark/) only 6 of 15 published results came with a published train/test split. The rest I could not reproduce, so most of that post compared my numbers with results I could not rerun.
+In my [first NIR post](/posts/nir-automl-benchmark/) only 6 of 15 published results came with a published train/test split. The rest I could not reproduce, so most of that post compared the pipeline's numbers with results that could not be rerun.
 
 [NIRBENCH-DL](https://github.com/DeepLightLab/NIRBENCH_DL_v0.1) fixes that ([live dashboard](https://deeplightlab.github.io/nirbench01/index.html)). It publishes 30 tasks with fixed train/test splits and the test errors of {NIRBENCH_MODELS} models on each: a tuned PLS, 13 deep-learning networks and two tabular foundation models, TabPFN 3.5 and TabICL v2. I ran 27 of the 30; tasks 4, 12 and 14 need a download from Eigenvector that I have not done yet.
 
@@ -48,7 +48,7 @@ What to expect from it: small datasets finish in minutes, large ones use the who
 
 <RuntimeTable />
 
-<p class="note">Median over the tasks in each row; the error columns compare my test error with NIRBENCH's PLS and with the best of its {NIRBENCH_MODELS} models. Whether more than one hour would help the large tasks, I have not tested.</p>
+<p class="note">Median over the tasks in each row; the error columns compare the pipeline's test error with NIRBENCH's PLS and with the best of its {NIRBENCH_MODELS} models. Whether more than one hour would help the large tasks, I have not tested.</p>
 
 ## NIRBENCH-DL: 27 tasks on the published splits
 
@@ -58,37 +58,37 @@ A gap counts only if it is larger than the noise of the test error. I use one st
 
 The fair comparison is the first row. NIRBENCH tunes its PLS by five-fold cross-validation on the training set, choosing preprocessing and 1–20 latent variables together, as a chemometrician would. "Best of {NIRBENCH_MODELS}" is the lowest test error among {NIRBENCH_MODELS} models per task, picked after seeing the test set, and NIRBENCH's deep-learning models run without hyperparameter tuning. So I do not read the second row as "beats deep learning"; it is a hard bar, not a rival.
 
-NIRBENCH also ranks models by a consistency score: rank the models by test error within each dataset, map each rank to 0–100 (100 × (M − rank) / (M − 1), M models), and average over datasets. Restricting it to the {RANK_SCORE.datasetsShared} datasets I ran barely moves NIRBENCH's own numbers: TabPFN 3.5 {RANK_SCORE.theirs30.TabPFN35.toFixed(1)} on all {RANK_SCORE.datasetsAll} and {RANK_SCORE.theirs27.TabPFN35.toFixed(1)} on {RANK_SCORE.datasetsShared}. With the NIR AutoML pipeline added as a 17th model on those {RANK_SCORE.datasetsShared} datasets, it scores {RANK_SCORE.with.OURS.toFixed(1)}, against TabPFN 3.5 at {RANK_SCORE.with.TabPFN35.toFixed(1)}, TabICL v2 at {RANK_SCORE.with.TabICLv2.toFixed(1)} and PLS at {RANK_SCORE.with.PLSRegression.toFixed(1)}. It is first on {RANK_SCORE.firstPlaces} of the {RANK_SCORE.datasetsShared} datasets and never below rank {RANK_SCORE.worstRank} ({RANK_SCORE.worstTask}). Three limits: {RANK_SCORE.datasetsAll - RANK_SCORE.datasetsShared} of NIRBENCH's {RANK_SCORE.datasetsAll} datasets are missing; my error is one run, while their deep-learning and foundation-model errors are means over 10 runs; and I scored these test sets once before changing the search. The score counts only order, so a 1% win counts as much as a 30% one; the chips below show the margins.
+NIRBENCH also ranks models by a consistency score: rank the models by test error within each dataset, map each rank to 0–100 (100 × (M − rank) / (M − 1), M models), and average over datasets. Restricting it to the {RANK_SCORE.datasetsShared} datasets I ran barely moves NIRBENCH's own numbers: TabPFN 3.5 {RANK_SCORE.theirs30.TabPFN35.toFixed(1)} on all {RANK_SCORE.datasetsAll} and {RANK_SCORE.theirs27.TabPFN35.toFixed(1)} on {RANK_SCORE.datasetsShared}. With the NIR AutoML pipeline added as a 17th model on those {RANK_SCORE.datasetsShared} datasets, it scores {RANK_SCORE.with.OURS.toFixed(1)}, against TabPFN 3.5 at {RANK_SCORE.with.TabPFN35.toFixed(1)}, TabICL v2 at {RANK_SCORE.with.TabICLv2.toFixed(1)} and PLS at {RANK_SCORE.with.PLSRegression.toFixed(1)}. It is first on {RANK_SCORE.firstPlaces} of the {RANK_SCORE.datasetsShared} datasets and never below rank {RANK_SCORE.worstRank} ({RANK_SCORE.worstTask}). Three limits: {RANK_SCORE.datasetsAll - RANK_SCORE.datasetsShared} of NIRBENCH's {RANK_SCORE.datasetsAll} datasets are missing; the pipeline's error is one run, while their deep-learning and foundation-model errors are means over 10 runs; and I scored these test sets once before changing the search. The score counts only order, so a 1% win counts as much as a 30% one; the chips below show the margins.
 
 <RankScoreChart />
 
 <ul class="legend" aria-label="How to read the comparison columns">
-  <li><span class="chip ours">lower</span>my error lower, beyond 2 SE</li>
+  <li><span class="chip ours">lower</span>pipeline error lower, beyond 2 SE</li>
   <li><span class="chip ours ind">lower</span>beyond 1 SE only</li>
   <li><span class="chip equal">within 1 SE</span>no clear difference</li>
-  <li><span class="chip pub ind">higher</span>my error higher, beyond 1 SE only</li>
-  <li><span class="chip pub">higher</span>my error higher, beyond 2 SE</li>
+  <li><span class="chip pub ind">higher</span>pipeline error higher, beyond 1 SE only</li>
+  <li><span class="chip pub">higher</span>pipeline error higher, beyond 2 SE</li>
 </ul>
 
 <NirbenchTable />
 
-<p class="note">Published errors: NIRBENCH-DL v0.1 site data generated 14 November 2026, test RMSE in the units of the property. Deep-learning, TabPFN and TabICL errors are means over 10 seeded runs; PLS is one fit; mine is one run. "Best of {NIRBENCH_MODELS}" names the model with the lowest published test error. Errors are shown with 3 decimals; percentages are computed from the unrounded values. The shaded cell is the lowest error in the row. The model column shows ensemble weights per model family, which add up to 100%; an ensemble can hold several models of one family.</p>
+<p class="note">Published errors: NIRBENCH-DL v0.1 site data generated 14 November 2026, test RMSE in the units of the property. Deep-learning, TabPFN and TabICL errors are means over 10 seeded runs; PLS is one fit; the pipeline's is one run. "Best of {NIRBENCH_MODELS}" names the model with the lowest published test error. Errors are shown with 3 decimals; percentages are computed from the unrounded values. The shaded cell is the lowest error in the row. The model column shows ensemble weights per model family, which add up to 100%; an ensemble can hold several models of one family.</p>
 
-## Where I lose
+## Where the NIR AutoML pipeline loses
 
-- **Milk protein (15% higher than PLS).** NIRBENCH's PLS is the best model here. My ensemble's PLS member (30% of the weight) uses 20 components, the cap of my search; more components gained less than 1% in cross-validation, so the cap is not the whole story. The search also stopped at the one-hour limit.
+- **Milk protein (15% higher than PLS).** NIRBENCH's PLS is the best model here. The pipeline's ensemble has a PLS member (30% of the weight) with 20 components, the cap of the search; more components gained less than 1% in cross-validation, so the cap is not the whole story. The search also stopped at the one-hour limit.
 - **Mango S1 dry matter (6% higher than TabPFN 3.5).** The search stopped at the one-hour limit after 35 trials. On large tasks the time limit, not the method, sets how far the search gets.
 - **Tomato set 4 (18% higher than TabPFN 3.5).** The test set has 27 samples, so 18% is about 1.3 standard errors: possibly noise.
 
 ## Read with care
 
 - **The test sets are not fresh.** I scored these same NIRBENCH test sets on 14 November and changed the search afterwards. Tecator moisture, for example, went from 0.460 to 0.550. A result tuned against a reused test set is optimistic, even if no single change was aimed at it.
-- **The pipeline flags its own weak models.** It marks a model unreliable when, on rows held out during training, the RPD is below 1.4, the slope of predicted against measured falls outside 0.8–1.2, or the error is more than 1.5 times the cross-validated error. The check does not see the benchmark test set. 11 of the 27 NIRBENCH models carry a flag, including 7 where my error is below PLS beyond one standard error (3 beyond two). The flag is in the last column.
-- **Foundation models are on both sides.** NIRBENCH runs two pretrained tabular models with frozen weights: TabPFN 3.5 and TabICL v2 (Qu et al. 2026). TabICL v2 is the best published model on 4 of the 27 tasks (3, 5, 19, 21). The NIR AutoML pipeline uses TabPFN v2 as one member of the ensemble; it carries weight in 40 of my 71 final models.
+- **The pipeline flags its own weak models.** It marks a model unreliable when, on rows held out during training, the RPD is below 1.4, the slope of predicted against measured falls outside 0.8–1.2, or the error is more than 1.5 times the cross-validated error. The check does not see the benchmark test set. 11 of the 27 NIRBENCH models carry a flag, including 7 where the pipeline's error is below PLS beyond one standard error (3 beyond two). The flag is in the last column.
+- **Foundation models are on both sides.** NIRBENCH runs two pretrained tabular models with frozen weights: TabPFN 3.5 and TabICL v2 (Qu et al. 2026). TabICL v2 is the best published model on 4 of the 27 tasks (3, 5, 19, 21). The NIR AutoML pipeline uses TabPFN v2 as one member of the ensemble; it carries weight in 40 of the 71 final models.
 
 ## The 10 datasets of the first post, on new splits
 
-One random split per dataset (seed 42, stratified by the measured value) and one property each. These numbers do not replace the first post's: that post averaged 3 random splits and used the published splits where they existed. Corn protein, for example, is 0.051 here and 0.030 there; with 16 test samples, one split moves the error a lot. Two tasks appear twice in this post. Tecator moisture: 0.550 on NIRBENCH's published split (172 train / 43 test) and 0.512 here on my own split (192 / 48). Wheat protein (handheld): NIRBENCH task 20 uses the same 403 samples, 0.364 on its split (323 / 80) and 0.363 here (322 / 81). Stratifying by the measured value also makes R² and RPD look better than a plain random split would.
+One random split per dataset (seed 42, stratified by the measured value) and one property each. These numbers do not replace the first post's: that post averaged 3 random splits and used the published splits where they existed. Corn protein, for example, is 0.051 here and 0.030 there; with 16 test samples, one split moves the error a lot. Two tasks appear twice in this post. Tecator moisture: 0.550 on NIRBENCH's published split (172 train / 43 test) and 0.512 here on the split used in this post (192 / 48). Wheat protein (handheld): NIRBENCH task 20 uses the same 403 samples, 0.364 on its split (323 / 80) and 0.363 here (322 / 81). Stratifying by the measured value also makes R² and RPD look better than a plain random split would.
 
 <OwnResultsTable set="initial" />
 
@@ -98,7 +98,7 @@ Same procedure, own split per dataset. These are harder: leaf and canopy spectra
 
 <OwnResultsTable set="nirs4all" />
 
-<p class="note">RPD: standard deviation of the test values divided by the test error. Above 3 is good for quantitative use, 2–3 is enough for screening, below 2 is weak. Median here: R² 0.747, RPD 2.015. 17 of the 34 are below RPD 2, 5 have a negative R² (worse than predicting the mean), and the pipeline flags 26 of 34 as unreliable. Some of these datasets have published errors, but none on my split; I will add them, marked indicative, once I have checked each source.</p>
+<p class="note">RPD: standard deviation of the test values divided by the test error. Above 3 is good for quantitative use, 2–3 is enough for screening, below 2 is weak. Median here: R² 0.747, RPD 2.015. 17 of the 34 are below RPD 2, 5 have a negative R² (worse than predicting the mean), and the pipeline flags 26 of 34 as unreliable. Some of these datasets have published errors, but none on these splits; I will add them, marked indicative, once I have checked each source.</p>
 
 ## What the run says
 

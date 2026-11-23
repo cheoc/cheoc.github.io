@@ -66,10 +66,10 @@ export type PublishedRow = {
 };
 
 export const SAME_SET_NOTE =
-  "Same test set as the published result. Our error and calibration: one model from the full pipeline, trained on the published training rows.";
+  "Same test set as the published result. Pipeline error and calibration: one model from the full pipeline, trained on the published training rows.";
 
 export const DIFFERENT_SET_NOTE =
-  'Different test procedure. Our error: mean of 3 random splits, range in brackets. Calibration: model from the full pipeline, trained on all rows (run of 12 November).';
+  'Different test procedure. Pipeline error: mean of 3 random splits, range in brackets. Calibration: model from the full pipeline, trained on all rows (run of 12 November).';
 
 export const PUBLISHED: PublishedRow[] = [
   { dataset: 'Tecator meat', property: 'Fat, %', published: '0.360', ours: '0.435', winner: 'pub', gap: '17% lower', sameTestSet: true, calibration: { head: 'Ensemble of 6:', body: 'TabPFN 72%, kernel ridge 22%, GPR 4%, local PLS 2%', sub: 'SG 2nd derivative; SNV + SG for TabPFN' } },

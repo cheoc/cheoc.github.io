@@ -9,7 +9,7 @@ cover: ../../assets/posts/nir-automl-benchmark/cover.png
 coverAlt: "Cartoon of a handheld scanner shining near-infrared light on grain; the spectrum goes to a small robot holding a check mark."
 summary: "I ran the NIR AutoML pipeline on 10 public datasets, set it against published results, then read the papers to see how those results were made."
 lede: "I ran the NIR AutoML pipeline on 10 public NIR datasets (25 measured properties) and put every result next to the best published error I could find. All numbers are prediction errors (RMSE): lower is better."
-result: "On the 6 like-for-like properties, published errors are lower on 5; ours is lower on Tecator protein, by 24%."
+result: "On the 6 like-for-like properties, published errors are lower on 5; the pipeline's is lower on Tecator protein, by 24%."
 resultHref: "#datasets-with-a-published-result"
 cta:
   text: "Have NIR spectra with reference values, or a published calibration I should try to reproduce? Send it over. I will run it through the pipeline and share what comes out."
@@ -52,18 +52,18 @@ A model is scored on samples it never saw during training. Which samples those a
 15 properties. Only 6 come with a published train/test split, so only those 6 compare like for like. The lower error in each row is bold. Errors are shown with 3 decimal places; the percentages are computed from the unrounded values.
 
 <ul class="legend" aria-label="How to read the lower-error column">
-  <li><span class="chip ours">Ours</span>pipeline error lower, same test set</li>
+  <li><span class="chip ours">Pipeline</span>pipeline error lower, same test set</li>
   <li><span class="chip pub">Published</span>published error lower, same test set</li>
-  <li><span class="chip ours ind">Ours</span><span class="chip pub ind">Published</span>outlined: different test procedure, indicative only</li>
+  <li><span class="chip ours ind">Pipeline</span><span class="chip pub ind">Published</span>outlined: different test procedure, indicative only</li>
 </ul>
 
 <PublishedTable />
 
 <p class="note">Percentages in the calibration column are ensemble weights: each model's share of the final prediction. The pipeline picks them by greedily adding the model that most lowers the cross-validated error, 50 times, so the weights are multiples of 2% and add up to 100%. "Lower error" says how much lower the smaller error is than the larger one; "about equal" means within 1%.</p>
 
-## I expected better
+## Where the NIR AutoML pipeline loses
 
-I thought the pipeline would win more often. On the 6 properties with a published split, the published error is lower 5 times, by 1% to 17%. So I downloaded the papers behind those numbers and read how each one was made.
+On the 6 properties with a published split, the published error is lower 5 times, by 1% to 17%. To see why, I downloaded the papers behind those numbers and read how each one was made.
 
 ## What the papers show
 
@@ -86,7 +86,7 @@ That is why I want more data. Spectra with reference values, ideally with the sp
 
 ## Datasets without a published result
 
-10 properties. When I wrote this I found no published error for these, so I report mine on their own. I had missed that NIRBENCH-DL publishes errors for three of them: Tecator moisture on the standard 172/43 split, and wheat moisture and protein on its own split of 398 and 403 of these wheat samples. My [follow-up post](/posts/nir-automl-71-tasks/) compares against those. Error: mean of 3 random splits. Calibration: model from the full pipeline, trained on all rows (run of 12 November). Errors are shown with 3 decimal places.
+10 properties. When I wrote this I found no published error for these, so the pipeline's errors are reported on their own. I had missed that NIRBENCH-DL publishes errors for three of them: Tecator moisture on the standard 172/43 split, and wheat moisture and protein on its own split of 398 and 403 of these wheat samples. My [follow-up post](/posts/nir-automl-71-tasks/) compares against those. Error: mean of 3 random splits. Calibration: model from the full pipeline, trained on all rows (run of 12 November). Errors are shown with 3 decimal places.
 
 <OwnTable />
 

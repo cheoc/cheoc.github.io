@@ -1,0 +1,1 @@
+{"seed": 42, "test_fraction": 0.2, "method": "y-sorted blocks, one random test row per block", "row_order": "groups sorted by id, replicates averaged", "test_rows": [7, 10, 11, 13, 19, 28, 30, 36, 38, 40, 45, 48, 58, 64, 66, 73, 78]}

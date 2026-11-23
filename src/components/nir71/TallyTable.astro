@@ -1,0 +1,42 @@
+---
+import { DL_TALLY, NIRBENCH_MODELS } from '../../data/nir-benchmark-71';
+
+// Counts per band, so each chip style means what the legend says:
+// outlined = beyond 1 SE but not 2 SE, filled = beyond 2 SE.
+function only1(one: { better: number; worse: number }, two: { better: number; worse: number }) {
+  return { better: one.better - two.better, worse: one.worse - two.worse };
+}
+
+const rows = [
+  { label: 'NIRBENCH PLS (tuned by 5-fold CV)', lower: DL_TALLY.lowerThanPls, one: only1(DL_TALLY.vsPls1, DL_TALLY.vsPls2), two: DL_TALLY.vsPls2 },
+  { label: `Best of NIRBENCH’s ${NIRBENCH_MODELS} models per task`, lower: DL_TALLY.lowerThanBest, one: only1(DL_TALLY.vsBest1, DL_TALLY.vsBest2), two: DL_TALLY.vsBest2 },
+];
+---
+<div class="table-box" role="region" aria-label="NIRBENCH-DL tally" tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Compared with</th>
+        <th scope="col" class="num">My error lower</th>
+        <th scope="col" class="num">Beyond 1 SE only</th>
+        <th scope="col" class="num">Beyond 2 SE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td>{r.label}</td>
+          <td class="num">{r.lower} of 27</td>
+          <td class="num"><span class="chip ours ind">{r.one.better} lower</span> <span class="chip pub ind">{r.one.worse} higher</span></td>
+          <td class="num"><span class="chip ours">{r.two.better} lower</span> <span class="chip pub">{r.two.worse} higher</span></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* The site gives every table's last column 340px for long model text; this
+     table's last column holds two chips, so let it shrink on phones. */
+  .table-box td:last-child, .table-box th:last-child { min-width: 0; }
+</style>

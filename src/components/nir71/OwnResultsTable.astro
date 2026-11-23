@@ -1,0 +1,75 @@
+---
+import { INITIAL, NIRS4ALL } from '../../data/nir-benchmark-71';
+import { fmtErr, fmtR2, fmtRpd, taskName } from './format';
+
+interface Props {
+  set: 'initial' | 'nirs4all';
+}
+
+const { set } = Astro.props;
+const rows = set === 'initial' ? INITIAL : NIRS4ALL;
+const label = set === 'initial' ? 'Results on the first 10 datasets' : 'Results on 34 nirs4all datasets';
+
+// RPD bands used in NIR practice: 3 and above good for quantitative use,
+// 2 to 3 enough for screening, below 2 weak. Own marks (teal wash, plain,
+// muted) so they are not confused with the lower/higher error chips.
+const RPD_GOOD = 3;
+const RPD_SCREENING = 2;
+
+function rpdClass(rpd: number): string {
+  if (rpd >= RPD_GOOD) {
+    return 'rpd good';
+  }
+  return rpd >= RPD_SCREENING ? 'rpd mid' : 'rpd weak';
+}
+---
+<ul class="legend" aria-label="How to read the RPD, R² and check columns">
+  <li><span class="key rpd good">RPD ≥ 3</span>good for quantitative use</li>
+  <li><span class="key rpd mid">2–3</span>enough for screening</li>
+  <li><span class="key rpd weak">&lt; 2</span>weak</li>
+  <li><span class="key neg">R² &lt; 0</span>worse than predicting the mean</li>
+  <li><b class="flag">Flagged</b>failed the pipeline's reliability check</li>
+</ul>
+<div class="table-box wide" role="region" aria-label={label} tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Dataset</th>
+        <th scope="col" class="num">Train / test</th>
+        <th scope="col" class="num">Error (RMSE)</th>
+        <th scope="col" class="num">R²</th>
+        <th scope="col" class="num">RPD</th>
+        <th scope="col">Licence</th>
+        <th scope="col">Model the pipeline chose</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td>{set === 'initial' ? r.name : taskName(r.task)}<span class="sub">{r.property}{r.sourceColumn && r.sourceColumn !== r.property ? ` (${r.sourceColumn})` : ''}</span></td>
+          <td class="num">{r.nTrain} / {r.nTest}</td>
+          <td class="num">{fmtErr(r.rmse)}</td>
+          <td class:list={['num', { lose: r.r2 < 0 }]}>{fmtR2(r.r2)}</td>
+          <td class:list={['num', rpdClass(r.rpd)]}>{fmtRpd(r.rpd)}</td>
+          <td>{r.licence}</td>
+          <td>
+            {r.model}
+            <span class="sub">
+              {r.reliable ? 'Passed the reliability check' : <b class="flag">Flagged by the reliability check</b>}
+              {r.timeLimit && ' · stopped at the 1 h limit'}
+            </span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* RPD band marks in teal; the R² < 0 key reuses the red data tint (--higher-bg),
+     the DESIGN.md exception for result tints. */
+  .rpd.good { background: var(--accent-soft); color: var(--accent-ink); font-weight: 700; }
+  .rpd.weak { color: var(--muted); }
+  .key { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 12px; font-weight: 600; white-space: nowrap; border: 1px solid var(--rule); }
+  .key.neg { background: var(--higher-bg); }
+</style>

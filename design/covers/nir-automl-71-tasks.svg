@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="1600" height="1000">
+  <!-- NIR AutoML 71-task cover: the robot from the first NIR cover stands on a
+       podium next to a scoreboard. Each bar is one task's error; the dashed line
+       is the reference (PLS). Most bars end below it, a few above. -->
+  <defs>
+    <style>
+      .ol { stroke: #1b2321; stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect width="800" height="500" fill="#e1f0ec"/>
+  <circle cx="400" cy="250" r="215" fill="#cbe6df"/>
+
+  <!-- scoreboard -->
+  <ellipse cx="300" cy="436" rx="150" ry="13" fill="#1b2321" opacity="0.12"/>
+  <rect x="150" y="104" width="300" height="236" rx="16" fill="#ffffff" class="ol"/>
+  <path d="M176 306 L 426 306 M176 306 L 176 126" stroke="#1b2321" stroke-width="4" stroke-linecap="round"/>
+  <!-- bars: teal ends below the reference line, ink above -->
+  <g stroke-linecap="round" stroke-width="12">
+    <line x1="196" y1="300" x2="196" y2="214" stroke="#0f7b6c"/>
+    <line x1="215" y1="300" x2="215" y2="236" stroke="#0f7b6c"/>
+    <line x1="234" y1="300" x2="234" y2="198" stroke="#0f7b6c"/>
+    <line x1="253" y1="300" x2="253" y2="150" stroke="#2f3a38"/>
+    <line x1="272" y1="300" x2="272" y2="224" stroke="#0f7b6c"/>
+    <line x1="291" y1="300" x2="291" y2="246" stroke="#0f7b6c"/>
+    <line x1="310" y1="300" x2="310" y2="206" stroke="#0f7b6c"/>
+    <line x1="329" y1="300" x2="329" y2="230" stroke="#0f7b6c"/>
+    <line x1="348" y1="300" x2="348" y2="162" stroke="#2f3a38"/>
+    <line x1="367" y1="300" x2="367" y2="218" stroke="#0f7b6c"/>
+    <line x1="386" y1="300" x2="386" y2="240" stroke="#0f7b6c"/>
+    <line x1="405" y1="300" x2="405" y2="202" stroke="#0f7b6c"/>
+  </g>
+  <!-- reference line (PLS) -->
+  <line x1="184" y1="176" x2="424" y2="176" stroke="#e2554a" stroke-width="5" stroke-dasharray="12 9" stroke-linecap="round"/>
+  <!-- stand -->
+  <path d="M286 340 L 278 428 M314 340 L 322 428" stroke="#1b2321" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- podium (no rank number: the result is not first on every task) -->
+  <ellipse cx="596" cy="440" rx="104" ry="13" fill="#1b2321" opacity="0.12"/>
+  <rect x="508" y="364" width="176" height="70" rx="10" fill="#0f7b6c" class="ol"/>
+
+  <!-- robot standing on the podium -->
+  <rect x="542" y="268" width="108" height="96" rx="22" fill="#f0f4f2" class="ol"/>
+  <rect x="568" y="290" width="56" height="46" rx="8" fill="#0f7b6c" class="ol" style="stroke-width:5"/>
+  <path d="M578 324 L 578 316 M590 324 L 590 306 M602 324 L 602 310 M614 324 L 614 300" stroke="#bff0e4" stroke-width="6" stroke-linecap="round"/>
+  <line x1="596" y1="174" x2="596" y2="146" stroke="#1b2321" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="596" cy="140" r="11" fill="#e2554a" class="ol" style="stroke-width:5"/>
+  <rect x="534" y="174" width="124" height="92" rx="26" fill="#f0f4f2" class="ol"/>
+  <rect x="554" y="194" width="84" height="50" rx="16" fill="#1b2321"/>
+  <circle cx="578" cy="218" r="9" fill="#7fe0cc"/>
+  <circle cx="614" cy="218" r="9" fill="#7fe0cc"/>
+  <path d="M586 234 Q 596 242 606 234" stroke="#7fe0cc" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect x="524" y="208" width="12" height="28" rx="5" fill="#9fb3ae" class="ol" style="stroke-width:5"/>
+  <rect x="656" y="208" width="12" height="28" rx="5" fill="#9fb3ae" class="ol" style="stroke-width:5"/>
+  <!-- arm pointing at the scoreboard -->
+  <path d="M544 300 Q 510 292 486 262" stroke="#1b2321" stroke-width="20" fill="none" stroke-linecap="round"/>
+  <path d="M544 300 Q 510 292 486 262" stroke="#f0f4f2" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- other arm holding a check -->
+  <path d="M650 300 Q 682 290 690 262" stroke="#1b2321" stroke-width="20" fill="none" stroke-linecap="round"/>
+  <path d="M650 300 Q 682 290 690 262" stroke="#f0f4f2" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <circle cx="694" cy="244" r="24" fill="#ffffff" class="ol"/>
+  <path d="M682 244 L 691 254 L 708 234" stroke="#0f7b6c" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

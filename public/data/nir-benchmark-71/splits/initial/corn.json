@@ -1,0 +1,1 @@
+{"seed": 42, "test_fraction": 0.2, "method": "y-sorted blocks, one random test row per block", "row_order": "source rows with a value, file order", "test_rows": [2, 9, 15, 21, 22, 25, 32, 34, 40, 42, 53, 54, 59, 68, 71, 76]}

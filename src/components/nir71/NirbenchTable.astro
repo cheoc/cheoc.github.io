@@ -1,0 +1,60 @@
+---
+import { DL, NIRBENCH_MODELS } from '../../data/nir-benchmark-71';
+import { fmtErr, fmtGap, modelName } from './format';
+
+// Chip per comparison at 1 SE: filled when the gap is also beyond 2 SE.
+type Verdict = 'better' | 'same' | 'worse';
+const CHIP: Record<Verdict, string> = { better: 'chip ours', worse: 'chip pub', same: 'chip equal' };
+
+function chip(v1: Verdict, v2: Verdict): string {
+  return v1 === v2 ? CHIP[v1] : `${CHIP[v1]} ind`;
+}
+
+// Shade the lowest error in the row. Best published is never above PLS, so
+// when ours is not lowest the best cell is shaded, and PLS too if it is the best.
+type Who = 'ours' | 'pls' | 'best';
+function lowest(r: { ours: number; pls: number; best: number }): Who {
+  const min = Math.min(r.ours, r.pls, r.best);
+  if (r.ours === min) {
+    return 'ours';
+  }
+  return r.pls === min ? 'pls' : 'best';
+}
+---
+<div class="table-box wide" role="region" aria-label="NIRBENCH-DL results per task" tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Task</th>
+        <th scope="col" class="num">Train / test</th>
+        <th scope="col" class="num">My error</th>
+        <th scope="col" class="num">NIRBENCH PLS</th>
+        <th scope="col">vs PLS</th>
+        <th scope="col" class="num">Best of {NIRBENCH_MODELS}</th>
+        <th scope="col">vs best</th>
+        <th scope="col">Model the pipeline chose</th>
+      </tr>
+    </thead>
+    <tbody>
+      {DL.map((r) => (
+        <tr>
+          <td>{r.id}. {r.material}<span class="sub">{r.target}</span></td>
+          <td class="num">{r.nTrain} / {r.nTest}</td>
+          <td class:list={['num', { win: lowest(r) === 'ours' }]}>{fmtErr(r.ours)}</td>
+          <td class:list={['num', { win: lowest(r) === 'pls' }]}>{fmtErr(r.pls)}</td>
+          <td><span class={chip(r.vsPls1, r.vsPls2)}>{fmtGap(r.ratioPls)}</span></td>
+          <td class:list={['num', { win: lowest(r) !== 'ours' }]}>{fmtErr(r.best)}<span class="sub">{modelName(r.bestModel)}</span></td>
+          <td><span class={chip(r.vsBest1, r.vsBest2)}>{fmtGap(r.ratioBest)}</span></td>
+          <td>
+            {r.model}
+            <span class="sub">
+              {r.reliable ? 'Passed the reliability check' : <b class="flag">Flagged:</b>}
+              {!r.reliable && ` ${r.reasons.join('; ')}`}
+              {r.timeLimit && ' · stopped at the 1 h limit'}
+            </span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

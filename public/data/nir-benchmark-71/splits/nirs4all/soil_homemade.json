@@ -1,0 +1,1 @@
+{"seed": 42, "test_fraction": 0.2, "method": "y-sorted blocks, one random test row per block", "row_order": "data.csv rows with a value", "test_rows": [0, 4, 16, 19, 20, 31, 37, 46, 51, 52, 60, 65, 69, 73, 83, 87, 99, 106, 107, 108, 109, 110, 115, 116, 117, 126, 130, 134, 138, 139, 155, 157, 160, 163, 165, 166, 170, 175]}

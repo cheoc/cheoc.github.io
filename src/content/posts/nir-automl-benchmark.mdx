@@ -27,6 +27,8 @@ import calibration from '../../assets/posts/nir-automl-benchmark/calibration-cor
 import dataset from '../../assets/posts/nir-automl-benchmark/dataset-tecator-fat.png';
 import explain from '../../assets/posts/nir-automl-benchmark/explain-tecator-fat.png';
 
+<p class="note">Follow-up: <a href="/posts/nir-automl-71-tasks/">the same pipeline on 71 public tasks, 27 of them on the published splits of NIRBENCH-DL</a>.</p>
+
 ## Why I tried this
 
 At Evonik I spent more than three years around NIR: feedstuff analysis, prediction algorithms, two patents. Years later, at Eurofins, I built automated ML pipelines that take the hand work out of ADMET models. Putting the two together was the obvious next step. Can the AutoML approach build NIR calibrations?
@@ -74,7 +76,7 @@ So most of the gap is how the published numbers were obtained. The one clear los
 
 ## What the pipeline does have
 
-It needs no chemometrics expert to run, it gives every property a validated model with a report in an hour, and it deploys as an API. For a lab with many properties and little time, that matters as much as the last few percent.
+It needs no chemometrics expert to run, it gives every property a validated model with a report in an hour, and its models can be called through an API. For a lab with many properties and little time, that matters as much as the last few percent.
 
 ## Can the published numbers be reproduced?
 
@@ -84,7 +86,7 @@ That is why I want more data. Spectra with reference values, ideally with the sp
 
 ## Datasets without a published result
 
-10 properties. Nobody has published an error for these, so I report mine on their own. Error: mean of 3 random splits. Calibration: model from the full pipeline, trained on all rows (run of 12 November). Errors are shown with 3 decimal places.
+10 properties. When I wrote this I found no published error for these, so I report mine on their own. I had missed that NIRBENCH-DL publishes errors for three of them: Tecator moisture on the standard 172/43 split, and wheat moisture and protein on its own split of 398 and 403 of these wheat samples. My [follow-up post](/posts/nir-automl-71-tasks/) compares against those. Error: mean of 3 random splits. Calibration: model from the full pipeline, trained on all rows (run of 12 November). Errors are shown with 3 decimal places.
 
 <OwnTable />
 
@@ -93,6 +95,8 @@ That is why I want more data. Spectra with reference values, ideally with the sp
 A rough outline. One time limit of one hour covers all steps.
 
 <PipelineSteps />
+
+<p class="note" style="margin-top: 24px">Update, 22 November 2026: the ensemble check changed after this run. A mix is now kept only if it beats the single best model by more than one standard error on rows held out from the search, and that check runs without TabPFN, which joins the mix afterwards. See the <a href="/posts/nir-automl-71-tasks/">follow-up post</a>.</p>
 
 ## Seeing what the model uses: SHAP
 
@@ -110,7 +114,7 @@ The fatty and lean spectra differ most at 929–937 nm, in the region where the 
 
 This is the check I want before trusting a calibration. If the tallest bars sat in a region with no chemistry behind it, or at the edge of the detector, I would suspect an artefact or overfitting, however good the error.
 
-The app does this check on its explain page. It marks the peak regions, shades them by strength, and lists the published NIR bands that sit there, each with its sources:
+The pipeline's web interface does this check on its explain page. It marks the peak regions, shades them by strength, and lists the published NIR bands that sit there, each with its sources:
 
 <figure>
   <Image src={explain} widths={[720, 1440]} sizes="(max-width: 700px) 100vw, 1040px" alt="Explain page for a Tecator fat model: mean SHAP per wavelength with the 923–937 nm region shaded, and region cards below listing candidate bands such as fat, C–H third overtone, with PubMed Central sources." />

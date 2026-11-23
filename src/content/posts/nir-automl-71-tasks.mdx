@@ -20,7 +20,7 @@ cta:
 import TallyTable from '../../components/nir71/TallyTable.astro';
 import NirbenchTable from '../../components/nir71/NirbenchTable.astro';
 import OwnResultsTable from '../../components/nir71/OwnResultsTable.astro';
-import { NIRBENCH_MODELS } from '../../data/nir-benchmark-71';
+import { NIRBENCH_MODELS, RANK_SCORE } from '../../data/nir-benchmark-71';
 
 ## Why a second run
 
@@ -45,6 +45,8 @@ A gap counts only if it is larger than the noise of the test error. I use one st
 <TallyTable />
 
 The fair comparison is the first row. NIRBENCH tunes its PLS by five-fold cross-validation on the training set, choosing preprocessing and 1–20 latent variables together, as a chemometrician would. "Best of {NIRBENCH_MODELS}" is the lowest test error among {NIRBENCH_MODELS} models per task, picked after seeing the test set, and NIRBENCH's deep-learning models run without hyperparameter tuning. So I do not read the second row as "beats deep learning"; it is a hard bar, not a rival.
+
+NIRBENCH also ranks models by a consistency score: rank the models by test error within each dataset, map each rank to 0–100 (100 × (M − rank) / (M − 1), M models), and average over datasets. Restricting it to the {RANK_SCORE.datasetsShared} datasets I ran barely moves NIRBENCH's own numbers: TabPFN 3.5 {RANK_SCORE.theirs30.TabPFN35.toFixed(1)} on all {RANK_SCORE.datasetsAll} and {RANK_SCORE.theirs27.TabPFN35.toFixed(1)} on {RANK_SCORE.datasetsShared}. With my pipeline added as a 17th model on those {RANK_SCORE.datasetsShared} datasets, it scores {RANK_SCORE.with.OURS.toFixed(1)}, against TabPFN 3.5 at {RANK_SCORE.with.TabPFN35.toFixed(1)}, TabICL v2 at {RANK_SCORE.with.TabICLv2.toFixed(1)} and PLS at {RANK_SCORE.with.PLSRegression.toFixed(1)}. It is first on {RANK_SCORE.firstPlaces} of the {RANK_SCORE.datasetsShared} datasets and never below rank {RANK_SCORE.worstRank} ({RANK_SCORE.worstTask}). Three limits: {RANK_SCORE.datasetsAll - RANK_SCORE.datasetsShared} of NIRBENCH's {RANK_SCORE.datasetsAll} datasets are missing; my error is one run, while their deep-learning and foundation-model errors are means over 10 runs; and I scored these test sets once before changing the search. The score counts only order, so a 1% win counts as much as a 30% one; the chips below show the margins.
 
 <ul class="legend" aria-label="How to read the comparison columns">
   <li><span class="chip ours">lower</span>my error lower, beyond 2 SE</li>

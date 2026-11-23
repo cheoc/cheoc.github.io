@@ -8,6 +8,7 @@ export const NIRBENCH_MODELS = 16;
 export const DL = [
  {
   "id": "1",
+  "taskId": "1-Wheat_kernels_protein",
   "material": "Wheat kernels",
   "target": "Protein",
   "nTrain": 415,
@@ -33,6 +34,7 @@ export const DL = [
  },
  {
   "id": "2",
+  "taskId": "2-Wheat_flours_protein",
   "material": "Wheat flour",
   "target": "Protein",
   "nTrain": 112,
@@ -58,6 +60,7 @@ export const DL = [
  },
  {
   "id": "3",
+  "taskId": "3-Tecator_moisture",
   "material": "Tecator meat",
   "target": "Moisture",
   "nTrain": 172,
@@ -83,6 +86,7 @@ export const DL = [
  },
  {
   "id": "5",
+  "taskId": "5-Cucurbitaceae_fruit_ssc",
   "material": "Cucurbitaceae fruit",
   "target": "Soluble solids",
   "nTrain": 200,
@@ -108,6 +112,7 @@ export const DL = [
  },
  {
   "id": "6",
+  "taskId": "6-NIR_tomato1_ssc",
   "material": "Tomato · set 1",
   "target": "Soluble solids",
   "nTrain": 126,
@@ -136,6 +141,7 @@ export const DL = [
  },
  {
   "id": "7",
+  "taskId": "7-NIR_tomato2_ssc",
   "material": "Tomato · set 2",
   "target": "Soluble solids",
   "nTrain": 135,
@@ -164,6 +170,7 @@ export const DL = [
  },
  {
   "id": "8",
+  "taskId": "8-NIR_tomato3_ssc",
   "material": "Tomato · set 3",
   "target": "Soluble solids",
   "nTrain": 80,
@@ -191,6 +198,7 @@ export const DL = [
  },
  {
   "id": "9",
+  "taskId": "9-NIR_tomato4_ssc",
   "material": "Tomato · set 4",
   "target": "Soluble solids",
   "nTrain": 81,
@@ -218,6 +226,7 @@ export const DL = [
  },
  {
   "id": "10",
+  "taskId": "10-NIR_tomato5_ssc",
   "material": "Tomato · set 5",
   "target": "Soluble solids",
   "nTrain": 66,
@@ -246,6 +255,7 @@ export const DL = [
  },
  {
   "id": "11",
+  "taskId": "11-Olive_oils_c16",
   "material": "Olive oil",
   "target": "C16 fatty acid",
   "nTrain": 149,
@@ -271,6 +281,7 @@ export const DL = [
  },
  {
   "id": "13",
+  "taskId": "13-NIR_milk_protein",
   "material": "Milk",
   "target": "Protein",
   "nTrain": 963,
@@ -296,6 +307,7 @@ export const DL = [
  },
  {
   "id": "15",
+  "taskId": "15-CEOT_pear_2021_brix",
   "material": "Pear · 2021",
   "target": "Brix",
   "nTrain": 3204,
@@ -323,6 +335,7 @@ export const DL = [
  },
  {
   "id": "16",
+  "taskId": "16-CEOT_pears_2019_brix",
   "material": "Pear · 2019",
   "target": "Brix",
   "nTrain": 2640,
@@ -350,6 +363,7 @@ export const DL = [
  },
  {
   "id": "17",
+  "taskId": "17-Barley_sensAIfood_Perten_moisture",
   "material": "Barley · Perten",
   "target": "Moisture",
   "nTrain": 120,
@@ -377,6 +391,7 @@ export const DL = [
  },
  {
   "id": "18",
+  "taskId": "18-Barley_sensAIfood_Perten_protein",
   "material": "Barley · Perten",
   "target": "Protein",
   "nTrain": 120,
@@ -402,6 +417,7 @@ export const DL = [
  },
  {
   "id": "19",
+  "taskId": "19-Wheat_sensAIfood_Grainit_moisture",
   "material": "Wheat · Grainit",
   "target": "Moisture",
   "nTrain": 318,
@@ -429,6 +445,7 @@ export const DL = [
  },
  {
   "id": "20",
+  "taskId": "20-Wheat_sensAIfood_Grainit_protein",
   "material": "Wheat · Grainit",
   "target": "Protein",
   "nTrain": 323,
@@ -454,6 +471,7 @@ export const DL = [
  },
  {
   "id": "21",
+  "taskId": "21-CEOT_pear_2021_snv_brix",
   "material": "Pear · 2021 · SNV",
   "target": "Brix",
   "nTrain": 3204,
@@ -481,6 +499,7 @@ export const DL = [
  },
  {
   "id": "22",
+  "taskId": "22-Mango_S1_dm",
   "material": "Mango · S1",
   "target": "Dry matter",
   "nTrain": 3132,
@@ -506,6 +525,7 @@ export const DL = [
  },
  {
   "id": "23",
+  "taskId": "23-Mango_S2_dm",
   "material": "Mango · S2",
   "target": "Dry matter",
   "nTrain": 1086,
@@ -531,6 +551,7 @@ export const DL = [
  },
  {
   "id": "24",
+  "taskId": "24-Mango_S3_dm",
   "material": "Mango · S3",
   "target": "Dry matter",
   "nTrain": 3964,
@@ -556,6 +577,7 @@ export const DL = [
  },
  {
   "id": "25",
+  "taskId": "25-Mango_S4_dm",
   "material": "Mango · S4",
   "target": "Dry matter",
   "nTrain": 1158,
@@ -581,6 +603,7 @@ export const DL = [
  },
  {
   "id": "26",
+  "taskId": "26-Corn_sensAIfood_Perten_moisture",
   "material": "Corn · Perten",
   "target": "Moisture",
   "nTrain": 120,
@@ -606,6 +629,7 @@ export const DL = [
  },
  {
   "id": "27",
+  "taskId": "27-Corn_sensAIfood_Perten_protein",
   "material": "Corn · Perten",
   "target": "Protein",
   "nTrain": 120,
@@ -633,6 +657,7 @@ export const DL = [
  },
  {
   "id": "28",
+  "taskId": "28-Wheat_sensAIfood_Perten_moisture",
   "material": "Wheat · Perten",
   "target": "Moisture",
   "nTrain": 120,
@@ -658,6 +683,7 @@ export const DL = [
  },
  {
   "id": "29",
+  "taskId": "29-Wheat_sensAIfood_Perten_protein",
   "material": "Wheat · Perten",
   "target": "Protein",
   "nTrain": 120,
@@ -683,6 +709,7 @@ export const DL = [
  },
  {
   "id": "30",
+  "taskId": "30-Wheat_sensAIfood_CRAW_protein",
   "material": "Wheat · CRAW",
   "target": "Protein",
   "nTrain": 4036,
@@ -731,6 +758,30 @@ export const DL_TALLY = {
  },
  "lowerThanBest": 18,
  "lowerThanPls": 23
+} as const;
+
+export const RANK_SCORE = {
+ "datasetsAll": 30,
+ "datasetsShared": 27,
+ "theirs30": {
+  "TabPFN35": 91.55555555555556,
+  "TabICLv2": 88.00000000000003,
+  "PLSRegression": 86.44444444444444
+ },
+ "theirs27": {
+  "TabPFN35": 91.60493827160495,
+  "TabICLv2": 87.4074074074074,
+  "PLSRegression": 85.43209876543212
+ },
+ "with": {
+  "OURS": 96.75925925925925,
+  "TabPFN35": 87.03703703703704,
+  "TabICLv2": 82.4074074074074,
+  "PLSRegression": 81.01851851851852
+ },
+ "firstPlaces": 18,
+ "worstRank": 6,
+ "worstTask": "task 9, Tomato · set 4"
 } as const;
 
 export const INITIAL = [

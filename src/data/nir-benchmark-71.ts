@@ -30,7 +30,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Single model: kernel ridge",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 1378.3184689789923
  },
  {
   "id": "2",
@@ -56,7 +57,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 4: TabPFN 66%, kernel ridge 34%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 295.4606246589974
  },
  {
   "id": "3",
@@ -82,7 +84,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Single model: kernel ridge",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 438.1401158559893
  },
  {
   "id": "5",
@@ -108,7 +111,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 6: PLS 38%, LightGBM 34%, local PLS 14%, TabPFN 12%, 1 more",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 818.6560295709933
  },
  {
   "id": "6",
@@ -137,7 +141,8 @@ export const DL = [
    "regression slope 0.29 outside [0.8, 1.2]"
   ],
   "model": "Single model: kernel ridge",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 83.95336795799085
  },
  {
   "id": "7",
@@ -166,7 +171,8 @@ export const DL = [
    "regression slope 0.38 outside [0.8, 1.2]"
   ],
   "model": "Ensemble of 3: SVR 70%, GPR 16%, PLS 14%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 365.62461425201036
  },
  {
   "id": "8",
@@ -194,7 +200,8 @@ export const DL = [
    "regression slope 0.50 outside [0.8, 1.2]"
   ],
   "model": "Single model: kernel ridge",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 71.20999184402172
  },
  {
   "id": "9",
@@ -222,7 +229,8 @@ export const DL = [
    "regression slope 0.52 outside [0.8, 1.2]"
   ],
   "model": "Ensemble of 5: PLS 40%, kernel ridge 34%, SVR 20%, TabPFN 6%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 188.602333206014
  },
  {
   "id": "10",
@@ -251,7 +259,8 @@ export const DL = [
    "regression slope 0.29 outside [0.8, 1.2]"
   ],
   "model": "Ensemble of 5: kernel ridge 58%, PLS 38%, GPR 2%, elastic net 2%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 186.10509184197872
  },
  {
   "id": "11",
@@ -277,7 +286,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 7: TabPFN 80%, PLS 10%, GPR 8%, SVR 2%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 378.4269542099937
  },
  {
   "id": "13",
@@ -303,7 +313,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 6: GPR 52%, PLS 30%, TabPFN 14%, local PLS 4%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3498.5160825979838
  },
  {
   "id": "15",
@@ -331,7 +342,8 @@ export const DL = [
    "regression slope 0.71 outside [0.8, 1.2]"
   ],
   "model": "Ensemble of 9: local PLS 44%, kernel ridge 30%, SVR 14%, PLS 4%, 2 more",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3556.387588979007
  },
  {
   "id": "16",
@@ -359,7 +371,8 @@ export const DL = [
    "regression slope 0.62 outside [0.8, 1.2]"
   ],
   "model": "Ensemble of 5: kernel ridge 58%, local PLS 26%, PLS 16%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3567.5330740000063
  },
  {
   "id": "17",
@@ -387,7 +400,8 @@ export const DL = [
    "CV-optimistic: held-out RMSEP 1.7x RMSECV"
   ],
   "model": "Ensemble of 5: TabPFN 60%, PLS 40%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 182.35257371200714
  },
  {
   "id": "18",
@@ -413,7 +427,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 5: TabPFN 48%, PLS 36%, kernel ridge 16%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 197.4836503789993
  },
  {
   "id": "19",
@@ -441,7 +456,8 @@ export const DL = [
    "CV-optimistic: held-out RMSEP 2.1x RMSECV"
   ],
   "model": "Ensemble of 5: TabPFN 64%, local PLS 26%, PLS 8%, SVR 2%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3397.8678752119886
  },
  {
   "id": "20",
@@ -467,7 +483,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Single model: GPR",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 2627.9380936750094
  },
  {
   "id": "21",
@@ -495,7 +512,8 @@ export const DL = [
    "regression slope 0.63 outside [0.8, 1.2]"
   ],
   "model": "Ensemble of 7: SVR 38%, local PLS 30%, kernel ridge 16%, LightGBM 16%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3533.6759337999974
  },
  {
   "id": "22",
@@ -521,7 +539,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 4: TabPFN 88%, kernel ridge 6%, LightGBM 4%, local PLS 2%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3514.382568688976
  },
  {
   "id": "23",
@@ -547,7 +566,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 2: TabPFN 100%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3392.4030137640075
  },
  {
   "id": "24",
@@ -573,7 +593,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 5: TabPFN 48%, LightGBM 32%, kernel ridge 12%, random forest 6%, 1 more",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3530.8698277469957
  },
  {
   "id": "25",
@@ -599,7 +620,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 4: TabPFN 98%, LightGBM 2%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3425.418813921002
  },
  {
   "id": "26",
@@ -625,7 +647,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 6: PLS 42%, kernel ridge 38%, GPR 16%, SVR 4%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 188.50383810800122
  },
  {
   "id": "27",
@@ -653,7 +676,8 @@ export const DL = [
    "regression slope 0.79 outside [0.8, 1.2]"
   ],
   "model": "Ensemble of 7: PLS 54%, kernel ridge 28%, TabPFN 12%, GPR 6%",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 182.76545711400104
  },
  {
   "id": "28",
@@ -679,7 +703,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Single model: kernel ridge",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 77.93653644300502
  },
  {
   "id": "29",
@@ -705,7 +730,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Single model: GPR",
-  "timeLimit": false
+  "timeLimit": false,
+  "trainSeconds": 84.01854196200293
  },
  {
   "id": "30",
@@ -731,7 +757,8 @@ export const DL = [
   "reliable": true,
   "reasons": [],
   "model": "Ensemble of 5: kernel ridge 58%, local PLS 20%, LightGBM 14%, PLS 8%",
-  "timeLimit": true
+  "timeLimit": true,
+  "trainSeconds": 3595.3578122430044
  }
 ] as const;
 
@@ -805,6 +832,48 @@ export const RANK_SCORE = {
  ],
  "models": 17,
  "worstTask": "task 9, Tomato · set 4"
+} as const;
+
+export const RUNTIME = {
+ "oursMedianSeconds": 438.1401158559893,
+ "oursMinSeconds": 71.20999184402172,
+ "oursTotalHours": 11.87719690964527,
+ "bands": [
+  {
+   "lo": 0,
+   "hi": 200,
+   "tasks": 14,
+   "medianSeconds": 187.30446497498997,
+   "timeLimit": 0,
+   "medianRatioPls": 0.8675981808889143,
+   "medianRatioBest": 0.9639546462078554
+  },
+  {
+   "lo": 200,
+   "hi": 1000,
+   "tasks": 5,
+   "medianSeconds": 2627.9380936750094,
+   "timeLimit": 2,
+   "medianRatioPls": 0.8578373177355509,
+   "medianRatioBest": 0.9388088088650648
+  },
+  {
+   "lo": 1000,
+   "hi": null,
+   "tasks": 8,
+   "medianSeconds": 3532.2728807734966,
+   "timeLimit": 8,
+   "medianRatioPls": 0.8366347712922908,
+   "medianRatioBest": 0.933194832038793
+  }
+ ],
+ "theirsMedianSeconds": {
+  "PLSRegression": 1.0256933169999911,
+  "TabPFN35": 1.6022639170500268,
+  "TabICLv2": 1.1543252853560262,
+  "DeepSpectra": 25.36690331524951
+ },
+ "theirsHardware": "Intel Core i9-13900K, NVIDIA GeForce RTX 2080 Ti"
 } as const;
 
 export const INITIAL = [

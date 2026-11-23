@@ -1,0 +1,46 @@
+---
+import { RUNTIME } from '../../data/nir-benchmark-71';
+import { fmtGap } from './format';
+
+// Train time and gain per training-set size on the 27 NIRBENCH-DL tasks.
+const SECONDS_PER_MINUTE = 60;
+
+function band(lo: number, hi: number | null): string {
+  return hi === null ? `${lo.toLocaleString('en')} and more` : `${lo}–${hi - 1}`;
+}
+
+function minutes(seconds: number): string {
+  return `${Math.round(seconds / SECONDS_PER_MINUTE)} min`;
+}
+---
+<div class="table-box" role="region" aria-label="Runtime and gain by training-set size" tabindex="0">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Training rows</th>
+        <th scope="col" class="num">Tasks</th>
+        <th scope="col" class="num">Median train time</th>
+        <th scope="col" class="num">Stopped at 1 h</th>
+        <th scope="col" class="num">Median error vs PLS</th>
+        <th scope="col" class="num">Median error vs best</th>
+      </tr>
+    </thead>
+    <tbody>
+      {RUNTIME.bands.map((b) => (
+        <tr>
+          <td>{band(b.lo, b.hi)}</td>
+          <td class="num">{b.tasks}</td>
+          <td class="num">{minutes(b.medianSeconds)}</td>
+          <td class="num">{b.timeLimit} of {b.tasks}</td>
+          <td class="num">{fmtGap(b.medianRatioPls)}</td>
+          <td class="num">{fmtGap(b.medianRatioBest)}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* Short numeric table: no wide last column (site.css gives it 340px). */
+  .table-box td:last-child, .table-box th:last-child { min-width: 0; }
+</style>

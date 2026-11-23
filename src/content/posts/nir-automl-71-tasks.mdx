@@ -21,7 +21,8 @@ import TallyTable from '../../components/nir71/TallyTable.astro';
 import NirbenchTable from '../../components/nir71/NirbenchTable.astro';
 import OwnResultsTable from '../../components/nir71/OwnResultsTable.astro';
 import RankScoreChart from '../../components/nir71/RankScoreChart.astro';
-import { NIRBENCH_MODELS, RANK_SCORE } from '../../data/nir-benchmark-71';
+import RuntimeTable from '../../components/nir71/RuntimeTable.astro';
+import { NIRBENCH_MODELS, RANK_SCORE, RUNTIME } from '../../data/nir-benchmark-71';
 
 ## Why a second run
 
@@ -38,6 +39,16 @@ I also ran 34 datasets from the [nirs4all dataset collection](https://github.com
 - The ensemble check changed since the first post. A mix of models is kept only if it beats the single best model by more than one standard error on rows held out from the search (outer folds); that check runs without TabPFN, which joins the mix afterwards with its own weight. Otherwise the single best model is used.
 - The search runs on one PC with an 8-core CPU and an RTX 5060 Ti. Three model families (SVR, kernel ridge, random forest) are fitted on the GPU.
 - The runs took place from 18 to 22 November 2026. The code changed in between, but only in GPU memory handling, SHAP and the upload size limit, not in how models are searched or chosen. 16 tasks I reran on the later code gave the same test error to 4 decimals on 15 of them; one moved by 1.4%.
+
+## Runtime, and what to expect
+
+Compute is where the NIR AutoML pipeline and NIRBENCH differ most. On the 27 NIRBENCH tasks, the median task trained for {Math.round(RUNTIME.oursMedianSeconds / 60)} minutes (shortest {Math.round(RUNTIME.oursMinSeconds)} s), {RUNTIME.oursTotalHours.toFixed(1)} hours for all 27, on the PC above. NIRBENCH reports wall times per model on an {RUNTIME.theirsHardware}: median {RUNTIME.theirsMedianSeconds.PLSRegression.toFixed(1)} s for PLS including its five-fold search, {RUNTIME.theirsMedianSeconds.TabPFN35.toFixed(1)} s for TabPFN 3.5, {RUNTIME.theirsMedianSeconds.TabICLv2.toFixed(1)} s for TabICL v2 and {Math.round(RUNTIME.theirsMedianSeconds.DeepSpectra)} s for DeepSpectra. The pipeline spends a few hundred times more compute per task than their strongest single models. That is the price of searching and combining many models instead of fitting one, and probably the main reason it can beat each of them; how much the search, the ensemble and TabPFN each add, I have not measured yet.
+
+What to expect from it: small datasets finish in minutes, large ones use the whole hour. The gain over PLS is about the same at every size.
+
+<RuntimeTable />
+
+<p class="note">Median over the tasks in each row; the error columns compare my test error with NIRBENCH's PLS and with the best of its {NIRBENCH_MODELS} models. Whether more than one hour would help the large tasks, I have not tested.</p>
 
 ## NIRBENCH-DL: 27 tasks on the published splits
 

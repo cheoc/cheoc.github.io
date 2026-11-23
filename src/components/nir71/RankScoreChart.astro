@@ -1,0 +1,53 @@
+---
+import { RANK_SCORE } from '../../data/nir-benchmark-71';
+import { modelName } from './format';
+
+// NIRBENCH's consistency score, top 5 of 17 models on the 27 shared datasets.
+// Emphasis chart: the NIR AutoML pipeline in the accent, the others in the context grey.
+const OURS = 'OURS';
+const OURS_LABEL = 'NIR AutoML pipeline';
+const SCORE_MAX = 100;
+const SCORE_DECIMALS = 1;
+
+const bars = RANK_SCORE.top.map((t) => ({
+  label: t.model === OURS ? OURS_LABEL : modelName(t.model),
+  score: t.score,
+  ours: t.model === OURS,
+}));
+---
+<figure class="rank-chart">
+  <ol aria-label={`NIRBENCH consistency score, top ${bars.length} of ${RANK_SCORE.models} models, ${RANK_SCORE.datasetsShared} datasets`}>
+    {bars.map((b) => (
+      <li class:list={{ ours: b.ours }} title={`${b.label}: ${b.score.toFixed(SCORE_DECIMALS)}`}>
+        <span class="name">{b.label}</span>
+        <span class="track">
+          <span class="bar" style={`width: ${(b.score / SCORE_MAX) * 100}%`}></span>
+        </span>
+        <span class="value">{b.score.toFixed(SCORE_DECIMALS)}</span>
+      </li>
+    ))}
+  </ol>
+  <figcaption>
+    NIRBENCH consistency score (0–100, higher is better) on the {RANK_SCORE.datasetsShared} datasets I ran, with the NIR AutoML
+    pipeline added as model {RANK_SCORE.models}; top {bars.length} shown. Same formula as NIRBENCH's "Across datasets"
+    chart, on its site data of 14 November 2026.
+  </figcaption>
+</figure>
+
+<style>
+  /* Bars per the dataviz mark spec: 18px thick, 4px rounded data end, square
+     at the baseline, value at the tip in text ink; a faint track shows the 100 cap. */
+  .rank-chart ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .rank-chart li { display: grid; grid-template-columns: minmax(96px, 190px) 1fr 3.2em; align-items: center; gap: 12px; font-size: 14px; }
+  .rank-chart .name { text-align: right; color: var(--muted); line-height: 1.3; }
+  .rank-chart li.ours .name { color: var(--fg); font-weight: 600; }
+  .rank-chart .track { display: block; height: 18px; background: var(--rule); border-radius: 0 4px 4px 0; }
+  .rank-chart .bar { display: block; height: 100%; background: var(--chart-context); border-radius: 0 4px 4px 0; }
+  .rank-chart li.ours .bar { background: var(--accent); }
+  .rank-chart .value { font-variant-numeric: tabular-nums; color: var(--fg); }
+  .rank-chart li.ours .value { font-weight: 700; }
+  @media (max-width: 480px) {
+    .rank-chart li { grid-template-columns: 1fr 3.2em; row-gap: 4px; }
+    .rank-chart .name { grid-column: 1 / -1; text-align: left; }
+  }
+</style>

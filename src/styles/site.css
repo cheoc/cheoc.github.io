@@ -9,6 +9,9 @@
   --accent: #0f7b6c;
   --chart-lean: #3b6ea8;
   --chart-fatty: #b45309;
+  /* Context bars beside the one highlighted series (emphasis charts); validated
+     against the accent: CVD dE 11.3, normal dE 15.9, 3:1 on the surface. */
+  --chart-context: #8a9693;
   --accent-soft: #e3f1ee;
   --accent-ink: #0c6e60;
   --shade: rgb(23 29 28 / 0.12);
@@ -21,12 +24,12 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111615; --surface: #171e1d; --fg: #e6ecea; --muted: #9aa8a4;
-    --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --chart-lean: #5a8fd6; --chart-fatty: #c97a1a; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
+    --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --chart-lean: #5a8fd6; --chart-fatty: #c97a1a; --chart-context: #6b7875; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111615; --surface: #171e1d; --fg: #e6ecea; --muted: #9aa8a4;
-  --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --chart-lean: #5a8fd6; --chart-fatty: #c97a1a; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
+  --rule: #26302e; --accent: #5cc9b6; --accent-soft: #173330; --accent-ink: #5cc9b6; --chart-lean: #5a8fd6; --chart-fatty: #c97a1a; --chart-context: #6b7875; --shade: rgb(0 0 0 / 0.45); --cell: #4a5856; --lower-bg: #172b1f; --higher-bg: #301d1b; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }

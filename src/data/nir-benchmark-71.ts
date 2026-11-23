@@ -781,6 +781,29 @@ export const RANK_SCORE = {
  },
  "firstPlaces": 18,
  "worstRank": 6,
+ "top": [
+  {
+   "model": "OURS",
+   "score": 96.75925925925925
+  },
+  {
+   "model": "TabPFN35",
+   "score": 87.03703703703704
+  },
+  {
+   "model": "TabICLv2",
+   "score": 82.4074074074074
+  },
+  {
+   "model": "PLSRegression",
+   "score": 81.01851851851852
+  },
+  {
+   "model": "DeepSpectra",
+   "score": 68.75
+  }
+ ],
+ "models": 17,
  "worstTask": "task 9, Tomato · set 4"
 } as const;
 

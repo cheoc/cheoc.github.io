@@ -8,8 +8,8 @@ tags: [nir, chemometrics, automl, benchmark]
 minutes: 18
 cover: ../../assets/posts/nir-automl-71-tasks/cover.png
 coverAlt: "Cartoon of a small robot on a podium next to a bar chart; most bars end below a dashed reference line, two rise above it."
-summary: "I ran my NIR AutoML pipeline on 71 public tasks, 27 of them on the published splits of the NIRBENCH-DL benchmark."
-lede: "I ran my NIR AutoML pipeline on 71 public NIR tasks with a one-hour limit each. 27 come from NIRBENCH-DL, a benchmark that publishes its train/test splits and the errors of 16 models per task, so for those the comparison is like for like. All errors are test RMSE: lower is better."
+summary: "I ran the NIR AutoML pipeline on 71 public tasks, 27 of them on the published splits of the NIRBENCH-DL benchmark."
+lede: "I ran the NIR AutoML pipeline on 71 public NIR tasks with a one-hour limit each. 27 come from NIRBENCH-DL, a benchmark that publishes its train/test splits and the errors of 16 models per task, so for those the comparison is like for like. All errors are test RMSE: lower is better."
 result: "On NIRBENCH-DL's own test sets, my error is lower than their tuned PLS on 23 of 27 tasks; beyond two standard errors, 12 lower and 1 higher."
 resultHref: "#nirbench-dl-27-tasks-on-the-published-splits"
 cta:
@@ -20,6 +20,7 @@ cta:
 import TallyTable from '../../components/nir71/TallyTable.astro';
 import NirbenchTable from '../../components/nir71/NirbenchTable.astro';
 import OwnResultsTable from '../../components/nir71/OwnResultsTable.astro';
+import RankScoreChart from '../../components/nir71/RankScoreChart.astro';
 import { NIRBENCH_MODELS, RANK_SCORE } from '../../data/nir-benchmark-71';
 
 ## Why a second run
@@ -46,7 +47,9 @@ A gap counts only if it is larger than the noise of the test error. I use one st
 
 The fair comparison is the first row. NIRBENCH tunes its PLS by five-fold cross-validation on the training set, choosing preprocessing and 1–20 latent variables together, as a chemometrician would. "Best of {NIRBENCH_MODELS}" is the lowest test error among {NIRBENCH_MODELS} models per task, picked after seeing the test set, and NIRBENCH's deep-learning models run without hyperparameter tuning. So I do not read the second row as "beats deep learning"; it is a hard bar, not a rival.
 
-NIRBENCH also ranks models by a consistency score: rank the models by test error within each dataset, map each rank to 0–100 (100 × (M − rank) / (M − 1), M models), and average over datasets. Restricting it to the {RANK_SCORE.datasetsShared} datasets I ran barely moves NIRBENCH's own numbers: TabPFN 3.5 {RANK_SCORE.theirs30.TabPFN35.toFixed(1)} on all {RANK_SCORE.datasetsAll} and {RANK_SCORE.theirs27.TabPFN35.toFixed(1)} on {RANK_SCORE.datasetsShared}. With my pipeline added as a 17th model on those {RANK_SCORE.datasetsShared} datasets, it scores {RANK_SCORE.with.OURS.toFixed(1)}, against TabPFN 3.5 at {RANK_SCORE.with.TabPFN35.toFixed(1)}, TabICL v2 at {RANK_SCORE.with.TabICLv2.toFixed(1)} and PLS at {RANK_SCORE.with.PLSRegression.toFixed(1)}. It is first on {RANK_SCORE.firstPlaces} of the {RANK_SCORE.datasetsShared} datasets and never below rank {RANK_SCORE.worstRank} ({RANK_SCORE.worstTask}). Three limits: {RANK_SCORE.datasetsAll - RANK_SCORE.datasetsShared} of NIRBENCH's {RANK_SCORE.datasetsAll} datasets are missing; my error is one run, while their deep-learning and foundation-model errors are means over 10 runs; and I scored these test sets once before changing the search. The score counts only order, so a 1% win counts as much as a 30% one; the chips below show the margins.
+NIRBENCH also ranks models by a consistency score: rank the models by test error within each dataset, map each rank to 0–100 (100 × (M − rank) / (M − 1), M models), and average over datasets. Restricting it to the {RANK_SCORE.datasetsShared} datasets I ran barely moves NIRBENCH's own numbers: TabPFN 3.5 {RANK_SCORE.theirs30.TabPFN35.toFixed(1)} on all {RANK_SCORE.datasetsAll} and {RANK_SCORE.theirs27.TabPFN35.toFixed(1)} on {RANK_SCORE.datasetsShared}. With the NIR AutoML pipeline added as a 17th model on those {RANK_SCORE.datasetsShared} datasets, it scores {RANK_SCORE.with.OURS.toFixed(1)}, against TabPFN 3.5 at {RANK_SCORE.with.TabPFN35.toFixed(1)}, TabICL v2 at {RANK_SCORE.with.TabICLv2.toFixed(1)} and PLS at {RANK_SCORE.with.PLSRegression.toFixed(1)}. It is first on {RANK_SCORE.firstPlaces} of the {RANK_SCORE.datasetsShared} datasets and never below rank {RANK_SCORE.worstRank} ({RANK_SCORE.worstTask}). Three limits: {RANK_SCORE.datasetsAll - RANK_SCORE.datasetsShared} of NIRBENCH's {RANK_SCORE.datasetsAll} datasets are missing; my error is one run, while their deep-learning and foundation-model errors are means over 10 runs; and I scored these test sets once before changing the search. The score counts only order, so a 1% win counts as much as a 30% one; the chips below show the margins.
+
+<RankScoreChart />
 
 <ul class="legend" aria-label="How to read the comparison columns">
   <li><span class="chip ours">lower</span>my error lower, beyond 2 SE</li>
@@ -70,7 +73,7 @@ NIRBENCH also ranks models by a consistency score: rank the models by test error
 
 - **The test sets are not fresh.** I scored these same NIRBENCH test sets on 14 November and changed the search afterwards. Tecator moisture, for example, went from 0.460 to 0.550. A result tuned against a reused test set is optimistic, even if no single change was aimed at it.
 - **The pipeline flags its own weak models.** It marks a model unreliable when, on rows held out during training, the RPD is below 1.4, the slope of predicted against measured falls outside 0.8–1.2, or the error is more than 1.5 times the cross-validated error. The check does not see the benchmark test set. 11 of the 27 NIRBENCH models carry a flag, including 7 where my error is below PLS beyond one standard error (3 beyond two). The flag is in the last column.
-- **Foundation models are on both sides.** NIRBENCH runs two pretrained tabular models with frozen weights: TabPFN 3.5 and TabICL v2 (Qu et al. 2026). TabICL v2 is the best published model on 4 of the 27 tasks (3, 5, 19, 21). My pipeline uses TabPFN v2 as one member of the ensemble; it carries weight in 40 of my 71 final models.
+- **Foundation models are on both sides.** NIRBENCH runs two pretrained tabular models with frozen weights: TabPFN 3.5 and TabICL v2 (Qu et al. 2026). TabICL v2 is the best published model on 4 of the 27 tasks (3, 5, 19, 21). The NIR AutoML pipeline uses TabPFN v2 as one member of the ensemble; it carries weight in 40 of my 71 final models.
 
 ## The 10 datasets of the first post, on new splits
 

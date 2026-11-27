@@ -52,7 +52,7 @@ What to expect from it: small datasets finish in minutes, large ones use the who
 
 ## NIRBENCH-DL: 27 tasks on the published splits
 
-A gap counts only if it is larger than the noise of the test error. I use one standard error of an RMSE, 1/√(2 · test samples): about 14% for a test set of 27 samples, 2.5% for 800. With 27 comparisons, a few gaps beyond one standard error happen by chance, so I also show two. The formula assumes independent test rows. The mango tasks (22–25) hold several spectra per fruit, so their gaps are less certain than the chips show.
+A test error has noise of its own: a different test set of the same size would give a slightly different error. I count a gap only if it is larger than that noise, one standard error of the RMSE (1/√(2 · test samples)): about 14% with 27 test samples, 2.5% with 800. With 27 comparisons, a few gaps beyond one standard error happen by chance, so the legend below also marks gaps beyond two standard errors. The formula assumes independent test rows; the mango tasks (22–25) hold several spectra per fruit, so their gaps are less certain than the colours show.
 
 <TallyTable />
 

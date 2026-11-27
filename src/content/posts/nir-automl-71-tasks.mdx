@@ -37,7 +37,7 @@ I also ran 34 datasets from the [nirs4all dataset collection](https://github.com
 - Every task went through the full NIR AutoML pipeline, not a separate script: upload the spectra, ask for an automatic calibration, score the final model on the held-out test set.
 - One hour per task covers the whole search, the outlier decision and the final fit. 26 of the 71 tasks stopped at that limit.
 - The ensemble check changed since the first post. A mix of models is kept only if it beats the single best model by more than one standard error on rows held out from the search (outer folds); that check runs without TabPFN, which joins the mix afterwards with its own weight. Otherwise the single best model is used.
-- The search runs on one PC with an 8-core CPU and an RTX 5060 Ti. Three model families (SVR, kernel ridge, random forest) are fitted on the GPU.
+- The search runs on one PC with an Intel Core i7-4790K (4 cores, 8 threads) and an RTX 5060 Ti. Three model families (SVR, kernel ridge, random forest) are fitted on the GPU.
 - The runs took place from 18 to 22 November 2026. The code changed in between, but only in GPU memory handling, SHAP and the upload size limit, not in how models are searched or chosen. 16 tasks I reran on the later code gave the same test error to 4 decimals on 15 of them; one moved by 1.4%.
 
 ## Runtime, and what to expect
